@@ -10,6 +10,18 @@
     "type": "git",
     "url": "git@bitbucket.org:gleb_bahmutov/check-more-types.git"
   },
+  "devDependencies": {
+    "grunt-contrib-jshint": "0.10.0",
+    "grunt-jshint-solid": "0.1.0",
+    "grunt-nice-package": "0.9.1",
+    "grunt-readme": "0.4.5",
+    "matchdep": "0.3.0",
+    "pre-git": "0.0.16"
+  },
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "homepage": "https://github.com/kensho/check-more-types",
   "keywords": [
     "types",
     "type-checking",
