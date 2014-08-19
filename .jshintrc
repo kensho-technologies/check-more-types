@@ -21,8 +21,8 @@
   "trailing"      : false,
   "maxparams"     : 3,
   "maxdepth"      : 3,
-  "maxstatements" : 20,
-  "maxcomplexity" : 10,
+  "maxstatements" : 40,
+  "maxcomplexity" : 20,
   "maxlen"        : 120,
 
   "asi"           : false,
@@ -50,7 +50,7 @@
   "supernew"      : false,
   "validthis"     : false,
 
-  "browser"       : false,
+  "browser"       : true,
   "couch"         : false,
   "devel"         : true,
   "dojo"          : false,

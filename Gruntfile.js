@@ -4,20 +4,11 @@ module.exports = function(grunt) {
   grunt.initConfig({
     jshint: {
       all: [
-        'Gruntfile.js',
-        'tasks/*.js'
+        'check-more-types.js'
       ],
       options: {
         jshintrc: '.jshintrc'
       }
-    },
-
-    xplain: {
-      options: {
-        dir: 'api',
-        framework: 'jasmine'
-      },
-      src: ['test/*.js']
     },
 
     readme: {
@@ -31,8 +22,7 @@ module.exports = function(grunt) {
 
   var plugins = require('matchdep').filterDev('grunt-*');
   plugins.forEach(grunt.loadNpmTasks);
-  grunt.loadTasks('tasks');
 
   grunt.registerTask('default',
-    ['jshint', 'jshint-solid', 'nice-package', 'xplain', 'readme']);
+    ['jshint', 'nice-package', 'readme']);
 };

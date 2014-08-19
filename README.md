@@ -1,6 +1,30 @@
-# check-more-types
+# check-more-types v0.0.0
 
 > Additional type checks for [check-types.js](https://github.com/philbooth/check-types.js)
+
+[![NPM][check-more-types-icon] ][check-more-types-url]
+
+[![Build status][check-more-types-ci-image] ][check-more-types-ci-url]
+[![dependencies][check-more-types-dependencies-image] ][check-more-types-dependencies-url]
+[![devdependencies][check-more-types-devdependencies-image] ][check-more-types-devdependencies-url]
+
+[check-more-types-icon]: https://nodei.co/npm/check-more-types.png?downloads=true
+[check-more-types-url]: https://npmjs.org/package/check-more-types
+[check-more-types-ci-image]: https://travis-ci.org/kensho/check-more-types.png?branch=master
+[check-more-types-ci-url]: https://travis-ci.org/kensho/check-more-types
+[check-more-types-dependencies-image]: https://david-dm.org/kensho/check-more-types.png
+[check-more-types-dependencies-url]: https://david-dm.org/kensho/check-more-types
+[check-more-types-devdependencies-image]: https://david-dm.org/kensho/check-more-types/dev-status.png
+[check-more-types-devdependencies-url]: https://david-dm.org/kensho/check-more-types#info=devDependencies
+
+
+
+### Install
+
+**node:** `npm install check-more-types --save`
+
+
+
 
 ### Small print
 
@@ -11,6 +35,10 @@ Author: Kensho &copy; 2014
 
 Support: if you find any problems with this library,
 [open issue](https://github.com/kensho/check-more-types/issues) on Github
+
+
+
+## MIT License
 
 The MIT License (MIT)
 
@@ -32,3 +60,6 @@ FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
 COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
 IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+

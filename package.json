@@ -1,14 +1,10 @@
 {
   "name": "check-more-types",
-  "version": "0.0.0",
   "description": "Additional type checks for https://github.com/philbooth/check-types.js",
-  "main": "check-more-types.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git@bitbucket.org:gleb_bahmutov/check-more-types.git"
+  "version": "0.0.0",
+  "author": "Gleb Bahmutov <gleb.bahmutov@gmail.com>",
+  "bugs": {
+    "url": "https://github.com/kensho/check-more-types/issues"
   },
   "devDependencies": {
     "grunt-contrib-jshint": "0.10.0",
@@ -29,6 +25,13 @@
     "checks",
     "check-types"
   ],
-  "author": "Gleb Bahmutov <gleb.bahmutov@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "main": "check-more-types.js",
+  "repository": {
+    "type": "git",
+    "url": "git@bitbucket.org:gleb_bahmutov/check-more-types.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
 }
