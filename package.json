@@ -36,7 +36,7 @@
   "pre-commit": "npm test",
   "repository": {
     "type": "git",
-    "url": "git@bitbucket.org:gleb_bahmutov/check-more-types.git"
+    "url": "git@github.com:kensho/check-more-types.git"
   },
   "scripts": {
     "test": "grunt"
