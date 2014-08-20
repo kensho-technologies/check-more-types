@@ -44,5 +44,5 @@ module.exports = function(grunt) {
 
   grunt.registerTask('test', ['mochaTest']);
   grunt.registerTask('default',
-    ['nice-package', 'deps-ok', 'jshint', 'readme']);
+    ['nice-package', 'deps-ok', 'jshint', 'test', 'readme']);
 };
