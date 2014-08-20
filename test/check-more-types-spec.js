@@ -175,69 +175,6 @@ describe('check-more-types', function () {
     });
   });
 
-  describe('verify.ticker', function () {
-    it('has functions', function () {
-      expect(check.verify.ticker).toBeFunction();
-      expect(check.ticker).toBeFunction();
-    });
-
-    /** @sample check/ticker */
-    it('checks ticker', function () {
-      var t = {
-        ticker: 'BA',
-        name: 'Bank of America',
-        exchange: null
-      };
-      la(check.ticker(t));
-      la(!check.ticker({ name: 'Just name'} ));
-      // missing name
-      la(!check.ticker({ ticker: 'NO'} ));
-    });
-
-    it('verifies ticker', function () {
-      var t = {
-        ticker: 'BA',
-        name: 'Bank of America',
-        exchange: null
-      };
-      expect(check.ticker(t)).toBe(true);
-      check.verify.ticker(t);
-    });
-
-    it('throws exception if missing ticker', function () {
-      expect(function () {
-        check.verify.ticker({
-          name: 'Bank of America',
-          exchange: null
-        });
-      }).toThrow();
-    });
-
-    it('throws exception if missing name', function () {
-      expect(function () {
-        check.verify.ticker({
-          ticker: 'BA',
-          exchange: null
-        });
-      }).toThrow();
-    });
-
-    it('throws exception if missing exchange', function () {
-      expect(function () {
-        check.verify.ticker({
-          ticker: 'BA',
-          name: 'Bank of America'
-        });
-      }).toThrow();
-    });
-
-    it('throws exception if just ticker', function () {
-      expect(function () {
-        check.verify.ticker('BA');
-      }).toThrow();
-    });
-  });
-
   describe('arrayOfStrings', function () {
     it('has check', function () {
       la(check.fn(check.arrayOfStrings));
@@ -434,38 +371,38 @@ describe('check-more-types', function () {
     });
 
     it('passes lower case with spaces', function () {
-      expect(check.lowerCase('foo')).toBe(true);
-      expect(check.lowerCase('foo bar')).toBe(true);
-      expect(check.lowerCase('  foo bar  ')).toBe(true);
+      la(check.lowerCase('foo'));
+      la(check.lowerCase('foo bar'));
+      la(check.lowerCase('  foo bar  '));
     });
 
     it('handles special chars', function () {
-      expect(check.lowerCase('^tea')).toBe(true);
-      expect(check.lowerCase('$tea')).toBe(true);
-      expect(check.lowerCase('s&p 500')).toBe(true);
+      la(check.lowerCase('^tea'));
+      la(check.lowerCase('$tea'));
+      la(check.lowerCase('s&p 500'));
     });
 
     it('rejects upper case', function () {
-      expect(check.lowerCase('Foo')).toBe(false);
-      expect(check.lowerCase('FOO ')).toBe(false);
-      expect(check.lowerCase('FOO BAR')).toBe(false);
-      expect(check.lowerCase('foo bAr')).toBe(false);
+      la(!check.lowerCase('Foo'));
+      la(!check.lowerCase('FOO '));
+      la(!check.lowerCase('FOO BAR'));
+      la(!check.lowerCase('foo bAr'));
     });
 
     it('returns true', function () {
-      expect(check.lowerCase).toBeFunction('it is a function');
-      expect(check.lowerCase('foo 2 []')).toBeTrue();
-      expect(check.lowerCase('-_foo_ and another bar')).toBeTrue();
+      la(check.fn(check.lowerCase), 'it is a function');
+      la(check.lowerCase('foo 2 []'));
+      la(check.lowerCase('-_foo_ and another bar'));
     });
 
     it('returns false', function () {
-      expect(check.lowerCase('FoO')).toBeFalse();
+      la(!check.lowerCase('FoO'));
     });
 
     it('returns false for non strings', function () {
-      expect(check.lowerCase([])).toBeFalse();
-      expect(check.lowerCase(7)).toBeFalse();
-      expect(check.lowerCase({ foo: 'foo' })).toBeFalse();
+      la(!check.lowerCase([]));
+      la(!check.lowerCase(7));
+      la(!check.lowerCase({ foo: 'foo' }));
     });
   });
 
@@ -495,8 +432,8 @@ describe('check-more-types', function () {
 
     /** @example check/has */
     it('works for non-objects', function () {
-      expect(check.has('str', 'length')).toBeTrue('string length');
-      expect(check.has([], 'length')).toBeTrue('array length');
+      la(check.has('str', 'length'), 'string length');
+      la(check.has([], 'length'), 'array length');
     });
 
     it('fails for invalid args', function () {

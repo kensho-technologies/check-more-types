@@ -34,7 +34,7 @@ module.exports = function(grunt) {
       },
       all: {
         files: ['*.js', 'test/*.js', 'package.json'],
-        tasks: ['jshint', 'mochaTest']
+        tasks: ['jshint', 'test']
       }
     }
   });
@@ -42,6 +42,7 @@ module.exports = function(grunt) {
   var plugins = require('matchdep').filterDev('grunt-*');
   plugins.forEach(grunt.loadNpmTasks);
 
+  grunt.registerTask('test', ['mochaTest']);
   grunt.registerTask('default',
     ['nice-package', 'deps-ok', 'jshint', 'readme']);
 };
