@@ -110,22 +110,22 @@ describe('check-more-types', function () {
       la(check.fn(check.verify.all));
     });
 
-    xit('requires arguments', function () {
-      expect(function () {
+    it('requires arguments', function () {
+      la(check.raises(function () {
         check.all();
-      }).toThrow();
+      }));
 
-      expect(function () {
+      la(check.raises(function () {
         check.verify.all();
-      }).toThrow();
+      }));
 
-      expect(function () {
+      la(check.raises(function () {
         check.verify.all({});
-      }).toThrow();
+      }));
 
-      expect(function () {
+      la(check.raises(function () {
         check.verify.all({}, {});
-      }).toThrow();
+      }));
     });
 
     it('accepts empty objects', function () {
@@ -141,22 +141,22 @@ describe('check-more-types', function () {
       }, 'foo property');
     });
 
-    xit('throws an error if a property does not pass', function () {
-      expect(function () {
+    it('throws an error if a property does not pass', function () {
+      la(check.raises(function () {
         check.verify.all({
           foo: 'foo'
         }, {
           foo: check.number
         }, 'foo property');
-      }).toThrow();
+      }));
     });
 
-    xit('fails if a predicate is not a function', function () {
-      expect(function () {
+    it('fails if a predicate is not a function', function () {
+      la(check.raises(function () {
         check.all({}, {
           foo: check.doesNotExistCheck
         });
-      }).toThrow();
+      }));
     });
 
     describe('check.all partial', function () {
@@ -223,18 +223,18 @@ describe('check-more-types', function () {
       check.verify.arrayOfStrings(['foo', 'bar']);
     });
 
-    xit('fails', function () {
-      expect(function () {
+    it('fails', function () {
+      la(check.raises(function () {
         check.verify.arrayOfStrings('foo');
-      }).toThrow();
+      }));
 
-      expect(function () {
+      la(check.raises(function () {
         check.verify.arrayOfStrings([1]);
-      }).toThrow();
+      }));
 
-      expect(function () {
+      la(check.raises(function () {
         check.verify.arrayOfStrings(['foo', 1]);
-      }).toThrow();
+      }));
     });
 
     /** @sample check/arrayOfStrings */
@@ -278,22 +278,22 @@ describe('check-more-types', function () {
       check.verify.arrayOfArraysOfStrings([['foo'], ['bar'], []]);
     });
 
-    xit('fails', function () {
-      expect(function () {
+    it('fails', function () {
+      la(check.raises(function () {
         check.verify.arrayOfArraysOfStrings('foo');
-      }).toThrow();
+      }));
 
-      expect(function () {
+      la(check.raises(function () {
         check.verify.arrayOfArraysOfStrings([1]);
-      }).toThrow();
+      }));
 
-      expect(function () {
+      la(check.raises(function () {
         check.verify.arrayOfArraysOfStrings(['foo', 1]);
-      }).toThrow();
+      }));
 
-      expect(function () {
+      la(check.raises(function () {
         check.verify.arrayOfArraysOfStrings([['foo', 1]]);
-      }).toThrow();
+      }));
     });
   });
 
