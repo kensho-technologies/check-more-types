@@ -182,6 +182,31 @@
         throw new Error(message);
       }
     };
+
+  }
+
+  if (!check.raises) {
+    /** Checks if given function raises an error
+
+      @method raises
+    */
+    check.raises = function (fn, errorValidator) {
+      check.verify.fn(fn, 'expected function that raises');
+      try {
+        fn();
+      } catch (err) {
+        if (typeof errorValidator === 'undefined') {
+          return true;
+        }
+        if (typeof errorValidator === 'function') {
+          return errorValidator(err);
+        }
+        return false;
+      }
+      // error has not been raised
+      return false;
+    };
+
   }
 
 }(typeof window === 'object' ? window.check : global.check));

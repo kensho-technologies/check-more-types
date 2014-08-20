@@ -16,6 +16,35 @@ describe('check-more-types', function () {
     la(check.fn(check.lowerCase));
   });
 
+  /** @sample check/raises */
+  describe('check.raises', function () {
+    la(check.fn(check.raises));
+
+    function foo() {
+      throw new Error('foo');
+    }
+
+    function bar() {}
+
+    function isValidError(err) {
+      return err.message === 'foo';
+    }
+
+    function isInvalid(err) {
+      return false;
+    }
+
+    it('just checks if function raises error', function () {
+      la(check.raises(foo));
+      la(!check.raises(bar));
+    });
+
+    it('can validate error using second argument', function () {
+      la(check.raises(foo, isValidError));
+      la(!check.raises(foo, isInvalid));
+    });
+  });
+
   describe('check.defined', function () {
     la(check.fn(check.bit));
 
