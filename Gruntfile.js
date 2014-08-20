@@ -17,6 +17,25 @@ module.exports = function(grunt) {
         docs: '.',
         templates: './docs'
       }
+    },
+
+    mochaTest: {
+      test: {
+        options: {
+          reporter: 'spec'
+        },
+        src: ['test/*-spec.js']
+      }
+    },
+
+    watch: {
+      options: {
+        atBegin: true
+      },
+      all: {
+        files: ['*.js', 'test/*.js', 'package.json'],
+        tasks: ['jshint', 'mochaTest']
+      }
     }
   });
 
@@ -24,5 +43,5 @@ module.exports = function(grunt) {
   plugins.forEach(grunt.loadNpmTasks);
 
   grunt.registerTask('default',
-    ['jshint', 'nice-package', 'readme']);
+    ['nice-package', 'deps-ok', 'jshint', 'readme']);
 };
