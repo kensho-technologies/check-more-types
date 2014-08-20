@@ -85,28 +85,6 @@
     };
   }
 
-  if (!check.arrayOfDateStrings) {
-    /**
-    Returns true if given argument is an array of dates in valid internal format
-    @method arrayOfDateStrings
-    */
-    check.arrayOfDateStrings = function (a) {
-      return check.array(a) && a.every(check.dateFormat);
-    };
-
-  }
-
-  if (!check.verify.arrayOfDateStrings) {
-    check.verify.arrayOfDateStrings = function (a, msg) {
-      check.verify.array(a, msg + '\nexpected an array, got ' +
-        JSON.stringify(a, null, 2));
-      a.forEach(function (str, k) {
-        check.verify.dateFormat(str, msg + '\nexpected date string at position ' + k + ' got ' +
-          JSON.stringify(str, null, 2));
-      });
-    };
-  }
-
   if (!check.arrayOfStrings) {
     /**
     Returns true if given array only has strings
