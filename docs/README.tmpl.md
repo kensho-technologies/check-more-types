@@ -8,6 +8,12 @@
 
 **node:** `npm install {%= name %} --save`
 
+    global.check = requier('check-types');
+    require('check-more-types');
+    // patches global check object
+
+**browser** include {%= name %} after including *check-types.js*
+
 {%= _.doc("./docs/use.md") %}
 
 {%= _.doc("./docs/footer.md") %}

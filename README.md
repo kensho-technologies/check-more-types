@@ -23,6 +23,15 @@
 
 **node:** `npm install check-more-types --save`
 
+    global.check = requier('check-types');
+    require('check-more-types');
+    // patches global check object
+
+**browser** include check-more-types after including *check-types.js*
+
+## API
+
+coming soon...
 
 
 
