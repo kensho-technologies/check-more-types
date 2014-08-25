@@ -11,6 +11,18 @@ module.exports = function(grunt) {
       }
     },
 
+    xplain: {
+      options: {
+        framework: 'jasmine'
+      },
+      toMarkdown: {
+        options: {
+          output: 'docs/use.md'
+        },
+        src: ['test/*-spec.js']
+      }
+    },
+
     readme: {
       options: {
         readme: './docs/README.tmpl.md',
@@ -43,6 +55,7 @@ module.exports = function(grunt) {
   plugins.forEach(grunt.loadNpmTasks);
 
   grunt.registerTask('test', ['mochaTest']);
+  grunt.registerTask('doc', ['xplain', 'readme']);
   grunt.registerTask('default',
-    ['nice-package', 'deps-ok', 'jshint', 'test', 'readme']);
+    ['nice-package', 'deps-ok', 'jshint', 'test', 'doc']);
 };

@@ -1,4 +1,4 @@
-# check-more-types v0.0.0
+# check-more-types v0.1.0
 
 > Additional type checks for [check-types.js](https://github.com/philbooth/check-types.js)
 
@@ -31,8 +31,15 @@
 
 ## API
 
-coming soon...
+#### check.unemptyArray
 
+    check.unemptyArray(null); // false
+    check.unemptyArray(1); // false
+    check.unemptyArray({}); // false
+    check.unemptyArray([]); // false
+    check.unemptyArray(root.does_not_exist); // false
+    check.unemptyArray([1]); // true
+    check.unemptyArray(['foo', 'bar']); // true
 
 
 ### Small print

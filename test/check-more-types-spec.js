@@ -61,6 +61,17 @@ describe('check-more-types', function () {
       la(!check.defined({}.does_not_exist));
     });
 
+    it('check.defined', function () {
+      la(check.defined(0));
+      la(check.defined(1));
+      la(check.defined(true));
+      la(check.defined(false));
+      la(check.defined(null));
+      la(check.defined(''));
+      la(!check.defined());
+      la(!check.defined(root.does_not_exist));
+      la(!check.defined({}.does_not_exist));
+    });
   });
 
   describe('check.bit', function () {
@@ -86,13 +97,21 @@ describe('check-more-types', function () {
       la(!check.bit(true));
       la(!check.bit(false));
     });
+
+    it('check.bit', function () {
+      la(check.bit(0));
+      la(check.bit(1));
+      la(!check.bit('1'));
+      la(!check.bit(2));
+      la(!check.bit(true));
+    });
   });
 
   describe('check.unemptyArray', function () {
     la(check.fn(check.unemptyArray));
 
     /** @sample check/defined */
-    it('detects unempty array or not', function () {
+    it('check.unemptyArray', function () {
       la(!check.unemptyArray(null));
       la(!check.unemptyArray(1));
       la(!check.unemptyArray({}));
