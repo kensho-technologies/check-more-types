@@ -33,3 +33,40 @@
     check.unemptyArray(root.does_not_exist); // false
     check.unemptyArray([1]); // true
     check.unemptyArray(['foo', 'bar']); // true
+
+---
+
+### check.arrayOfStrings
+
+    // second argument is checkLowerCase
+    check.arrayOfStrings(['foo', 'Foo']); // true
+    check.arrayOfStrings(['foo', 'Foo'], true); // false
+    check.arrayOfStrings(['foo', 'bar'], true); // true
+    check.arrayOfStrings(['FOO', 'BAR'], true); // false
+
+---
+
+### check.arrayOfArraysOfStrings
+
+    // second argument is checkLowerCase
+    check.arrayOfArraysOfStrings([['foo'], ['bar']]); // true
+    check.arrayOfArraysOfStrings([['foo'], ['bar']], true); // true
+    check.arrayOfArraysOfStrings([['foo'], ['BAR']], true); // false
+
+---
+
+### check.lowerCase
+
+    check.lowerCase('foo bar'); // true
+    check.lowerCase('*foo ^bar'); // true
+    check.lowerCase('fooBar'); // false
+
+---
+
+### check.has
+
+---
+
+### check.all
+
+---

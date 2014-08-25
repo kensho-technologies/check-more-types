@@ -179,6 +179,17 @@ describe('check-more-types', function () {
     });
 
     describe('check.all partial', function () {
+      it('check.all props', function () {
+        var obj = {
+          foo: 'foo',
+          bar: 'bar'
+        };
+        var predicates = {
+          foo: check.unemptyString
+        };
+        la(check.all(obj, predicates));
+      });
+
       /** @sample check/all */
       it('checks an object', function () {
         function fooChecker(value) {
@@ -223,6 +234,14 @@ describe('check-more-types', function () {
     it('has check', function () {
       la(check.fn(check.arrayOfStrings));
       la(check.fn(check.verify.arrayOfStrings));
+    });
+
+    it('check.arrayOfStrings', function () {
+      // second argument is checkLowerCase
+      la(check.arrayOfStrings(['foo', 'Foo']));
+      la(!check.arrayOfStrings(['foo', 'Foo'], true));
+      la(check.arrayOfStrings(['foo', 'bar'], true));
+      la(!check.arrayOfStrings(['FOO', 'BAR'], true));
     });
 
     it('checks if strings are lower case', function () {
@@ -274,6 +293,13 @@ describe('check-more-types', function () {
       la(check.fn(check.verify.arrayOfArraysOfStrings));
     });
 
+    it('check.arrayOfArraysOfStrings', function () {
+      // second argument is checkLowerCase
+      la(check.arrayOfArraysOfStrings([['foo'], ['bar']]));
+      la(check.arrayOfArraysOfStrings([['foo'], ['bar']], true));
+      la(!check.arrayOfArraysOfStrings([['foo'], ['BAR']], true));
+    });
+
     /** @sample check/arrayOfArraysOfStrings */
     it('checks if all strings are lower case', function () {
       la(check.arrayOfArraysOfStrings([['foo'], ['bar']]));
@@ -317,6 +343,12 @@ describe('check-more-types', function () {
   });
 
   describe('lowerCase', function () {
+    it('check.lowerCase', function () {
+      la(check.lowerCase('foo bar'));
+      la(check.lowerCase('*foo ^bar'));
+      la(!check.lowerCase('fooBar'));
+    });
+
     /** @sample check/lowerCase */
     it('checks lower case', function () {
       la(check.lowerCase('foo bar'));
