@@ -15,7 +15,7 @@ module.exports = function(grunt) {
       options: {
         framework: 'jasmine'
       },
-      toMarkdown: {
+      api: {
         options: {
           output: 'docs/use.md'
         },
