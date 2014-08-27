@@ -1,4 +1,4 @@
-# check-more-types v0.1.0
+# check-more-types v0.1.1
 
 > Additional type checks for [check-types.js](https://github.com/philbooth/check-types.js)
 
@@ -96,9 +96,30 @@
 
 #### check.has
 
+    var obj = {
+      foo: 'foo',
+      bar: 0
+    };
+    check.has(obj, 'foo'); // true
+    check.has(obj, 'bar'); // true
+    check.has(obj, 'baz'); // false
+
 ---
 
 #### check.all
+
+    var obj = {
+      foo: 'foo',
+      bar: 'bar',
+      baz: 'baz'
+    };
+    var predicates = {
+      foo: check.unemptyString,
+      bar: function(value) {
+        return value === 'bar';
+      }
+    };
+    check.all(obj, predicates); // true
 
 ---
 

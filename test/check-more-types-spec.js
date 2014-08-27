@@ -179,13 +179,17 @@ describe('check-more-types', function () {
     });
 
     describe('check.all partial', function () {
-      it('check.all props', function () {
+      it('check.all', function () {
         var obj = {
           foo: 'foo',
-          bar: 'bar'
+          bar: 'bar',
+          baz: 'baz'
         };
         var predicates = {
-          foo: check.unemptyString
+          foo: check.unemptyString,
+          bar: function (value) {
+            return value === 'bar';
+          }
         };
         la(check.all(obj, predicates));
       });
@@ -393,8 +397,7 @@ describe('check-more-types', function () {
   });
 
   describe('has', function () {
-    /** @sample check/has */
-    it('checks property presense', function () {
+    it('check.has', function () {
       var obj = {
         foo: 'foo',
         bar: 0
