@@ -1,7 +1,7 @@
 {
   "name": "check-more-types",
   "description": "Additional type checks for https://github.com/philbooth/check-types.js",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "author": "Gleb Bahmutov <gleb.bahmutov@gmail.com>",
   "bugs": {
     "url": "https://github.com/kensho/check-more-types/issues"
@@ -14,6 +14,7 @@
     "grunt-jshint-solid": "0.1.0",
     "grunt-mocha-test": "0.11.0",
     "grunt-nice-package": "0.9.1",
+    "grunt-npm2bower-sync": "0.4.0",
     "grunt-readme": "0.4.5",
     "grunt-xplain": "0.2.4",
     "lazy-ass": "0.5.1",

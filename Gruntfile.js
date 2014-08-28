@@ -11,6 +11,15 @@ module.exports = function(grunt) {
       }
     },
 
+    sync: {
+      all: {
+        options: {
+          sync: ['author', 'name', 'version',
+            'private', 'license', 'keywords', 'homepage'],
+        }
+      }
+    },
+
     xplain: {
       options: {
         framework: 'jasmine'
@@ -57,5 +66,5 @@ module.exports = function(grunt) {
   grunt.registerTask('test', ['mochaTest']);
   grunt.registerTask('doc', ['xplain', 'readme']);
   grunt.registerTask('default',
-    ['nice-package', 'deps-ok', 'jshint', 'test', 'doc']);
+    ['nice-package', 'deps-ok', 'sync', 'jshint', 'test', 'doc']);
 };

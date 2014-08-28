@@ -9,10 +9,13 @@
 **node:** `npm install {%= name %} --save`
 
     global.check = requier('check-types');
-    require('check-more-types');
+    require('{%= name %}');
     // patches global check object
 
-**browser** include {%= name %} after including *check-types.js*
+**browser** `bower install {%= name %} --save`
+
+    <script src="check-types.js"></script>
+    <script src="{%= name %}.js"></script>
 
 {%= _.doc("./docs/use.md") %}
 

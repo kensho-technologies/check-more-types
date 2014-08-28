@@ -1,4 +1,4 @@
-# check-more-types v0.1.1
+# check-more-types v0.1.2
 
 > Additional type checks for [check-types.js](https://github.com/philbooth/check-types.js)
 
@@ -27,7 +27,10 @@
     require('check-more-types');
     // patches global check object
 
-**browser** include check-more-types after including *check-types.js*
+**browser** `bower install check-more-types --save`
+
+    <script src="check-types.js"></script>
+    <script src="check-more-types.js"></script>
 
 ## API
 
