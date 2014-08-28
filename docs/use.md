@@ -79,8 +79,8 @@
 ### check.has(obj, property)
 
     var obj = {
-      foo: 'foo',
-      bar: 0
+    foo: 'foo',
+    bar: 0
     };
     check.has(obj, 'foo'); // true
     check.has(obj, 'bar'); // true
@@ -94,15 +94,15 @@
 ### check.all
 
     var obj = {
-      foo: 'foo',
-      bar: 'bar',
-      baz: 'baz'
+    foo: 'foo',
+    bar: 'bar',
+    baz: 'baz'
     };
     var predicates = {
-      foo: check.unemptyString,
-      bar: function(value) {
-        return value === 'bar';
-      }
+    foo: check.unemptyString,
+    bar: function(value) {
+    return value === 'bar';
+    }
     };
     check.all(obj, predicates); // true
 
@@ -111,17 +111,17 @@
 ### check.raises(fn, validator)
 
     function foo() {
-      throw new Error('foo');
+    throw new Error('foo');
     }
 
     function bar() {}
 
     function isValidError(err) {
-      return err.message === 'foo';
+    return err.message === 'foo';
     }
 
     function isInvalid(err) {
-      return false;
+    return false;
     }
     check.raises(foo); // true
     check.raises(bar); // false
@@ -160,11 +160,11 @@ Every predicate can also throw an exception if it fails
     check.verify.bit(1);
 
     function nonStrings() {
-      check.verify.arrayOfStrings(['Foo', 1]);
+    check.verify.arrayOfStrings(['Foo', 1]);
     }
     check.raises(nonStrings); // true
     function nonLowerCase() {
-      check.verify.lowerCase('Foo');
+    check.verify.lowerCase('Foo');
     }
     check.raises(nonLowerCase); // true
 
@@ -180,7 +180,7 @@ method
     check.foo; // false
     // new predicate to be added. Should have function name
     function foo(a) {
-      return a === 'foo';
+    return a === 'foo';
     }
     check.mixin(foo);
     check.fn(check.foo); // true
@@ -191,7 +191,7 @@ method
     check.not.foo('bar'); // true
     // you can provide name
     function isBar(a) {
-      return a === 'bar';
+    return a === 'bar';
     }
     check.mixin(isBar, 'bar');
     check.bar('bar'); // true

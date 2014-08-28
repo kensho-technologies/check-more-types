@@ -14,9 +14,19 @@
     throw new Error('Cannot find check-types library, has it been loaded?');
   }
 
-  // new predicates to be added to check object
-  var predicates = [defined, bit, bool, has, lowerCase, unemptyArray,
-    arrayOfStrings, arrayOfArraysOfStrings, all, raises];
+  // new predicates to be added to check object. Use object to preserve names
+  var predicates = {
+    defined: defined,
+    bit: bit,
+    bool: bool,
+    has: has,
+    lowerCase: lowerCase,
+    unemptyArray: unemptyArray,
+    arrayOfStrings: arrayOfStrings,
+    arrayOfArraysOfStrings: arrayOfArraysOfStrings,
+    all: all,
+    raises: raises
+  };
 
   /**
   Checks if argument is defined or not
@@ -213,6 +223,8 @@
     };
   }
 
-  predicates.forEach(check.mixin);
+  Object.keys(predicates).forEach(function (name) {
+    check.mixin(predicates[name], name);
+  });
 
 }(typeof window === 'object' ? window.check : global.check));

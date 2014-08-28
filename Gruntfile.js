@@ -45,7 +45,13 @@ module.exports = function(grunt) {
         options: {
           reporter: 'spec'
         },
-        src: ['test/*-spec.js']
+        src: ['test/check-more-types-spec.js']
+      },
+      minified: {
+        options: {
+          reporter: 'spec'
+        },
+        src: ['test/check-more-types-minified-spec.js']
       }
     },
 
