@@ -130,7 +130,6 @@
 
 ## Modifiers
 
-
 Every predicate function is also added to `check.maybe` object.
 The `maybe` predicate passes if the argument is null or undefined,
 or the predicate returns true.
@@ -152,6 +151,24 @@ Every function has a negated predicate in `check.not` object
     check.not.bool(4); // true
     check.not.bool('true'); // true
     check.not.bool(true); // false
+
+Every predicate can also throw an exception if it fails
+
+### check.verify
+
+    check.verify.arrayOfStrings(['foo', 'bar']);
+    check.verify.bit(1);
+
+    function nonStrings() {
+      check.verify.arrayOfStrings(['Foo', 1]);
+    }
+    check.raises(nonStrings); // true
+    function nonLowerCase() {
+      check.verify.lowerCase('Foo');
+    }
+    check.raises(nonLowerCase); // true
+
+---
 
 ## Adding your own predicates
 

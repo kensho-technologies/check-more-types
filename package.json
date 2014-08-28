@@ -1,7 +1,7 @@
 {
   "name": "check-more-types",
   "description": "Additional type checks for https://github.com/philbooth/check-types.js",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "author": "Gleb Bahmutov <gleb.bahmutov@gmail.com>",
   "bugs": {
     "url": "https://github.com/kensho/check-more-types/issues"

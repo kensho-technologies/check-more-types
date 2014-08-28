@@ -177,10 +177,6 @@ describe('check-more-types', function () {
       la(check.raises(function () {
         check.verify.all({});
       }));
-
-      la(check.raises(function () {
-        check.verify.all({}, {});
-      }));
     });
 
     it('accepts empty objects', function () {
@@ -553,6 +549,31 @@ describe('check-more-types', function () {
       la(check.foo('foo'));
       la(check.maybe.foo('foo'));
       la(check.not.foo('bar'));
+    });
+  });
+
+  describe('check.verify extras', function () {
+    it('has extra methods', function () {
+      la(check.object(check.verify));
+      la(check.fn(check.verify.lowerCase));
+    });
+
+    it('check.verify', function () {
+      check.verify.arrayOfStrings(['foo', 'bar']);
+      check.verify.bit(1);
+
+      function nonStrings() {
+        check.verify.arrayOfStrings(['Foo', 1]);
+      }
+
+      la(check.raises(nonStrings));
+
+
+      function nonLowerCase() {
+        check.verify.lowerCase('Foo');
+      }
+
+      la(check.raises(nonLowerCase));
     });
   });
 });

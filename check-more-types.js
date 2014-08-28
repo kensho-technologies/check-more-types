@@ -86,17 +86,6 @@
     return v;
   }
 
-  if (!check.verify.arrayOfStrings) {
-    check.verify.arrayOfStrings = function (a, msg) {
-      check.verify.array(a, msg + '\nexpected an array, got ' +
-        JSON.stringify(a, null, 2));
-      a.forEach(function (str, k) {
-        check.verify.string(str, msg + '\nexpected string at position ' + k + ' got ' +
-          JSON.stringify(str, null, 2));
-      });
-    };
-  }
-
   /**
   Returns true if given argument is array of arrays of strings
   @method arrayOfArraysOfStrings
@@ -109,21 +98,13 @@
     });
   }
 
-  if (!check.verify.arrayOfArraysOfStrings) {
-    check.verify.arrayOfArraysOfStrings = function (a, msg) {
-      check.verify.array(a, msg + '\nexpected a top level array, got ' +
-        JSON.stringify(a, null, 2));
-
-      a.forEach(function (arr, k) {
-        check.verify.arrayOfStrings(arr,
-          msg + '\nexpected an array of strings at position ' + k + ' got ' +
-          JSON.stringify(arr, null, 2));
-      });
-    };
-  }
-
   /**
     Checks if object passes all rules in predicates.
+
+    check.all({ foo: 'foo' }, { foo: check.string }, 'wrong object');
+
+    This is a composition of check.every(check.map ...) calls
+    https://github.com/philbooth/check-types.js#batch-operations
 
     @method all
     @param {object} object object to check
@@ -138,29 +119,6 @@
       check.verify.fn(predicates[property], 'not a predicate function for ' + property);
     });
     return check.every(check.map(obj, predicates));
-  }
-
-  if (!check.verify.all) {
-    /*
-      verify.all(object, predicates, message)
-      object - object to verify
-      predicates - properties to verify, each property should have a check string
-      message - requires message to throw if any predicate is false
-
-      verify.all({ foo: 'foo' }, { foo: check.string }, 'wrong object');
-
-      This is a composition of check.every(check.map ...) calls
-      https://github.com/philbooth/check-types.js#batch-operations
-    */
-    check.verify.all = function (obj, predicates, message) {
-      check.verify.unemptyString(message, 'missing error string');
-      check.verify.object(obj, 'missing object to check');
-      check.verify.object(predicates, 'missing predicates object');
-      if (!check.every(check.map(obj, predicates))) {
-        throw new Error(message);
-      }
-    };
-
   }
 
   /** Checks if given function raises an error
@@ -229,9 +187,26 @@
         };
       }
 
+      /**
+       * Public modifier `verify`.
+       *
+       * Throws if `predicate` returns `false`.
+       * copied from check-types.js
+       */
+      function verifyModifier(predicate, defaultMessage) {
+        return function () {
+        var message;
+        if (predicate.apply(null, arguments) === false) {
+          message = arguments[arguments.length - 1];
+            throw new Error(check.unemptyString(message) ? message : defaultMessage);
+          }
+        };
+      }
+
       registerPredicate(check, fn.name, fn);
       registerPredicate(check.maybe, fn.name, maybeModifier(fn));
       registerPredicate(check.not, fn.name, notModifier(fn));
+      registerPredicate(check.verify, fn.name, verifyModifier(fn, 'fn.name failed'));
     };
   }
 
