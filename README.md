@@ -1,4 +1,4 @@
-# check-more-types v0.2.0
+# check-more-types v0.3.0
 
 > Additional type checks for [check-types.js](https://github.com/philbooth/check-types.js)
 
@@ -178,7 +178,13 @@ or the predicate returns true.
     check.maybe.unemptyArray([]); // false
     check.maybe.unemptyArray(['foo', 'bar']); // true
 
----
+Every function has a negated predicate in `check.not` object
+
+#### check.not
+
+    check.not.bool(4); // true
+    check.not.bool('true'); // true
+    check.not.bool(true); // false
 
 
 ### Small print

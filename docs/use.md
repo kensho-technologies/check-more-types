@@ -144,4 +144,10 @@ or the predicate returns true.
     check.maybe.unemptyArray([]); // false
     check.maybe.unemptyArray(['foo', 'bar']); // true
 
----
+Every function has a negated predicate in `check.not` object
+
+### check.not
+
+    check.not.bool(4); // true
+    check.not.bool('true'); // true
+    check.not.bool(true); // false

@@ -184,42 +184,73 @@
     return false;
   }
 
-  function registerPredicate(fn) {
-    check.verify.fn(fn, 'expected predicate function');
-    check.verify.unemptyString(fn.name, 'predicate function missing name');
-    if (!check[fn.name]) {
-      check[fn.name] = fn;
-    }
-  }
-
-  predicates.forEach(registerPredicate);
-
-  /**
-   * Public modifier `maybe`.
-   *
-   * Returns `true` if `predicate` is  `null` or `undefined`,
-   * otherwise propagates the return value from `predicate`.
-   * copied from check-types.js
-   */
-  function maybeModifier (predicate) {
-    return function () {
-      if (!check.defined(arguments[0]) || check.nulled(arguments[0])) {
-        return true;
+  (function registerPredicates() {
+    function registerPredicate(fn) {
+      check.verify.fn(fn, 'expected predicate function');
+      check.verify.unemptyString(fn.name, 'predicate function missing name');
+      if (!check[fn.name]) {
+        check[fn.name] = fn;
       }
-      return predicate.apply(null, arguments);
-    };
-  }
-
-  function registerMaybePredicate(fn) {
-    check.verify.object(check.maybe, 'missing check.maybe object');
-    check.verify.fn(fn, 'expected predicate function');
-    check.verify.unemptyString(fn.name, 'predicate function missing name');
-
-    if (!check.maybe[fn.name]) {
-      check.maybe[fn.name] = maybeModifier(fn);
     }
-  }
 
-  predicates.forEach(registerMaybePredicate);
+    predicates.forEach(registerPredicate);
+  }());
+
+  (function registerMaybe() {
+    check.verify.object(check.maybe, 'missing check.maybe object');
+    /**
+     * Public modifier `maybe`.
+     *
+     * Returns `true` if `predicate` is  `null` or `undefined`,
+     * otherwise propagates the return value from `predicate`.
+     * copied from check-types.js
+     */
+    function maybeModifier (predicate) {
+      return function () {
+        if (!check.defined(arguments[0]) || check.nulled(arguments[0])) {
+          return true;
+        }
+        return predicate.apply(null, arguments);
+      };
+    }
+
+    function registerMaybePredicate(fn) {
+      check.verify.fn(fn, 'expected predicate function');
+      check.verify.unemptyString(fn.name, 'predicate function missing name');
+
+      if (!check.maybe[fn.name]) {
+        check.maybe[fn.name] = maybeModifier(fn);
+      }
+    }
+
+    predicates.forEach(registerMaybePredicate);
+  }());
+
+  (function registerNot() {
+    check.verify.object(check.not, 'missing check.not object');
+
+    /**
+    * Public modifier `not`.
+    *
+    * Negates `predicate`.
+    * copied from check-types.js
+    */
+    function notModifier(predicate) {
+      return function () {
+        return !predicate.apply(null, arguments);
+      };
+    }
+
+    function registerNotPredicate(fn) {
+      check.verify.fn(fn, 'expected predicate function');
+      check.verify.unemptyString(fn.name, 'predicate function missing name');
+
+      if (!check.not[fn.name]) {
+        check.not[fn.name] = notModifier(fn);
+      }
+    }
+
+    predicates.forEach(registerNotPredicate);
+  }());
 
 }(typeof window === 'object' ? window.check : global.check));

@@ -510,4 +510,32 @@ describe('check-more-types', function () {
     });
   });
 
+  describe('not modifier', function () {
+    it('default not from check-types.js', function () {
+      la(check.object(check.not), 'check.not is an object');
+      la(check.fn(check.not.fn), 'check.maybe.fn function');
+      la(check.not.fn(), 'undefined is not a function');
+      la(check.not.fn(null), 'null is not a function');
+    });
+
+    it('check.not.bit', function () {
+      la(check.fn(check.not.bit), 'check.not.bit function');
+      la(!check.not.bit(1), '! 1 is not a bit');
+      la(check.not.bit());
+      la(check.not.bit(null));
+      la(check.not.bit(4), '4 is not a bit');
+    });
+
+    it('check.not other functions', function () {
+      la(check.not.bool());
+      la(check.not.bool('true'));
+      la(!check.not.bool(true));
+    });
+
+    it('check.not', function () {
+      la(check.not.bool(4), '4 is not bool');
+      la(check.not.bool('true'), 'string true is not a bool');
+      la(!check.not.bool(true), 'true is a bool');
+    });
+  });
 });
