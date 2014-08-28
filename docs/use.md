@@ -24,6 +24,17 @@
 
 ---
 
+### check.bool
+
+    check.bool(true); // true
+    check.bool(false); // true
+    check.bool(0); // false
+    check.bool(1); // false
+    check.bool('1'); // false
+    check.bool(2); // false
+
+---
+
 ### check.unemptyArray
 
     check.unemptyArray(null); // false
@@ -60,10 +71,12 @@
     check.lowerCase('foo bar'); // true
     check.lowerCase('*foo ^bar'); // true
     check.lowerCase('fooBar'); // false
+    // non-strings return false
+    check.lowerCase(10); // false
 
 ---
 
-### check.has
+### check.has(obj, property)
 
     var obj = {
       foo: 'foo',
@@ -72,6 +85,9 @@
     check.has(obj, 'foo'); // true
     check.has(obj, 'bar'); // true
     check.has(obj, 'baz'); // false
+    // non-object returns false
+    check.has(5, 'foo'); // false
+    check.has('foo', 'length'); // true
 
 ---
 
@@ -89,5 +105,27 @@
       }
     };
     check.all(obj, predicates); // true
+
+---
+
+### check.raises(fn, validator)
+
+    function foo() {
+      throw new Error('foo');
+    }
+
+    function bar() {}
+
+    function isValidError(err) {
+      return err.message === 'foo';
+    }
+
+    function isInvalid(err) {
+      return false;
+    }
+    check.raises(foo); // true
+    check.raises(bar); // false
+    check.raises(foo, isValidError); // true
+    check.raises(foo, isInvalid); // false
 
 ---

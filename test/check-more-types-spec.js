@@ -45,6 +45,29 @@ describe('check-more-types', function () {
     });
   });
 
+  describe('check.raises example', function () {
+    it('check.raises(fn, validator)', function () {
+      function foo() {
+        throw new Error('foo');
+      }
+
+      function bar() {}
+
+      function isValidError(err) {
+        return err.message === 'foo';
+      }
+
+      function isInvalid(err) {
+        return false;
+      }
+
+      la(check.raises(foo));
+      la(!check.raises(bar));
+      la(check.raises(foo, isValidError));
+      la(!check.raises(foo, isInvalid));
+    });
+  });
+
   describe('check.defined', function () {
     la(check.fn(check.bit));
 
@@ -71,6 +94,19 @@ describe('check-more-types', function () {
       la(!check.defined());
       la(!check.defined(root.does_not_exist));
       la(!check.defined({}.does_not_exist));
+    });
+  });
+
+  describe('check.bool', function () {
+    la(check.fn(check.bool));
+
+    it('check.bool', function () {
+      la(check.bool(true));
+      la(check.bool(false));
+      la(!check.bool(0));
+      la(!check.bool(1));
+      la(!check.bool('1'));
+      la(!check.bool(2));
     });
   });
 
@@ -351,6 +387,8 @@ describe('check-more-types', function () {
       la(check.lowerCase('foo bar'));
       la(check.lowerCase('*foo ^bar'));
       la(!check.lowerCase('fooBar'));
+      // non-strings return false
+      la(!check.lowerCase(10));
     });
 
     /** @sample check/lowerCase */
@@ -397,7 +435,7 @@ describe('check-more-types', function () {
   });
 
   describe('has', function () {
-    it('check.has', function () {
+    it('check.has(obj, property)', function () {
       var obj = {
         foo: 'foo',
         bar: 0
@@ -405,6 +443,9 @@ describe('check-more-types', function () {
       la(check.has(obj, 'foo'));
       la(check.has(obj, 'bar'));
       la(!check.has(obj, 'baz'));
+      // non-object returns false
+      la(!check.has(5, 'foo'));
+      la(check.has('foo', 'length'));
     });
 
     it('passes', function () {
