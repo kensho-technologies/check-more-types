@@ -189,3 +189,14 @@ method
     check.foo('foo'); // true
     check.maybe.foo('foo'); // true
     check.not.foo('bar'); // true
+    // you can provide name
+    function isBar(a) {
+      return a === 'bar';
+    }
+    check.mixin(isBar, 'bar');
+    check.bar('bar'); // true
+    check.bar('anything else'); // false
+    // does NOT overwrite predicate if already exists
+    check.bar; // isBar
+    check.mixin(foo, 'bar');
+    check.bar; // isBar

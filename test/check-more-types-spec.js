@@ -549,6 +549,19 @@ describe('check-more-types', function () {
       la(check.foo('foo'));
       la(check.maybe.foo('foo'));
       la(check.not.foo('bar'));
+
+      // you can provide name
+      function isBar(a) {
+        return a === 'bar';
+      }
+      check.mixin(isBar, 'bar');
+      la(check.bar('bar'));
+      la(!check.bar('anything else'));
+
+      // does NOT overwrite predicate if already exists
+      la(check.bar === isBar, 'predicate has been registered');
+      check.mixin(foo, 'bar');
+      la(check.bar === isBar, 'old check predicate remains');
     });
   });
 

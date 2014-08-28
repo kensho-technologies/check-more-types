@@ -145,9 +145,12 @@
   if (!check.mixin) {
     /** Adds new predicate to all objects
     @method mixin */
-    check.mixin = function mixin(fn) {
+    check.mixin = function mixin(fn, name) {
       check.verify.fn(fn, 'expected predicate function');
-      check.verify.unemptyString(fn.name, 'predicate function missing name');
+      if (!name) {
+        name = fn.name;
+      }
+      check.verify.unemptyString(name, 'predicate function missing name\n' + fn.toString());
 
       function registerPredicate(obj, name, fn) {
         check.verify.object(obj, 'missing object');
@@ -203,13 +206,15 @@
         };
       }
 
-      registerPredicate(check, fn.name, fn);
-      registerPredicate(check.maybe, fn.name, maybeModifier(fn));
-      registerPredicate(check.not, fn.name, notModifier(fn));
-      registerPredicate(check.verify, fn.name, verifyModifier(fn, 'fn.name failed'));
+      registerPredicate(check, name, fn);
+      registerPredicate(check.maybe, name, maybeModifier(fn));
+      registerPredicate(check.not, name, notModifier(fn));
+      registerPredicate(check.verify, name, verifyModifier(fn, name + ' failed'));
     };
   }
 
-  predicates.forEach(check.mixin);
+  predicates.forEach(function (predicate) {
+    check.mixin(predicate);
+  });
 
 }(typeof window === 'object' ? window.check : global.check));
