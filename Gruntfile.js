@@ -41,11 +41,19 @@ module.exports = function(grunt) {
     },
 
     mochaTest: {
-      test: {
+      unminified: {
         options: {
           reporter: 'spec'
         },
         src: ['test/*-spec.js']
+      }
+    },
+
+    uglify: {
+      lib: {
+        files: {
+          'check-more-types.min.js': ['check-more-types.js']
+        }
       }
     },
 
@@ -66,5 +74,5 @@ module.exports = function(grunt) {
   grunt.registerTask('test', ['mochaTest']);
   grunt.registerTask('doc', ['xplain', 'readme']);
   grunt.registerTask('default',
-    ['nice-package', 'deps-ok', 'sync', 'jshint', 'test', 'doc']);
+    ['nice-package', 'deps-ok', 'sync', 'jshint', 'test', 'uglify', 'doc']);
 };
