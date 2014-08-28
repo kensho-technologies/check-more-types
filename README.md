@@ -1,4 +1,4 @@
-# check-more-types v0.3.0
+# check-more-types v0.4.0
 
 > Additional type checks for [check-types.js](https://github.com/philbooth/check-types.js)
 
@@ -162,7 +162,8 @@
     check.raises(foo, isValidError); // true
     check.raises(foo, isInvalid); // false
 
----
+### Modifiers
+
 
 Every predicate function is also added to `check.maybe` object.
 The `maybe` predicate passes if the argument is null or undefined,
@@ -185,6 +186,26 @@ Every function has a negated predicate in `check.not` object
     check.not.bool(4); // true
     check.not.bool('true'); // true
     check.not.bool(true); // false
+
+### Adding your own predicates
+
+You can add new predicates to `check`, `check.maybe`, etc. by using `check.mixin(predicate)`
+method
+
+#### check.mixin(predicate)
+
+    check.foo; // false
+    // new predicate to be added. Should have function name
+    function foo(a) {
+      return a === 'foo';
+    }
+    check.mixin(foo);
+    check.fn(check.foo); // true
+    check.fn(check.maybe.foo); // true
+    check.fn(check.not.foo); // true
+    check.foo('foo'); // true
+    check.maybe.foo('foo'); // true
+    check.not.foo('bar'); // true
 
 
 ### Small print

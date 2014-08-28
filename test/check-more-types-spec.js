@@ -538,4 +538,21 @@ describe('check-more-types', function () {
       la(!check.not.bool(true), 'true is a bool');
     });
   });
+
+  describe('adding custom predicate', function () {
+    it('check.mixin(predicate)', function () {
+      la(!check.foo, 'there is no check.foo');
+      // new predicate to be added. Should have function name
+      function foo(a) {
+        return a === 'foo';
+      }
+      check.mixin(foo);
+      la(check.fn(check.foo), 'foo has been added to check');
+      la(check.fn(check.maybe.foo), 'foo has been added to check.maybe');
+      la(check.fn(check.not.foo), 'foo has been added to check.not');
+      la(check.foo('foo'));
+      la(check.maybe.foo('foo'));
+      la(check.not.foo('bar'));
+    });
+  });
 });
