@@ -493,6 +493,21 @@ describe('check-more-types', function () {
       la(check.maybe.bit(null));
       la(!check.maybe.bit(4));
     });
+
+    it('check.maybe other functions', function () {
+      la(check.maybe.bool());
+      la(!check.maybe.bool('true'));
+    });
+
+    it('check.maybe', function () {
+      la(check.maybe.bool(), 'undefined is maybe bool');
+      la(!check.maybe.bool('true'));
+      var empty;
+      la(check.maybe.lowerCase(empty));
+      la(check.maybe.unemptyArray());
+      la(!check.maybe.unemptyArray([]));
+      la(check.maybe.unemptyArray(['foo', 'bar']));
+    });
   });
 
 });

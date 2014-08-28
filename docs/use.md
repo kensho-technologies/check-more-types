@@ -129,3 +129,19 @@
     check.raises(foo, isInvalid); // false
 
 ---
+
+Every predicate function is also added to `check.maybe` object.
+The `maybe` predicate passes if the argument is null or undefined,
+or the predicate returns true.
+
+### check.maybe
+
+    check.maybe.bool(); // true
+    check.maybe.bool('true'); // false
+    var empty;
+    check.maybe.lowerCase(empty); // true
+    check.maybe.unemptyArray(); // true
+    check.maybe.unemptyArray([]); // false
+    check.maybe.unemptyArray(['foo', 'bar']); // true
+
+---

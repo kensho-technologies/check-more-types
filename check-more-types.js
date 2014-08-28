@@ -15,7 +15,8 @@
   }
 
   // new predicates to be added to check object
-  var predicates = [defined, bit];
+  var predicates = [defined, bit, bool, has, lowerCase, unemptyArray,
+    arrayOfStrings, arrayOfArraysOfStrings, all, raises];
 
   /**
   Checks if argument is defined or not
@@ -35,68 +36,54 @@
     return value === 0 || value === 1;
   }
 
-  if (!check.bool) {
-    /**
-    Checks if given value is true of false
+  /**
+  Checks if given value is true of false
 
-    @method bool
-    */
-    check.bool = function (value) {
-      return typeof value === 'boolean';
-    };
-
+  @method bool
+  */
+  function bool(value) {
+    return typeof value === 'boolean';
   }
 
-  if (!check.has) {
-    /**
-    Checks if given object has a property
-    @method has
-    */
-    check.has = function (o, property) {
-      return Boolean(o && property &&
-        typeof property === 'string' &&
-        typeof o[property] !== 'undefined');
-    };
-
+  /**
+  Checks if given object has a property
+  @method has
+  */
+  function has(o, property) {
+    return Boolean(o && property &&
+      typeof property === 'string' &&
+      typeof o[property] !== 'undefined');
   }
 
-  if (!check.lowerCase) {
-    /**
-    Checks if given string is already in lower case
-    @method lowerCase
-    */
-    check.lowerCase = function (str) {
-      return check.string(str) &&
-        str.toLowerCase() === str;
-    };
-
+  /**
+  Checks if given string is already in lower case
+  @method lowerCase
+  */
+  function lowerCase(str) {
+    return check.string(str) &&
+      str.toLowerCase() === str;
   }
 
-  if(!check.unemptyArray) {
-    /**
-    Returns true if the argument is an array with at least one value
-    @method unemptyArray
-    */
-    check.unemptyArray = function (a) {
-      return check.array(a) && a.length > 0;
-    };
+  /**
+  Returns true if the argument is an array with at least one value
+  @method unemptyArray
+  */
+  function unemptyArray(a) {
+    return check.array(a) && a.length > 0;
   }
 
-  if (!check.arrayOfStrings) {
-    /**
-    Returns true if given array only has strings
-    @method arrayOfStrings
-    @param a Array to check
-    @param checkLowerCase Checks if all strings are lowercase
-    */
-    check.arrayOfStrings = function (a, checkLowerCase) {
-      var v = check.array(a) && a.every(check.string);
-      if (v && check.bool(checkLowerCase) && checkLowerCase) {
-        return a.every(check.lowerCase);
-      }
-      return v;
-    };
-
+  /**
+  Returns true if given array only has strings
+  @method arrayOfStrings
+  @param a Array to check
+  @param checkLowerCase Checks if all strings are lowercase
+  */
+  function arrayOfStrings(a, checkLowerCase) {
+    var v = check.array(a) && a.every(check.string);
+    if (v && check.bool(checkLowerCase) && checkLowerCase) {
+      return a.every(check.lowerCase);
+    }
+    return v;
   }
 
   if (!check.verify.arrayOfStrings) {
@@ -110,19 +97,16 @@
     };
   }
 
-  if (!check.arrayOfArraysOfStrings) {
-    /**
-    Returns true if given argument is array of arrays of strings
-    @method arrayOfArraysOfStrings
-    @param a Array to check
-    @param checkLowerCase Checks if all strings are lowercase
-    */
-    check.arrayOfArraysOfStrings = function (a, checkLowerCase) {
-      return check.array(a) && a.every(function (arr) {
-        return check.arrayOfStrings(arr, checkLowerCase);
-      });
-    };
-
+  /**
+  Returns true if given argument is array of arrays of strings
+  @method arrayOfArraysOfStrings
+  @param a Array to check
+  @param checkLowerCase Checks if all strings are lowercase
+  */
+  function arrayOfArraysOfStrings(a, checkLowerCase) {
+    return check.array(a) && a.every(function (arr) {
+      return check.arrayOfStrings(arr, checkLowerCase);
+    });
   }
 
   if (!check.verify.arrayOfArraysOfStrings) {
@@ -138,25 +122,22 @@
     };
   }
 
-  if (!check.all) {
-    /**
-      Checks if object passes all rules in predicates.
+  /**
+    Checks if object passes all rules in predicates.
 
-      @method all
-      @param {object} object object to check
-      @param {object} predicates rules to check. Usually one per property.
-      @public
-      @returns true or false
-    */
-    check.all = function all(obj, predicates) {
-      check.verify.object(obj, 'missing object to check');
-      check.verify.object(predicates, 'missing predicates object');
-      Object.keys(predicates).forEach(function (property) {
-        check.verify.fn(predicates[property], 'not a predicate function for ' + property);
-      });
-      return check.every(check.map(obj, predicates));
-    };
-
+    @method all
+    @param {object} object object to check
+    @param {object} predicates rules to check. Usually one per property.
+    @public
+    @returns true or false
+  */
+  function all(obj, predicates) {
+    check.verify.object(obj, 'missing object to check');
+    check.verify.object(predicates, 'missing predicates object');
+    Object.keys(predicates).forEach(function (property) {
+      check.verify.fn(predicates[property], 'not a predicate function for ' + property);
+    });
+    return check.every(check.map(obj, predicates));
   }
 
   if (!check.verify.all) {
@@ -182,28 +163,25 @@
 
   }
 
-  if (!check.raises) {
-    /** Checks if given function raises an error
+  /** Checks if given function raises an error
 
-      @method raises
-    */
-    check.raises = function (fn, errorValidator) {
-      check.verify.fn(fn, 'expected function that raises');
-      try {
-        fn();
-      } catch (err) {
-        if (typeof errorValidator === 'undefined') {
-          return true;
-        }
-        if (typeof errorValidator === 'function') {
-          return errorValidator(err);
-        }
-        return false;
+    @method raises
+  */
+  function raises(fn, errorValidator) {
+    check.verify.fn(fn, 'expected function that raises');
+    try {
+      fn();
+    } catch (err) {
+      if (typeof errorValidator === 'undefined') {
+        return true;
       }
-      // error has not been raised
+      if (typeof errorValidator === 'function') {
+        return errorValidator(err);
+      }
       return false;
-    };
-
+    }
+    // error has not been raised
+    return false;
   }
 
   function registerPredicate(fn) {
