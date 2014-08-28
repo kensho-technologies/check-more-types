@@ -147,7 +147,7 @@
     @method mixin */
     check.mixin = function mixin(fn, name) {
       check.verify.fn(fn, 'expected predicate function');
-      if (!name) {
+      if (!check.unemptyString(name)) {
         name = fn.name;
       }
       check.verify.unemptyString(name, 'predicate function missing name\n' + fn.toString());
@@ -213,8 +213,6 @@
     };
   }
 
-  predicates.forEach(function (predicate) {
-    check.mixin(predicate);
-  });
+  predicates.forEach(check.mixin);
 
 }(typeof window === 'object' ? window.check : global.check));
