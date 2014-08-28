@@ -14,28 +14,25 @@
     throw new Error('Cannot find check-types library, has it been loaded?');
   }
 
-  if (!check.defined) {
-    /**
-    Checks if argument is defined or not
+  // new predicates to be added to check object
+  var predicates = [defined, bit];
 
-    @method defined
-    */
-    check.defined = function (value) {
-      return typeof value !== 'undefined';
-    };
+  /**
+  Checks if argument is defined or not
 
+  @method defined
+  */
+  function defined(value) {
+    return typeof value !== 'undefined';
   }
 
-  if (!check.bit) {
-    /**
-    Checks if given value is 0 or 1
+  /**
+  Checks if given value is 0 or 1
 
-    @method bit
-    */
-    check.bit = function (value) {
-      return value === 0 || value === 1;
-    };
-
+  @method bit
+  */
+  function bit(value) {
+    return value === 0 || value === 1;
   }
 
   if (!check.bool) {
@@ -208,5 +205,43 @@
     };
 
   }
+
+  function registerPredicate(fn) {
+    check.verify.fn(fn, 'expected predicate function');
+    check.verify.unemptyString(fn.name, 'predicate function missing name');
+    if (!check[fn.name]) {
+      check[fn.name] = fn;
+    }
+  }
+
+  predicates.forEach(registerPredicate);
+
+  /**
+   * Public modifier `maybe`.
+   *
+   * Returns `true` if `predicate` is  `null` or `undefined`,
+   * otherwise propagates the return value from `predicate`.
+   * copied from check-types.js
+   */
+  function maybeModifier (predicate) {
+    return function () {
+      if (!check.defined(arguments[0]) || check.nulled(arguments[0])) {
+        return true;
+      }
+      return predicate.apply(null, arguments);
+    };
+  }
+
+  function registerMaybePredicate(fn) {
+    check.verify.object(check.maybe, 'missing check.maybe object');
+    check.verify.fn(fn, 'expected predicate function');
+    check.verify.unemptyString(fn.name, 'predicate function missing name');
+
+    if (!check.maybe[fn.name]) {
+      check.maybe[fn.name] = maybeModifier(fn);
+    }
+  }
+
+  predicates.forEach(registerMaybePredicate);
 
 }(typeof window === 'object' ? window.check : global.check));

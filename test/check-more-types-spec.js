@@ -477,4 +477,22 @@ describe('check-more-types', function () {
       la(!check.has({}, 'foo'));
     });
   });
+
+  describe('maybe modifier', function () {
+    it('default maybe from check-types.js', function () {
+      la(check.object(check.maybe), 'check.maybe is an object');
+      la(check.fn(check.maybe.fn), 'check.maybe.fn function');
+      la(check.maybe.fn(), 'undefined is maybe a function');
+      la(check.maybe.fn(null), 'null is maybe a function');
+    });
+
+    it('check.maybe.bit', function () {
+      la(check.fn(check.maybe.bit), 'check.maybe.bit function');
+      la(check.maybe.bit(1));
+      la(check.maybe.bit());
+      la(check.maybe.bit(null));
+      la(!check.maybe.bit(4));
+    });
+  });
+
 });
