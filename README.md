@@ -23,7 +23,7 @@
 
 **node:** `npm install check-more-types --save`
 
-    global.check = requier('check-types');
+    global.check = require('check-types');
     require('check-more-types');
     // patches global check object
 
