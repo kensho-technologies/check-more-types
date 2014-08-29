@@ -26,9 +26,10 @@ module.exports = function(grunt) {
       },
       api: {
         options: {
-          output: 'docs/use.md'
+          output: 'docs/use.md',
+          framework: 'jasmine'
         },
-        src: ['test/*-spec.js']
+        src: ['test/unit-tests.js']
       }
     },
 
