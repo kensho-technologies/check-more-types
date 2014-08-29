@@ -17,6 +17,9 @@
     <script src="check-types.js"></script>
     <script src="{%= name %}.js"></script>
 
+See [Readable conditions](http://bahmutov.calepin.co/readable-conditions-using-check-typesjs.html)
+for examples.
+
 {%= _.doc("./docs/use.md") %}
 
 {%= _.doc("./docs/footer.md") %}

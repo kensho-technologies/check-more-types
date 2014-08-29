@@ -32,6 +32,9 @@
     <script src="check-types.js"></script>
     <script src="check-more-types.js"></script>
 
+See [Readable conditions](http://bahmutov.calepin.co/readable-conditions-using-check-typesjs.html)
+for examples.
+
 ## API
 
 #### check.defined
