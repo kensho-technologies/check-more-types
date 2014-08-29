@@ -8,7 +8,7 @@
 
 **node:** `npm install {%= name %} --save`
 
-    global.check = requier('check-types');
+    global.check = require('check-types');
     require('{%= name %}');
     // patches global check object
 
