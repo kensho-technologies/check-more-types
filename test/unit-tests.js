@@ -262,6 +262,42 @@ describe('check-more-types', function () {
     });
   });
 
+  describe('check.schema', function () {
+    it('check.schema', function () {
+      la(check.fn(check.schema));
+      var obj = {
+        foo: 'foo',
+        bar: 'bar',
+        baz: 'baz'
+      };
+      var schema = {
+        foo: check.unemptyString,
+        bar: function (value) {
+          return value === 'bar';
+        }
+      };
+      la(check.schema(schema, obj));
+    });
+
+    it('check.schema bind', function () {
+      var personSchema = {
+        name: check.unemptyString,
+        age: check.positiveNumber
+      };
+      var isValidPerson = check.schema.bind(null, personSchema);
+      var h1 = {
+        name: 'joe',
+        age: 10
+      };
+      var h2 = {
+        name: 'ann'
+        // missing age property
+      }
+      la(isValidPerson(h1));
+      la(!isValidPerson(h2));
+    });
+  });
+
   describe('arrayOfStrings', function () {
     it('has check', function () {
       la(check.fn(check.arrayOfStrings));

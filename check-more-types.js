@@ -14,20 +14,6 @@
     throw new Error('Cannot find check-types library, has it been loaded?');
   }
 
-  // new predicates to be added to check object. Use object to preserve names
-  var predicates = {
-    defined: defined,
-    bit: bit,
-    bool: bool,
-    has: has,
-    lowerCase: lowerCase,
-    unemptyArray: unemptyArray,
-    arrayOfStrings: arrayOfStrings,
-    arrayOfArraysOfStrings: arrayOfArraysOfStrings,
-    all: all,
-    raises: raises
-  };
-
   /**
   Checks if argument is defined or not
 
@@ -131,6 +117,14 @@
     return check.every(check.map(obj, predicates));
   }
 
+  /**
+    Checks given object against predicates object
+    @method schema
+  */
+  function schema(predicates, obj) {
+    return all(obj, predicates);
+  }
+
   /** Checks if given function raises an error
 
     @method raises
@@ -222,6 +216,21 @@
       registerPredicate(check.verify, name, verifyModifier(fn, name + ' failed'));
     };
   }
+
+  // new predicates to be added to check object. Use object to preserve names
+  var predicates = {
+    defined: defined,
+    bit: bit,
+    bool: bool,
+    has: has,
+    lowerCase: lowerCase,
+    unemptyArray: unemptyArray,
+    arrayOfStrings: arrayOfStrings,
+    arrayOfArraysOfStrings: arrayOfArraysOfStrings,
+    all: all,
+    schema: schema,
+    raises: raises
+  };
 
   Object.keys(predicates).forEach(function (name) {
     check.mixin(predicates[name], name);

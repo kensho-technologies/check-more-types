@@ -108,6 +108,30 @@
 
 ---
 
+`check.spec` is equivalent to `check.all` but with arguments reversed.
+This makes it very convenient to create new validator functions using partial
+argument application
+
+### check.schema bind
+
+    var personSchema = {
+      name: check.unemptyString,
+      age: check.positiveNumber
+    };
+    var isValidPerson = check.schema.bind(null, personSchema);
+    var h1 = {
+      name: 'joe',
+      age: 10
+    };
+    var h2 = {
+      name: 'ann'
+      // missing age property
+    }
+    isValidPerson(h1); // true
+    isValidPerson(h2); // false
+
+---
+
 ### check.raises(fn, validator)
 
     function foo() {
