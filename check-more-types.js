@@ -146,6 +146,24 @@
     return false;
   }
 
+  if (!check.defend) {
+    check.defend = function defend(fn) {
+      var predicates = Array.prototype.slice.call(arguments, 1);
+      return function () {
+        var n = arguments.length;
+        while (n--) {
+          var predicate = predicates[n];
+          if (check.fn(predicate)) {
+            if (!predicate.call(null, arguments[n])) {
+              throw new Error('Argument ' + (n + 1) + ' ' + arguments[n] + ' does not pass predicate');
+            }
+          }
+        }
+        return fn.apply(null, arguments);
+      };
+    };
+  }
+
   if (!check.mixin) {
     /** Adds new predicate to all objects
     @method mixin */

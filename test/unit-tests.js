@@ -621,4 +621,47 @@ describe('check-more-types', function () {
       la(check.raises(nonLowerCase));
     });
   });
+
+  describe('defend', function () {
+    it('protects a function without predicates', function () {
+      la(check.fn(check.defend));
+      function add(a, b) { return a + b; }
+      var safeAdd = check.defend(add);
+      la(check.fn(safeAdd));
+      la(safeAdd !== add, 'it is not the same function');
+      la(add(2, 3) === 5, 'original function works');
+      la(safeAdd(2, 3) === 5, 'protected function works');
+    });
+
+    it('protects a function', function () {
+      function add(a, b) { return a + b; }
+      var safeAdd = check.defend(add, check.number, check.number);
+      la(add('foo', 2) === 'foo2', 'adding string to number works just fine');
+      la(check.raises(safeAdd.bind(null, 'foo', 2), function (err) {
+        console.log(err);
+        return /foo/.test(err.message);
+      }), 'trying to add string to number breaks');
+    });
+
+    it('protects optional arguments', function () {
+      function add(a, b) {
+        if (typeof b === 'undefined') {
+          return 'foo';
+        }
+        return a + b;
+      }
+      la(add(2) === 'foo');
+      var safeAdd = check.defend(add, check.number, check.maybe.number);
+      la(safeAdd(2, 3) === 5);
+      la(safeAdd(2) === 'foo');
+    });
+
+    // API doc examples
+    it('check.defend(fn, predicates)', function () {
+      function add(a, b) { return a + b; }
+      var safeAdd = check.defend(add, check.number, check.number);
+      la(add('foo', 2) === 'foo2', 'adding string to number works just fine');
+      la(check.raises(safeAdd.bind(null, 'foo', 2)));
+    });
+  });
 });

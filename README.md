@@ -1,4 +1,4 @@
-# check-more-types v0.7.0
+# check-more-types v0.8.0
 
 > Additional type checks for [check-types.js](https://github.com/philbooth/check-types.js)
 
@@ -236,31 +236,57 @@ Every predicate can also throw an exception if it fails
 You can add new predicates to `check`, `check.maybe`, etc. by using `check.mixin(predicate)`
 method
 
-#### check.mixin(predicate)
+#### Defending a function
 
-    check.foo; // false
-    // new predicate to be added. Should have function name
-    function foo(a) {
-      return a === 'foo';
+Using *check-more-types* you can separate the inner function logic from checking input
+arguments. Instead of this
+
+    :::javascript
+    function add(a, b) {
+        la(check.number(a), 'first argument should be a number', a);
+        la(check.number(a), 'second argument should be a number', b);
+        return a + b;
     }
-    check.mixin(foo);
-    check.fn(check.foo); // true
-    check.fn(check.maybe.foo); // true
-    check.fn(check.not.foo); // true
-    check.foo('foo'); // true
-    check.maybe.foo('foo'); // true
-    check.not.foo('bar'); // true
-    // you can provide name
-    function isBar(a) {
-      return a === 'bar';
+
+you can use `check.defend` function
+
+#### check.defend(fn, predicates)
+
+    function add(a, b) {
+      return a + b;
     }
-    check.mixin(isBar, 'bar');
-    check.bar('bar'); // true
-    check.bar('anything else'); // false
-    // does NOT overwrite predicate if already exists
-    check.bar; // isBar
-    check.mixin(foo, 'bar');
-    check.bar; // isBar
+    var safeAdd = check.defend(add, check.number, check.number);
+    add('foo', 2); // 'foo2'
+    check.raises(safeAdd.bind(null, 'foo', 2)); // true
+
+---
+
+#### protects optional arguments
+
+    function add(a, b) {
+      if (typeof b === 'undefined') {
+        return 'foo';
+      }
+      return a + b;
+    }
+    add(2); // 'foo'
+    var safeAdd = check.defend(add, check.number, check.maybe.number);
+    safeAdd(2, 3); // 5
+    safeAdd(2); // 'foo'
+
+---
+
+This works great when combined with JavaScript module pattern
+
+    :::javascript
+    var add = (function () {
+        // inner private function without any argument checks
+        function add(a, b) {
+            return a + b;
+        }
+        // return defended function
+        return check.defend(add, check.number, check.number);
+    }());
 
 
 ### Small print
