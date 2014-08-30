@@ -257,12 +257,13 @@ method
 Using *check-more-types* you can separate the inner function logic from checking input
 arguments. Instead of this
 
-    :::javascript
-    function add(a, b) {
-        la(check.number(a), 'first argument should be a number', a);
-        la(check.number(a), 'second argument should be a number', b);
-        return a + b;
-    }
+```js
+function add(a, b) {
+    la(check.number(a), 'first argument should be a number', a);
+    la(check.number(a), 'second argument should be a number', b);
+    return a + b;
+}
+```
 
 you can use `check.defend` function
 
@@ -294,15 +295,16 @@ you can use `check.defend` function
 
 This works great when combined with JavaScript module pattern
 
-    :::javascript
-    var add = (function () {
-        // inner private function without any argument checks
-        function add(a, b) {
-            return a + b;
-        }
-        // return defended function
-        return check.defend(add, check.number, check.number);
-    }());
+```js
+var add = (function () {
+    // inner private function without any argument checks
+    function add(a, b) {
+        return a + b;
+    }
+    // return defended function
+    return check.defend(add, check.number, check.number);
+}());
+```
 
 
 ### Small print
