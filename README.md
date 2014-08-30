@@ -274,6 +274,7 @@ you can use `check.defend` function
     }
     var safeAdd = check.defend(add, check.number, check.number);
     add('foo', 2); // 'foo2'
+    // calling safeAdd('foo', 2) raises an exception
     check.raises(safeAdd.bind(null, 'foo', 2)); // true
 
 ---
@@ -293,18 +294,26 @@ you can use `check.defend` function
 
 ---
 
-This works great when combined with JavaScript module pattern
+This works great when combined with JavaScript module pattern as in this example
 
-```js
-var add = (function () {
-    // inner private function without any argument checks
-    function add(a, b) {
+#### check.defend in module pattern
+
+    var add = (function() {
+      // inner private function without any argument checks
+      function add(a, b) {
         return a + b;
+      }
+      // return defended function
+      return check.defend(add, check.number, check.number);
+    }());
+    add(2, 3); // 5
+    // trying to call with non-numbers raises an exception
+    function callAddWithNonNumbers() {
+      return add('foo', 'bar');
     }
-    // return defended function
-    return check.defend(add, check.number, check.number);
-}());
-```
+    check.raises(callAddWithNonNumbers); // true
+
+---
 
 
 ### Small print

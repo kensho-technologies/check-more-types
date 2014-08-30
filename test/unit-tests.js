@@ -663,7 +663,25 @@ describe('check-more-types', function () {
       function add(a, b) { return a + b; }
       var safeAdd = check.defend(add, check.number, check.number);
       la(add('foo', 2) === 'foo2', 'adding string to number works just fine');
+      // calling safeAdd('foo', 2) raises an exception
       la(check.raises(safeAdd.bind(null, 'foo', 2)));
+    });
+
+    it('check.defend in module pattern', function () {
+      var add = (function () {
+        // inner private function without any argument checks
+        function add(a, b) {
+          return a + b;
+        }
+        // return defended function
+        return check.defend(add, check.number, check.number);
+      }());
+      la(add(2, 3) === 5);
+      // trying to call with non-numbers raises an exception
+      function callAddWithNonNumbers() {
+        return add('foo', 'bar');
+      }
+      la(check.raises(callAddWithNonNumbers));
     });
   });
 });
