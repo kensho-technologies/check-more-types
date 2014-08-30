@@ -263,8 +263,9 @@ describe('check-more-types', function () {
   });
 
   describe('check.schema', function () {
+    la(check.fn(check.schema));
+
     it('check.schema', function () {
-      la(check.fn(check.schema));
       var obj = {
         foo: 'foo',
         bar: 'bar',
@@ -277,6 +278,7 @@ describe('check-more-types', function () {
         }
       };
       la(check.schema(schema, obj));
+      la(!check.schema(schema, {}));
     });
 
     it('check.schema bind', function () {

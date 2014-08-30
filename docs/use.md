@@ -108,6 +108,22 @@
 
 ---
 
+### check.schema
+
+    var obj = {
+      foo: 'foo',
+      bar: 'bar',
+      baz: 'baz'
+    };
+    var schema = {
+      foo: check.unemptyString,
+      bar: function(value) {
+        return value === 'bar';
+      }
+    };
+    check.schema(schema, obj); // true
+    check.schema(schema, {}); // false
+
 `check.spec` is equivalent to `check.all` but with arguments reversed.
 This makes it very convenient to create new validator functions using partial
 argument application
