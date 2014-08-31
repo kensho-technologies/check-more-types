@@ -213,6 +213,36 @@ Every predicate can also throw an exception if it fails
 You can add new predicates to `check`, `check.maybe`, etc. by using `check.mixin(predicate)`
 method
 
+### check.mixin(predicate, name)
+
+    function isBar(a) {
+      return a === 'bar';
+    }
+    check.mixin(isBar, 'bar');
+    check.bar('bar'); // true
+    check.bar('anything else'); // false
+    // supports modifiers
+    check.maybe.bar(); // true
+    check.maybe.bar('bar'); // true
+    check.not.bar('foo'); // true
+    check.not.bar('bar'); // false
+
+Mixin will not override existing functions
+
+### check.mixin does not override
+
+    function isFoo(a) {
+      return a === 'foo';
+    }
+
+    function isBar(a) {
+      return a === 'bar';
+    }
+    check.mixin(isFoo, 'isFoo');
+    check.isFoo; // isFoo
+    check.mixin(isBar, 'isFoo');
+    check.isFoo; // isFoo
+
 ## Defending a function
 
 Using *check-more-types* you can separate the inner function logic from checking input

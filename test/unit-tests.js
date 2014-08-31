@@ -596,6 +596,35 @@ describe('check-more-types', function () {
       la(check.bar === isBar, 'predicate has been registered');
       check.mixin(foo, 'bar');
       la(check.bar === isBar, 'old check predicate remains');
+      delete check.foo;
+      delete check.bar;
+    });
+
+    it('check.mixin(predicate, name)', function () {
+      function isBar(a) {
+        return a === 'bar';
+      }
+      check.mixin(isBar, 'bar');
+      la(check.bar('bar'));
+      la(!check.bar('anything else'));
+      // supports modifiers
+      la(check.maybe.bar());
+      la(check.maybe.bar('bar'));
+      la(check.not.bar('foo'));
+      la(!check.not.bar('bar'));
+    });
+
+    it('check.mixin does not override', function () {
+      function isFoo(a) {
+        return a === 'foo';
+      }
+      function isBar(a) {
+        return a === 'bar';
+      }
+      check.mixin(isFoo, 'isFoo');
+      la(check.isFoo === isFoo, 'predicate has been registered');
+      check.mixin(isBar, 'isFoo');
+      la(check.isFoo === isFoo, 'old check predicate remains');
     });
   });
 
