@@ -1,6 +1,4 @@
-# API
-
-### check.defined
+## check.defined
 
     check.defined(0); // true
     check.defined(1); // true

@@ -4,7 +4,9 @@
 
 {%= _.doc("./docs/badges.md") %}
 
-### Install
+{%= toc %}
+
+## Install
 
 **node:** `npm install {%= name %} --save`
 
@@ -19,6 +21,8 @@
 
 See [Readable conditions](http://bahmutov.calepin.co/readable-conditions-using-check-typesjs.html)
 for examples.
+
+## API
 
 {%= _.doc("./docs/use.md") %}
 

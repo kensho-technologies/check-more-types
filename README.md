@@ -19,7 +19,12 @@
 
 
 
-### Install
+* [Install](#install)
+* [API](#api)
+* [MIT License](#mit-license)
+
+
+## Install
 
 **node:** `npm install check-more-types --save`
 
@@ -37,7 +42,7 @@ for examples.
 
 ## API
 
-#### check.defined
+### check.defined
 
     check.defined(0); // true
     check.defined(1); // true
