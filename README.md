@@ -36,7 +36,7 @@ for advice and examples.
     <script src="check-more-types.js"></script>
 
 
-**API**
+* **API**
   * [check.bit](#checkbit)
   * [check.bool](#checkbool)
   * [check.unemptyArray](#checkunemptyarray)

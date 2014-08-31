@@ -36,7 +36,7 @@ module.exports = function(grunt) {
     toc: {
       api: {
         options: {
-          heading: '**API**\n'
+          heading: '* **API**\n'
         },
         files: {
           './docs/use-toc.md': './docs/use.md'
