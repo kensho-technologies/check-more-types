@@ -20,7 +20,6 @@
 
 
 * [Install](#install)
-* [API](#api)
 * [MIT License](#mit-license)
 
 
@@ -40,9 +39,30 @@
 See [Readable conditions](http://bahmutov.calepin.co/readable-conditions-using-check-typesjs.html)
 for examples.
 
-## API
+** API **
+  * [check.bit](#checkbit)
+  * [check.bool](#checkbool)
+  * [check.unemptyArray](#checkunemptyarray)
+  * [check.arrayOfStrings](#checkarrayofstrings)
+  * [check.arrayOfArraysOfStrings](#checkarrayofarraysofstrings)
+  * [check.lowerCase](#checklowercase)
+  * [check.has(obj, property)](#checkhasobj-property)
+  * [check.all](#checkall)
+  * [check.schema](#checkschema)
+  * [check.schema bind](#checkschema-bind)
+  * [check.raises(fn, validator)](#checkraisesfn-validator)
+* [Modifiers](#modifiers)
+  * [check.maybe](#checkmaybe)
+  * [check.not](#checknot)
+  * [check.verify](#checkverify)
+* [Adding your own predicates](#adding-your-own-predicates)
+* [Defending a function](#defending-a-function)
+  * [check.defend(fn, predicates)](#checkdefendfn-predicates)
+  * [protects optional arguments](#protects-optional-arguments)
+  * [check.defend in module pattern](#checkdefend-in-module-pattern)
 
-### check.defined
+
+#### check.defined
 
     check.defined(0); // true
     check.defined(1); // true
@@ -257,7 +277,7 @@ Every predicate can also throw an exception if it fails
 You can add new predicates to `check`, `check.maybe`, etc. by using `check.mixin(predicate)`
 method
 
-#### Defending a function
+### Defending a function
 
 Using *check-more-types* you can separate the inner function logic from checking input
 arguments. Instead of this
@@ -319,7 +339,6 @@ This works great when combined with JavaScript module pattern as in this example
     check.raises(callAddWithNonNumbers); // true
 
 ---
-
 
 ### Small print
 

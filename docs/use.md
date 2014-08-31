@@ -1,4 +1,4 @@
-## check.defined
+### check.defined
 
     check.defined(0); // true
     check.defined(1); // true
@@ -213,7 +213,7 @@ Every predicate can also throw an exception if it fails
 You can add new predicates to `check`, `check.maybe`, etc. by using `check.mixin(predicate)`
 method
 
-### Defending a function
+## Defending a function
 
 Using *check-more-types* you can separate the inner function logic from checking input
 arguments. Instead of this

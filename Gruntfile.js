@@ -33,6 +33,17 @@ module.exports = function(grunt) {
       }
     },
 
+    toc: {
+      api: {
+        options: {
+          heading: '** API **\n'
+        },
+        files: {
+          './docs/use-toc.md': './docs/use.md'
+        }
+      }
+    },
+
     readme: {
       options: {
         readme: './docs/README.tmpl.md',
@@ -79,7 +90,7 @@ module.exports = function(grunt) {
   plugins.forEach(grunt.loadNpmTasks);
 
   grunt.registerTask('test', ['mochaTest']);
-  grunt.registerTask('doc', ['xplain', 'readme']);
+  grunt.registerTask('doc', ['xplain', 'toc', 'readme']);
   grunt.registerTask('default',
     ['nice-package', 'deps-ok', 'sync', 'jshint', 'test', 'uglify', 'doc']);
 };
