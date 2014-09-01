@@ -12,6 +12,9 @@ for advice and examples.
 {%= _.doc("./docs/use.md") %}
 {%= _.doc("./docs/footer.md") %}
 
+This documentation was generated using [grunt-xplain](https://github.com/bahmutov/grunt-xplain)
+and [grunt-readme](https://github.com/jonschlinkert/grunt-readme).
+
 ## MIT License
 
 {%= _.doc("./LICENSE") %}

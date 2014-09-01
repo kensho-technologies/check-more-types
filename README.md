@@ -381,6 +381,9 @@ Support: if you find any problems with this library,
 
 
 
+This documentation was generated using [grunt-xplain](https://github.com/bahmutov/grunt-xplain)
+and [grunt-readme](https://github.com/jonschlinkert/grunt-readme).
+
 ## MIT License
 
 The MIT License (MIT)
