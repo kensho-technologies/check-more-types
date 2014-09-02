@@ -185,6 +185,25 @@ argument application
     isValidPerson(h1); // true
     isValidPerson(h2); // false
 
+Because bound schema parameter generates a valid function, you can nest checks using
+schema composition. For example let us combine the reuse `isValidPerson` as part of
+another check
+
+### schema composition
+
+    var teamSchema = {
+      manager: isValidPerson,
+      members: check.unemptyArray
+    };
+    var team = {
+      manager: {
+        name: 'jim',
+        age: 20
+      },
+      members: ['joe', 'ann']
+    };
+    check.schema(teamSchema, team); // true
+
 ---
 
 ### check.raises(fn, validator)

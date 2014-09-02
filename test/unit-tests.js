@@ -298,6 +298,29 @@ describe('check-more-types', function () {
       la(isValidPerson(h1));
       la(!isValidPerson(h2));
     });
+
+    describe('nesting schemas', function () {
+      var personSchema = {
+        name: check.unemptyString,
+        age: check.positiveNumber
+      };
+      var isValidPerson = check.schema.bind(null, personSchema);
+
+      it('schema composition', function () {
+        var teamSchema = {
+          manager: isValidPerson,
+          members: check.unemptyArray
+        };
+        var team = {
+          manager: {
+            name: 'jim',
+            age: 20
+          },
+          members: ['joe', 'ann']
+        };
+        la(check.schema(teamSchema, team));
+      });
+    });
   });
 
   describe('arrayOfStrings', function () {
