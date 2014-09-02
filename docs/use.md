@@ -22,6 +22,26 @@
 
 ---
 
+### check.unit
+
+    check.unit(0); // true
+    check.unit(1); // true
+    check.unit(0.1); // true
+    check.unit(1.2); // false
+    check.unit(-0.1); // false
+
+---
+
+### check.hexRgb
+
+    check.hexRgb('#FF00FF'); // true
+    check.hexRgb('#000'); // true
+    check.hexRgb('#aaffed'); // true
+    check.hexRgb('#00aaffed'); // false
+    check.hexRgb('aaffed'); // false
+
+---
+
 ### check.bool
 
     check.bool(true); // true
@@ -30,6 +50,27 @@
     check.bool(1); // false
     check.bool('1'); // false
     check.bool(2); // false
+
+---
+
+### check.empty
+
+    check.empty([]); // true
+    check.empty(''); // true
+    check.empty({}); // true
+    check.empty(0); // false
+    check.empty(['foo']); // false
+
+---
+
+### check.unempty
+
+    check.unempty([]); // false
+    check.unempty(''); // false
+    check.unempty({}); // false
+    check.unempty(0); // true
+    check.unempty(['foo']); // true
+    check.unempty('foo'); // true
 
 ---
 

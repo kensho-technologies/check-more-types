@@ -146,6 +146,61 @@
     return false;
   }
 
+  /**
+    Returns true if given value is [], {} or ''
+    @method empty
+  */
+  function empty(a) {
+    var hasLength = typeof a === 'string' ||
+      Array.isArray(a);
+    if (hasLength) {
+      return !a.length;
+    }
+    if (a instanceof Object) {
+      return !Object.keys(a).length;
+    }
+    return false;
+  }
+
+  /**
+    Returns true if given value has .length and it is not zero, or has properties
+    @method unempty
+  */
+  function unempty(a) {
+    var hasLength = typeof a === 'string' ||
+      Array.isArray(a);
+    if (hasLength) {
+      return a.length;
+    }
+    if (a instanceof Object) {
+      return Object.keys(a).length;
+    }
+    return true;
+  }
+
+  /**
+    Returns true if 0 <= value <= 1
+    @method unit
+  */
+  function unit(value) {
+    return check.number(value) &&
+      value >= 0.0 && value <= 1.0;
+  }
+
+  var rgb = /^#(?:[0-9a-fA-F]{3}){1,2}$/;
+  /**
+    Returns true if value is hex RGB between '#000000' and '#FFFFFF'
+    @method hexRgb
+  */
+  function hexRgb(value) {
+    return check.string(value) &&
+      rgb.test(value);
+  }
+
+  //
+  // helper methods
+  //
+
   if (!check.defend) {
     check.defend = function defend(fn) {
       var predicates = Array.prototype.slice.call(arguments, 1);
@@ -247,7 +302,11 @@
     arrayOfArraysOfStrings: arrayOfArraysOfStrings,
     all: all,
     schema: schema,
-    raises: raises
+    raises: raises,
+    empty: empty,
+    unempty: unempty,
+    unit: unit,
+    hexRgb: hexRgb
   };
 
   Object.keys(predicates).forEach(function (name) {

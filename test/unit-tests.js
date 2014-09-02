@@ -713,4 +713,77 @@ describe('check-more-types', function () {
       la(check.raises(callAddWithNonNumbers));
     });
   });
+
+  describe('check.unit', function () {
+    /** @sample check/unit */
+    it('check.unit', function () {
+      la(check.unit(0));
+      la(check.unit(1));
+      la(check.unit(0.1));
+      la(!check.unit(1.2));
+      la(!check.unit(-0.1));
+    });
+
+    it('check.unit edge cases', function () {
+      la(check.unit(0));
+      la(check.unit(1));
+      la(check.unit(0.1));
+      la(check.unit(0.00001));
+
+      la(!check.unit(-0.1));
+      la(!check.unit(-1));
+      la(!check.unit(10));
+      la(!check.unit(-10));
+      la(!check.unit('0.1'));
+    });
+  });
+
+  describe('check.hexRgb', function () {
+    /** @sample check/hexRgb */
+    it('check.hexRgb', function () {
+      la(check.hexRgb('#FF00FF'));
+      la(check.hexRgb('#000'));
+      la(check.hexRgb('#aaffed'));
+      la(!check.hexRgb('#00aaffed'));
+      la(!check.hexRgb('aaffed'));
+    });
+
+    it('check.hexRgb works', function () {
+      la(check.hexRgb('#ffffff'));
+      la(check.hexRgb('#FF00FF'));
+      la(check.hexRgb('#000'));
+      la(check.hexRgb('#000000'));
+    });
+
+    it('fails for other cases', function () {
+      la(!check.hexRgb('ffffff'));
+      la(!check.hexRgb('#FF00FFF'));
+      la(!check.hexRgb('#ggjjaa'));
+      la(!check.hexRgb('#000000#'));
+      la(!check.hexRgb('red'));
+    });
+  });
+
+  describe('check.empty', function () {
+    /** @sample check/empty */
+    it('check.empty', function () {
+      la(check.empty([]));
+      la(check.empty(''));
+      la(check.empty({}));
+      la(!check.empty(0));
+      la(!check.empty(['foo']));
+    });
+  });
+
+  describe('check.unempty', function () {
+    /** @sample check/unempty */
+    it('check.unempty', function () {
+      la(!check.unempty([]));
+      la(!check.unempty(''));
+      la(!check.unempty({}));
+      la(check.unempty(0));
+      la(check.unempty(['foo']));
+      la(check.unempty('foo'));
+    });
+  });
 });
