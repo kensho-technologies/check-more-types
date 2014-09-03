@@ -67,6 +67,23 @@ module.exports = function(grunt) {
       }
     },
 
+    gt: {
+      unminified: {
+        options: {
+          cover: 'cover',
+          bdd: true
+        },
+        src: ['test/check-more-types-spec.js']
+      },
+      minified: {
+        options: {
+          cover: 'min-cover',
+          bdd: true
+        },
+        src: ['test/check-more-types-minified-spec.js']
+      }
+    },
+
     uglify: {
       lib: {
         files: {
@@ -89,7 +106,7 @@ module.exports = function(grunt) {
   var plugins = require('matchdep').filterDev('grunt-*');
   plugins.forEach(grunt.loadNpmTasks);
 
-  grunt.registerTask('test', ['mochaTest']);
+  grunt.registerTask('test', ['gt']);
   grunt.registerTask('doc', ['xplain', 'toc', 'readme']);
   grunt.registerTask('default',
     ['nice-package', 'deps-ok', 'sync', 'jshint', 'test', 'uglify', 'doc']);

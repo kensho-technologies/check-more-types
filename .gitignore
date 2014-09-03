@@ -2,3 +2,5 @@ node_modules/
 api/
 test/docs/
 docs/use-toc.md
+cover/
+min-cover/
