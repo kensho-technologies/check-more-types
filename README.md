@@ -5,7 +5,7 @@
 [![NPM][check-more-types-icon] ][check-more-types-url]
 
 [![Build status][check-more-types-ci-image] ][check-more-types-ci-url]
-[![Coverage Status][check-more-types-coverage-image}}[check-more-types-coverage-url]
+[![Coverage Status][check-more-types-coverage-image] ][check-more-types-coverage-url]
 [![dependencies][check-more-types-dependencies-image] ][check-more-types-dependencies-url]
 [![devdependencies][check-more-types-devdependencies-image] ][check-more-types-devdependencies-url]
 
