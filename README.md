@@ -6,6 +6,7 @@
 
 [![Build status][check-more-types-ci-image] ][check-more-types-ci-url]
 [![Coverage Status][check-more-types-coverage-image] ][check-more-types-coverage-url]
+[![Codacy Badge](https://www.codacy.com/project/badge/25cb5d1410c7497cb057d887d1f3ea23)](https://www.codacy.com)
 [![dependencies][check-more-types-dependencies-image] ][check-more-types-dependencies-url]
 [![devdependencies][check-more-types-devdependencies-image] ][check-more-types-devdependencies-url]
 
