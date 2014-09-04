@@ -1,9 +1,10 @@
+/* global describe, la, check, it */
 describe('check-more-types', function () {
   var root = typeof window === 'object' ? window : global;
 
   it('has check', function () {
     la(global.check);
-    la(typeof check == 'object');
+    la(typeof check === 'object');
     la(check.object(check));
   });
 
@@ -27,6 +28,7 @@ describe('check-more-types', function () {
     }
 
     function isInvalid(err) {
+      la(check.instance(err, Error), 'expected error');
       return false;
     }
 
@@ -54,6 +56,7 @@ describe('check-more-types', function () {
       }
 
       function isInvalid(err) {
+        la(check.instance(err, Error), 'expected error');
         return false;
       }
 
@@ -76,8 +79,8 @@ describe('check-more-types', function () {
       la(check.defined(null));
       la(check.defined(''));
       la(!check.defined());
-      la(!check.defined(root.does_not_exist));
-      la(!check.defined({}.does_not_exist));
+      la(!check.defined(root.doesNotExist));
+      la(!check.defined({}.doesNotExist));
     });
 
     it('check.defined', function () {
@@ -88,8 +91,8 @@ describe('check-more-types', function () {
       la(check.defined(null));
       la(check.defined(''));
       la(!check.defined());
-      la(!check.defined(root.does_not_exist));
-      la(!check.defined({}.does_not_exist));
+      la(!check.defined(root.doesNotExist));
+      la(!check.defined({}.doesNotExist));
     });
   });
 
@@ -148,7 +151,7 @@ describe('check-more-types', function () {
       la(!check.unemptyArray(1));
       la(!check.unemptyArray({}));
       la(!check.unemptyArray([]));
-      la(!check.unemptyArray(root.does_not_exist));
+      la(!check.unemptyArray(root.doesNotExist));
       la(check.unemptyArray([1]));
       la(check.unemptyArray(['foo', 'bar']));
     });
@@ -294,7 +297,7 @@ describe('check-more-types', function () {
       var h2 = {
         name: 'ann'
         // missing age property
-      }
+      };
       la(isValidPerson(h1));
       la(!isValidPerson(h2));
     });

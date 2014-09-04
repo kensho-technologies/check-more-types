@@ -1,5 +1,4 @@
 require('lazy-ass');
 global.check = require('check-types');
 require('../check-more-types');
-
-require('./unit-tests')
+require('./unit-tests');

@@ -1,4 +1,4 @@
-# check-more-types v0.9.1
+# check-more-types v0.9.2
 
 > Additional type checks for [check-types.js](https://github.com/philbooth/check-types.js)
 
@@ -79,8 +79,8 @@ for advice and examples.
     check.defined(null); // true
     check.defined(''); // true
     check.defined(); // false
-    check.defined(root.does_not_exist); // false
-    check.defined({}.does_not_exist); // false
+    check.defined(root.doesNotExist); // false
+    check.defined({}.doesNotExist); // false
 
 ---
 
@@ -152,7 +152,7 @@ for advice and examples.
     check.unemptyArray(1); // false
     check.unemptyArray({}); // false
     check.unemptyArray([]); // false
-    check.unemptyArray(root.does_not_exist); // false
+    check.unemptyArray(root.doesNotExist); // false
     check.unemptyArray([1]); // true
     check.unemptyArray(['foo', 'bar']); // true
 
@@ -253,7 +253,7 @@ argument application
     var h2 = {
       name: 'ann'
       // missing age property
-    }
+    };
     isValidPerson(h1); // true
     isValidPerson(h2); // false
 
@@ -291,6 +291,7 @@ another check
     }
 
     function isInvalid(err) {
+      check.instance(err, Error); // true
       return false;
     }
     check.raises(foo); // true

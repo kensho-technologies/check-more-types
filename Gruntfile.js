@@ -6,6 +6,7 @@ module.exports = function(grunt) {
       all: [
         'check-more-types.js'
       ],
+      specs: ['test/*.js'],
       options: {
         jshintrc: '.jshintrc'
       }
