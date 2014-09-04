@@ -65,6 +65,28 @@ describe('check-more-types', function () {
       la(check.raises(foo, isValidError));
       la(!check.raises(foo, isInvalid));
     });
+
+    it('fails is validator is not a function', function () {
+      function foo() {
+        throw new Error('foo');
+      }
+      la(!check.raises(foo, 'validator'));
+    });
+  });
+
+  describe('check.same', function () {
+    la(check.fn(check.same));
+
+    /** @sample check/same */
+    it('check.same', function () {
+      var foo = {}, bar = {};
+      la(check.same(foo, foo));
+      la(!check.same(foo, bar));
+
+      // primitives are compared by value
+      la(check.same(0, 0));
+      la(check.same('foo', 'foo'));
+    });
   });
 
   describe('check.defined', function () {

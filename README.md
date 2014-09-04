@@ -1,4 +1,4 @@
-# check-more-types v0.9.3
+# check-more-types v0.9.4
 
 > Additional type checks for [check-types.js](https://github.com/philbooth/check-types.js)
 
@@ -42,6 +42,7 @@ for advice and examples.
 
 * **API**
   * [check.bit](#checkbit)
+  * [check.same](#checksame)
   * [check.unit](#checkunit)
   * [check.hexRgb](#checkhexrgb)
   * [check.bool](#checkbool)
@@ -91,6 +92,20 @@ for advice and examples.
     check.bit('1'); // false
     check.bit(2); // false
     check.bit(true); // false
+
+---
+
+#### check.same
+
+    var foo = {},
+      bar = {};
+    check.same(foo, foo); // true
+    check.same(foo, bar); // false
+    // primitives are compared by value
+    check.same(0, 0); // true
+    check.same('foo', 'foo'); // true
+
+`check.same` should produce same result as `===`.
 
 ---
 

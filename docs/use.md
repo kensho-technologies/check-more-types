@@ -22,6 +22,20 @@
 
 ---
 
+### check.same
+
+    var foo = {},
+      bar = {};
+    check.same(foo, foo); // true
+    check.same(foo, bar); // false
+    // primitives are compared by value
+    check.same(0, 0); // true
+    check.same('foo', 'foo'); // true
+
+`check.same` should produce same result as `===`.
+
+---
+
 ### check.unit
 
     check.unit(0); // true

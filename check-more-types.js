@@ -24,6 +24,15 @@
   }
 
   /**
+    same as ===
+
+    @method same
+  */
+  function same(a, b) {
+    return a === b;
+  }
+
+  /**
   Checks if given value is 0 or 1
 
   @method bit
@@ -293,6 +302,7 @@
   // new predicates to be added to check object. Use object to preserve names
   var predicates = {
     defined: defined,
+    same: same,
     bit: bit,
     bool: bool,
     has: has,
