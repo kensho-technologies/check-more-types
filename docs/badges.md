@@ -2,7 +2,8 @@
 
 [![Build status][check-more-types-ci-image] ][check-more-types-ci-url]
 [![Coverage Status][check-more-types-coverage-image] ][check-more-types-coverage-url]
-[![Codacy Badge](https://www.codacy.com/project/badge/25cb5d1410c7497cb057d887d1f3ea23)](https://www.codacy.com/public/kensho/check-more-types.git)
+[![Codacy Badge][check-more-types-codacy-image] ][check-more-types-codacy-url]
+[![Code Climate][check-more-types-code-climate-image] ][check-more-types-code-climate-url]
 [![dependencies][check-more-types-dependencies-image] ][check-more-types-dependencies-url]
 [![devdependencies][check-more-types-devdependencies-image] ][check-more-types-devdependencies-url]
 
@@ -16,3 +17,7 @@
 [check-more-types-dependencies-url]: https://david-dm.org/kensho/check-more-types
 [check-more-types-devdependencies-image]: https://david-dm.org/kensho/check-more-types/dev-status.png
 [check-more-types-devdependencies-url]: https://david-dm.org/kensho/check-more-types#info=devDependencies
+[check-more-types-codacy-image]: https://www.codacy.com/project/badge/25cb5d1410c7497cb057d887d1f3ea23
+[check-more-types-codacy-url]: https://www.codacy.com/public/kensho/check-more-types.git
+[check-more-types-code-climate-image]: https://codeclimate.com/github/kensho/check-more-types/badges/gpa.svg
+[check-more-types-code-climate-url]: https://codeclimate.com/github/kensho/check-more-types
