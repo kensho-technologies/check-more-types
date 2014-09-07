@@ -284,9 +284,9 @@
        */
       function verifyModifier(predicate, defaultMessage) {
         return function () {
-        var message;
-        if (predicate.apply(null, arguments) === false) {
-          message = arguments[arguments.length - 1];
+          var message;
+          if (predicate.apply(null, arguments) === false) {
+            message = arguments[arguments.length - 1];
             throw new Error(check.unemptyString(message) ? message : defaultMessage);
           }
         };
