@@ -2,6 +2,8 @@ module.exports = function(grunt) {
   'use strict';
 
   grunt.initConfig({
+    pkg: grunt.file.readJSON('package.json'),
+
     jshint: {
       all: [
         'check-more-types.js'
@@ -86,6 +88,11 @@ module.exports = function(grunt) {
     },
 
     uglify: {
+      options: {
+        banner: '/*! <%= pkg.name %> - v<%= pkg.version %>\n' +
+        ' homepage: <%= pkg.homepage %>\n' +
+        ' Copyright @ 2014 Kensho license: <%= pkg.license %> */\n\n'
+      },
       lib: {
         files: {
           'check-more-types.min.js': ['check-more-types.js']
