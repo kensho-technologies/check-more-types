@@ -93,7 +93,7 @@ module.exports = function(grunt) {
         ' homepage: <%= pkg.homepage %>\n' +
         ' Copyright @ 2014 Kensho license: <%= pkg.license %> */\n\n'
       },
-      lib: {
+      minified: {
         files: {
           'check-more-types.min.js': ['check-more-types.js']
         }
