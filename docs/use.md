@@ -34,6 +34,17 @@
 
 `check.same` should produce same result as `===`.
 
+### check.allSame
+
+    var foo = {},
+      bar = {};
+    check.allSame([foo, foo, foo]); // true
+    check.allSame([foo, foo, bar]); // false
+    // primitives are compared by value
+    check.allSame([0, 0]); // true
+    check.allSame(['foo', 'foo', 'foo']); // true
+    check.allSame([false, 0]); // false
+
 ---
 
 ### check.unit

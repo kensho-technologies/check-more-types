@@ -87,6 +87,29 @@ describe('check-more-types', function () {
       la(check.same(0, 0));
       la(check.same('foo', 'foo'));
     });
+
+  });
+
+  describe('check.allSame', function () {
+    la(check.fn(check.allSame));
+
+    it('returns false for non arrays', function () {
+      la(!check.allSame('foo'));
+      la(!check.allSame());
+      la(check.allSame([]));
+    });
+
+    /** @sample check/allSame */
+    it('check.allSame', function () {
+      var foo = {}, bar = {};
+      la(check.allSame([foo, foo, foo]));
+      la(!check.allSame([foo, foo, bar]));
+
+      // primitives are compared by value
+      la(check.allSame([0, 0]));
+      la(check.allSame(['foo', 'foo', 'foo']));
+      la(!check.allSame([false, 0]));
+    });
   });
 
   describe('check.defined', function () {

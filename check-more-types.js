@@ -15,9 +15,10 @@
   }
 
   /**
-  Checks if argument is defined or not
+    Checks if argument is defined or not
 
-  @method defined
+    This method now is part of the check-types.js
+    @method defined
   */
   function defined(value) {
     return typeof value !== 'undefined';
@@ -33,26 +34,44 @@
   }
 
   /**
-  Checks if given value is 0 or 1
+    Returns true if all items in an array are the same reference
 
-  @method bit
+    @method allSame
+  */
+  function allSame(arr) {
+    if (!check.array(arr)) {
+      return false;
+    }
+    if (!arr.length) {
+      return true;
+    }
+    var first = arr[0];
+    return arr.every(function (item) {
+      return item === first;
+    });
+  }
+
+  /**
+    Checks if given value is 0 or 1
+
+    @method bit
   */
   function bit(value) {
     return value === 0 || value === 1;
   }
 
   /**
-  Checks if given value is true of false
+    Checks if given value is true of false
 
-  @method bool
+    @method bool
   */
   function bool(value) {
     return typeof value === 'boolean';
   }
 
   /**
-  Checks if given object has a property
-  @method has
+    Checks if given object has a property
+    @method has
   */
   function has(o, property) {
     return Boolean(o && property &&
@@ -303,6 +322,7 @@
   var predicates = {
     defined: defined,
     same: same,
+    allSame: allSame,
     bit: bit,
     bool: bool,
     has: has,
