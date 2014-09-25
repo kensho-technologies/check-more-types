@@ -230,19 +230,38 @@
   //
 
   if (!check.defend) {
+    var checkPredicates = function checkPredicates(fn, predicates, args) {
+      check.verify.fn(fn, 'expected a function');
+      check.verify.array(predicates, 'expected list of predicates');
+      check.verify.defined(args, 'missing args');
+
+      var k = 0, // iterates over predicates
+        j = 0, // iterates over arguments
+        n = predicates.length;
+
+      for (k = 0; k < n; k += 1) {
+        var predicate = predicates[k];
+        if (!check.fn(predicate)) {
+          continue;
+        }
+
+        if (!predicate.call(null, args[j])) {
+          var msg = 'Argument ' + (k + 1) + ' ' + args[j] + ' does not pass predicate';
+          if (check.unemptyString(predicates[k + 1])) {
+            msg += ': ' + predicates[k + 1];
+          }
+          throw new Error(msg);
+        }
+
+        j += 1;
+      }
+      return fn.apply(null, args);
+    };
+
     check.defend = function defend(fn) {
       var predicates = Array.prototype.slice.call(arguments, 1);
       return function () {
-        var n = arguments.length;
-        while (n--) {
-          var predicate = predicates[n];
-          if (check.fn(predicate)) {
-            if (!predicate.call(null, arguments[n])) {
-              throw new Error('Argument ' + (n + 1) + ' ' + arguments[n] + ' does not pass predicate');
-            }
-          }
-        }
-        return fn.apply(null, arguments);
+        return checkPredicates(fn, predicates, arguments);
       };
     };
   }

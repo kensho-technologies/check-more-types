@@ -729,7 +729,7 @@ describe('check-more-types', function () {
       la(check.fn(check.defend));
       function add(a, b) { return a + b; }
       var safeAdd = check.defend(add);
-      la(check.fn(safeAdd));
+      la(check.fn(safeAdd), 'returns defended function');
       la(safeAdd !== add, 'it is not the same function');
       la(add(2, 3) === 5, 'original function works');
       la(safeAdd(2, 3) === 5, 'protected function works');
@@ -738,7 +738,8 @@ describe('check-more-types', function () {
     it('protects a function', function () {
       function add(a, b) { return a + b; }
       var safeAdd = check.defend(add, check.number, check.number);
-      la(add('foo', 2) === 'foo2', 'adding string to number works just fine');
+      la(add('foo', 2) === 'foo2',
+        'adding string to number works just fine');
       la(check.raises(safeAdd.bind(null, 'foo', 2), function (err) {
         console.log(err);
         return /foo/.test(err.message);
@@ -756,6 +757,29 @@ describe('check-more-types', function () {
       var safeAdd = check.defend(add, check.number, check.maybe.number);
       la(safeAdd(2, 3) === 5);
       la(safeAdd(2) === 'foo');
+    });
+
+    it('can have string messages', function () {
+      function add(a, b) { return a + b; }
+      la(add('foo', 2) === 'foo2');
+
+      var safeAdd = check.defend(add,
+        check.number, 'a should be a number');
+      la(safeAdd(2, 3) === 5, '2 + 3 === 5');
+
+      function addStringToNumber() {
+        return safeAdd('foo', 2);
+      }
+      function checkException(err) {
+        la(check.defined(err), 'got error object');
+        la(/foo/.test(err.message),
+          'has offending argument value', err.message);
+        la(/a should be a number/.test(err.message),
+          'has defensive message', err.message);
+        return true;
+      }
+      la(check.raises(addStringToNumber, checkException),
+        'defends against string instead of number');
     });
 
     // API doc examples
