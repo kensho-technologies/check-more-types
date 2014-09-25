@@ -1,4 +1,4 @@
-# check-more-types v0.9.7
+# check-more-types v0.9.8
 
 > Additional type checks for [check-types.js](https://github.com/philbooth/check-types.js)
 
@@ -36,9 +36,11 @@ for advice and examples.
 
 **node:** `npm install check-more-types --save`
 
-    global.check = require('check-types');
-    require('check-more-types');
-    // patches global check object
+    // instead of
+    var check = require('check-types');
+    // use this
+    var check = require('check-more-types');
+    console.assert(check.bit(1), 'check.bit works');
 
 **browser** `bower install check-more-types --save`
 

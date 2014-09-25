@@ -11,7 +11,10 @@
   */
 
   if (!check) {
-    throw new Error('Cannot find check-types library, has it been loaded?');
+    if (typeof require === 'undefined') {
+      throw new Error('Cannot find check-types library, has it been loaded?');
+    }
+    check = require('check-types');
   }
 
   /**
@@ -362,4 +365,7 @@
     check.mixin(predicates[name], name);
   });
 
+  if (typeof module === 'object') {
+    module.exports = check;
+  }
 }(typeof window === 'object' ? window.check : global.check));

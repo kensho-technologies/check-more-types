@@ -2,9 +2,11 @@
 
 **node:** `npm install {%= name %} --save`
 
-    global.check = require('check-types');
-    require('{%= name %}');
-    // patches global check object
+    // instead of
+    var check = require('check-types');
+    // use this
+    var check = require('{%= name %}');
+    console.assert(check.bit(1), 'check.bit works');
 
 **browser** `bower install {%= name %} --save`
 
