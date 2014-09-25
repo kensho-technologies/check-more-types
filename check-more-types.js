@@ -233,7 +233,7 @@
   //
 
   if (!check.defend) {
-    var checkPredicates = function checkPredicates(fn, predicates, args) {
+    var checkPredicates = function checksPredicates(fn, predicates, args) {
       check.verify.fn(fn, 'expected a function');
       check.verify.array(predicates, 'expected list of predicates');
       check.verify.defined(args, 'missing args');
