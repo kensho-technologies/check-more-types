@@ -246,7 +246,7 @@
         }
 
         if (!predicate.call(null, args[j])) {
-          var msg = 'Argument ' + (k + 1) + ' ' + args[j] + ' does not pass predicate';
+          var msg = 'Argument ' + (j + 1) + ': ' + args[j] + ' does not pass predicate';
           if (check.unemptyString(predicates[k + 1])) {
             msg += ': ' + predicates[k + 1];
           }

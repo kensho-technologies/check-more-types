@@ -807,6 +807,23 @@ describe('check-more-types', function () {
       }
       la(check.raises(callAddWithNonNumbers));
     });
+
+    it('check.defend with messages', function () {
+      function add(a, b) { return a + b; }
+      var safeAdd = check.defend(add,
+        check.number, 'a should be a number',
+        check.string, 'b should be a string');
+      la(safeAdd(2, 'foo') === '2foo');
+
+      function addNumbers() {
+        return safeAdd(2, 3);
+      }
+      function checkException(err) {
+        la(err.message === 'Argument 2: 3 does not pass predicate: b should be a string');
+        return true;
+      }
+      la(check.raises(addNumbers, checkException));
+    });
   });
 
   describe('check.unit', function () {

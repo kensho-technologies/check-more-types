@@ -1,4 +1,4 @@
-# check-more-types v0.9.6
+# check-more-types v0.9.7
 
 > Additional type checks for [check-types.js](https://github.com/philbooth/check-types.js)
 
@@ -75,6 +75,7 @@ for advice and examples.
 * [Defending a function](#defending-a-function)
   * [check.defend(fn, predicates)](#checkdefendfn-predicates)
   * [protects optional arguments](#protects-optional-arguments)
+  * [check.defend with messages](#checkdefend-with-messages)
   * [check.defend in module pattern](#checkdefend-in-module-pattern)
 
 
@@ -448,6 +449,27 @@ you can use `check.defend` function
     var safeAdd = check.defend(add, check.number, check.maybe.number);
     safeAdd(2, 3); // 5
     safeAdd(2); // 'foo'
+
+---
+
+You can add extra message after a predicate
+
+#### check.defend with messages
+
+    function add(a, b) {
+      return a + b;
+    }
+    var safeAdd = check.defend(add, check.number, 'a should be a number', check.string, 'b should be a string');
+    safeAdd(2, 'foo'); // '2foo'
+    function addNumbers() {
+      return safeAdd(2, 3);
+    }
+
+    function checkException(err) {
+      err.message; // 'Argument 2: 3 does not pass predicate: b should be a string'
+      return true;
+    }
+    check.raises(addNumbers, checkException); // true
 
 ---
 

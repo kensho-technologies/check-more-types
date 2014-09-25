@@ -371,6 +371,27 @@ you can use `check.defend` function
 
 ---
 
+You can add extra message after a predicate
+
+### check.defend with messages
+
+    function add(a, b) {
+      return a + b;
+    }
+    var safeAdd = check.defend(add, check.number, 'a should be a number', check.string, 'b should be a string');
+    safeAdd(2, 'foo'); // '2foo'
+    function addNumbers() {
+      return safeAdd(2, 3);
+    }
+
+    function checkException(err) {
+      err.message; // 'Argument 2: 3 does not pass predicate: b should be a string'
+      return true;
+    }
+    check.raises(addNumbers, checkException); // true
+
+---
+
 This works great when combined with JavaScript module pattern as in this example
 
 ### check.defend in module pattern
