@@ -898,4 +898,18 @@ describe('check-more-types', function () {
       la(check.unempty('foo'));
     });
   });
+
+  describe('check.emptyString', function () {
+    it('is defined', function () {
+      la(check.fn(check.emptyString));
+    });
+
+    /** @sample check/emptyString */
+    it('check.emptyString', function () {
+      la(check.emptyString(''));
+      la(!check.emptyString(' '));
+      la(!check.emptyString(0));
+      la(!check.emptyString([]));
+    });
+  });
 });

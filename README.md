@@ -1,4 +1,4 @@
-# check-more-types v0.9.8
+# check-more-types v0.9.9
 
 > Additional type checks for [check-types.js](https://github.com/philbooth/check-types.js)
 
@@ -55,6 +55,7 @@ for advice and examples.
   * [check.unit](#checkunit)
   * [check.hexRgb](#checkhexrgb)
   * [check.bool](#checkbool)
+  * [check.emptyString](#checkemptystring)
   * [check.empty](#checkempty)
   * [check.unempty](#checkunempty)
   * [check.unemptyArray](#checkunemptyarray)
@@ -158,6 +159,15 @@ for advice and examples.
     check.bool(1); // false
     check.bool('1'); // false
     check.bool(2); // false
+
+---
+
+#### check.emptyString
+
+    check.emptyString(''); // true
+    check.emptyString(' '); // false
+    check.emptyString(0); // false
+    check.emptyString([]); // false
 
 ---
 

@@ -78,6 +78,15 @@
 
 ---
 
+### check.emptyString
+
+    check.emptyString(''); // true
+    check.emptyString(' '); // false
+    check.emptyString(0); // false
+    check.emptyString([]); // false
+
+---
+
 ### check.empty
 
     check.empty([]); // true

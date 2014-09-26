@@ -178,6 +178,14 @@
   }
 
   /**
+    Returns true if given value is ''
+    @method emptyString
+  */
+  function emptyString(a) {
+    return a === '';
+  }
+
+  /**
     Returns true if given value is [], {} or ''
     @method empty
   */
@@ -356,6 +364,7 @@
     schema: schema,
     raises: raises,
     empty: empty,
+    emptyString: emptyString,
     unempty: unempty,
     unit: unit,
     hexRgb: hexRgb
