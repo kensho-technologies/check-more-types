@@ -421,3 +421,26 @@ This works great when combined with JavaScript module pattern as in this example
     check.raises(callAddWithNonNumbers); // true
 
 ---
+
+## Safe callback execution
+
+Sometimes we want to execute a function depending on the condition, but without throwing an
+exception. For these cases, there is `check.then`
+
+### check.then
+
+    function isSum10(a, b) {
+      return a + b === 10;
+    }
+
+    function sum(a, b) {
+      return a + b;
+    }
+    var onlyAddTo10 = check.then(isSum10, sum);
+    // isSum10 returns true for these arguments
+    // then sum is executed
+    onlyAddTo10(3, 7); // 10
+    onlyAddTo10(1, 2); // undefined
+    // sum is never called because isSum10 condition is false
+
+----

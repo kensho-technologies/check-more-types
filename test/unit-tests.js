@@ -18,7 +18,6 @@ describe('check-more-types', function () {
     function doIt() { done = true; }
 
     beforeEach(function () {
-      console.log('done = false');
       done = false;
     });
 
@@ -38,7 +37,51 @@ describe('check-more-types', function () {
     });
 
     it('can evaluate predicate function', function () {
+      function isTrue() { return true; }
+      var safeDo = check.then(isTrue, doIt);
+      safeDo();
+      la(done);
+    });
 
+    it('can evaluate predicate function (returns false)', function () {
+      function isFalse() { return false; }
+      var safeDo = check.then(isFalse, doIt);
+      safeDo();
+      la(!done);
+    });
+
+    it('can evaluate condition based on arguments', function () {
+      function is3(a) {
+        return a === 3;
+      }
+      var safeDo = check.then(is3, doIt);
+      safeDo();
+      la(!done, 'argument was not 3');
+
+      safeDo(3);
+      la(done, 'argument was 3');
+    });
+
+    it('handles multiple arguments', function () {
+      function sumIs10(a, b) { return a + b === 10; }
+      var safeDo = check.then(sumIs10, doIt);
+      safeDo(4, 6);
+      la(done, 'executed');
+      done = false;
+      safeDo(4, 4);
+      la(!done, 'sum was not 10');
+    });
+
+    it('check.then', function () {
+      function isSum10(a, b) { return a + b === 10; }
+      function sum(a, b) { return a + b; }
+      var onlyAddTo10 = check.then(isSum10, sum);
+      // isSum10 returns true for these arguments
+      // then sum is executed
+      la(onlyAddTo10(3, 7) === 10);
+
+      la(onlyAddTo10(1, 2) === undefined);
+      // sum is never called because isSum10 condition is false
     });
   });
 

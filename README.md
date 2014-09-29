@@ -1,4 +1,4 @@
-# check-more-types v0.9.9
+# check-more-types v1.0.0
 
 > Additional type checks for [check-types.js](https://github.com/philbooth/check-types.js)
 
@@ -80,6 +80,8 @@ for advice and examples.
   * [protects optional arguments](#protects-optional-arguments)
   * [check.defend with messages](#checkdefend-with-messages)
   * [check.defend in module pattern](#checkdefend-in-module-pattern)
+* [Safe callback execution](#safe-callback-execution)
+  * [check.then](#checkthen)
 
 
 #### check.defined
@@ -505,6 +507,29 @@ This works great when combined with JavaScript module pattern as in this example
     check.raises(callAddWithNonNumbers); // true
 
 ---
+
+### Safe callback execution
+
+Sometimes we want to execute a function depending on the condition, but without throwing an
+exception. For these cases, there is `check.then`
+
+#### check.then
+
+    function isSum10(a, b) {
+      return a + b === 10;
+    }
+
+    function sum(a, b) {
+      return a + b;
+    }
+    var onlyAddTo10 = check.then(isSum10, sum);
+    // isSum10 returns true for these arguments
+    // then sum is executed
+    onlyAddTo10(3, 7); // 10
+    onlyAddTo10(1, 2); // undefined
+    // sum is never called because isSum10 condition is false
+
+----
 
 ### Small print
 

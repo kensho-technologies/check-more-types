@@ -355,7 +355,9 @@
     */
     check.then = function then(condition, fn) {
       return function () {
-        if (condition) {
+        var ok = typeof condition === 'function' ?
+          condition.apply(null, arguments) : condition;
+        if (ok) {
           return fn.apply(null, arguments);
         }
       };
