@@ -349,6 +349,10 @@
   }
 
   if (!check.then) {
+    /**
+      Executes given function only if condition is truthy.
+      @method then
+    */
     check.then = function then(condition, fn) {
       return function () {
         if (condition) {

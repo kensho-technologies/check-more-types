@@ -18,10 +18,12 @@ describe('check-more-types', function () {
     function doIt() { done = true; }
 
     beforeEach(function () {
+      console.log('done = false');
       done = false;
     });
 
     it('executes given function if condition is true', function () {
+      la(!done, '!done initially');
       var safeDo = check.then(true, doIt);
       la(check.fn(safeDo), 'returns a new function');
       safeDo();
