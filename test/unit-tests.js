@@ -1,4 +1,4 @@
-/* global describe, la, check, it */
+/* global describe, la, check, it, beforeEach */
 describe('check-more-types', function () {
   var root = typeof window === 'object' ? window : global;
 
@@ -14,22 +14,29 @@ describe('check-more-types', function () {
   });
 
   describe('check/then', function () {
+    var done = false;
+    function doIt() { done = true; }
+
+    beforeEach(function () {
+      done = false;
+    });
+
     it('executes given function if condition is true', function () {
-      var done = false;
-      function doIt() { done = true; }
       var safeDo = check.then(true, doIt);
-      la(check.fn(safeDo));
+      la(check.fn(safeDo), 'returns a new function');
       safeDo();
-      la(done);
+      la(done, 'safeDo was executed');
     });
 
     it('does not execute function if condition is false', function () {
-      var done = false;
-      function doIt() { done = true; }
+      la(!done, '!done initially');
       var safeDo = check.then(false, doIt);
-      la(check.fn(safeDo));
       safeDo();
-      la(!done);
+      la(!done, 'safeDo was NOT executed');
+    });
+
+    it('can evaluate predicate function', function () {
+
     });
   });
 
