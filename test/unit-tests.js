@@ -13,6 +13,26 @@ describe('check-more-types', function () {
     la(check.fn(check.lowerCase));
   });
 
+  describe('check/then', function () {
+    it('executes given function if condition is true', function () {
+      var done = false;
+      function doIt() { done = true; }
+      var safeDo = check.then(true, doIt);
+      la(check.fn(safeDo));
+      safeDo();
+      la(done);
+    });
+
+    it('does not execute function if condition is false', function () {
+      var done = false;
+      function doIt() { done = true; }
+      var safeDo = check.then(false, doIt);
+      la(check.fn(safeDo));
+      safeDo();
+      la(!done);
+    });
+  });
+
   /** @sample check/raises */
   describe('check.raises', function () {
     la(check.fn(check.raises), 'missing check.raises', check);

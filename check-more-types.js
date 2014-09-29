@@ -348,6 +348,16 @@
     };
   }
 
+  if (!check.then) {
+    check.then = function then(condition, fn) {
+      return function () {
+        if (condition) {
+          return fn.apply(null, arguments);
+        }
+      };
+    };
+  }
+
   // new predicates to be added to check object. Use object to preserve names
   var predicates = {
     defined: defined,
