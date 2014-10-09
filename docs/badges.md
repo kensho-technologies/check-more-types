@@ -6,7 +6,6 @@
 [![Code Climate][check-more-types-code-climate-image] ][check-more-types-code-climate-url]
 [![dependencies][check-more-types-dependencies-image] ][check-more-types-dependencies-url]
 [![devdependencies][check-more-types-devdependencies-image] ][check-more-types-devdependencies-url]
-![open issues](http://img.shields.io/github/issues/kensho/check-more-types.svg)
 ![issue](http://issuestats.com/github/kensho/check-more-types/badge/issue)
 
 [check-more-types-icon]: https://nodei.co/npm/check-more-types.png?downloads=true
