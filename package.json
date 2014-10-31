@@ -1,7 +1,7 @@
 {
   "name": "check-more-types",
   "description": "Additional type checks for https://github.com/philbooth/check-types.js",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "author": "Gleb Bahmutov <gleb.bahmutov@gmail.com>",
   "bugs": {
     "url": "https://github.com/kensho/check-more-types/issues"
@@ -47,7 +47,8 @@
     "url": "git@github.com:kensho/check-more-types.git"
   },
   "scripts": {
-    "test": "grunt && node test/load-under-node-test.js",
+    "test": "grunt && npm run node-test",
+    "node-test": "node test/load-under-node-test.js",
     "coveralls": "node node_modules/lcov-filter/index.js cover/lcov.info test | ./node_modules/coveralls/bin/coveralls.js"
   }
 }
