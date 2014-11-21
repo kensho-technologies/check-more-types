@@ -898,6 +898,16 @@ describe('check-more-types', function () {
     });
   });
 
+  describe('check.sameLength', function () {
+    /** @sample check/sameLength */
+    it('check.sameLength', function () {
+      la(check.sameLength([1, 2], ['a', 'b']));
+      la(check.sameLength('ab', 'cd'));
+      // different types
+      la(!check.sameLength([1, 2], 'ab'));
+    });
+  });
+
   describe('check.unit', function () {
     /** @sample check/unit */
     it('check.unit', function () {

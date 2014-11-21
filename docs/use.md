@@ -34,6 +34,17 @@
 
 `check.same` should produce same result as `===`.
 
+---
+
+### check.sameLength
+
+    check.sameLength([1, 2], ['a', 'b']); // true
+    check.sameLength('ab', 'cd'); // true
+    // different types
+    check.sameLength([1, 2], 'ab'); // false
+
+---
+
 ### check.allSame
 
     var foo = {},

@@ -37,6 +37,17 @@
   }
 
   /**
+    Returns true if both objects are the same type and have same length property
+
+    @method sameLength
+  */
+  function sameLength(a, b) {
+    return typeof a === typeof b &&
+      a && b &&
+      a.length === b.length;
+  }
+
+  /**
     Returns true if all items in an array are the same reference
 
     @method allSame
@@ -383,7 +394,8 @@
     emptyString: emptyString,
     unempty: unempty,
     unit: unit,
-    hexRgb: hexRgb
+    hexRgb: hexRgb,
+    sameLength: sameLength
   };
 
   Object.keys(predicates).forEach(function (name) {
