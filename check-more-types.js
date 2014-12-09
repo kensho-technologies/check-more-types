@@ -37,6 +37,18 @@
   }
 
   /**
+    Returns true if the index is valid for give string / array
+
+    @method index
+  */
+  function index(list, k) {
+    return defined(list) &&
+      has(list, 'length') &&
+      k >= 0 &&
+      k < list.length;
+  }
+
+  /**
     Returns true if both objects are the same type and have same length property
 
     @method sameLength
@@ -424,7 +436,8 @@
     hexRgb: hexRgb,
     sameLength: sameLength,
     commitId: commitId,
-    shortCommitId: shortCommitId
+    shortCommitId: shortCommitId,
+    index: index
   };
 
   Object.keys(predicates).forEach(function (name) {

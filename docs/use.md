@@ -30,6 +30,10 @@
 
 ---
 
+### check.index
+
+---
+
 ### check.same
 
     var foo = {},

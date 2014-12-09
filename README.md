@@ -1,4 +1,4 @@
-# check-more-types v1.0.4
+# check-more-types v1.1.0
 
 > Additional type checks for [check-types.js](https://github.com/philbooth/check-types.js)
 
@@ -52,6 +52,7 @@ for advice and examples.
   * [check.bit](#checkbit)
   * [check.commitId](#checkcommitid)
   * [check.shortCommitId](#checkshortcommitid)
+  * [check.index](#checkindex)
   * [check.same](#checksame)
   * [check.sameLength](#checksamelength)
   * [check.allSame](#checkallsame)
@@ -116,6 +117,10 @@ for advice and examples.
 ---
 
 #### check.shortCommitId
+
+---
+
+#### check.index
 
 ---
 

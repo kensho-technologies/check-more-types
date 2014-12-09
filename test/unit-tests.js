@@ -13,16 +13,29 @@ describe('check-more-types', function () {
     la(check.fn(check.lowerCase));
   });
 
-  describe('commit ids', function () {
+  describe('check/shortCommitId', function () {
+    /** @sample check/shortCommitId */
+    it('shortCommitId', function () {
+      la(check.shortCommitId('3b81980'));
+    });
+  });
 
+  describe('check/commitId', function () {
     /** @sample check/commitId */
     it('commitId', function () {
       la(check.commitId('3b819803cdf2225ca1338beb17e0c506fdeedefc'));
     });
+  });
 
-    /** @sample check/shortCommitId */
-    it('shortCommitId', function () {
-      la(check.shortCommitId('3b81980'));
+  describe('check/index', function () {
+    /** @sample check/index */
+    it('index', function () {
+      la(check.index('123', 0));
+      la(check.index('123', 2));
+      la(!check.index('123', 3));
+      la(check.index(['foo', 'bar'], 0));
+      la(check.index(['foo', 'bar'], 1));
+      la(!check.index(['foo', 'bar'], 2));
     });
   });
 
