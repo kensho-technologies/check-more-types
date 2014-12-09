@@ -22,6 +22,14 @@
 
 ---
 
+### check.commitId
+
+---
+
+### check.shortCommitId
+
+---
+
 ### check.same
 
     var foo = {},

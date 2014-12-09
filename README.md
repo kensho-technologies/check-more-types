@@ -50,6 +50,8 @@ for advice and examples.
 
 * **API**
   * [check.bit](#checkbit)
+  * [check.commitId](#checkcommitid)
+  * [check.shortCommitId](#checkshortcommitid)
   * [check.same](#checksame)
   * [check.sameLength](#checksamelength)
   * [check.allSame](#checkallsame)
@@ -106,6 +108,14 @@ for advice and examples.
     check.bit('1'); // false
     check.bit(2); // false
     check.bit(true); // false
+
+---
+
+#### check.commitId
+
+---
+
+#### check.shortCommitId
 
 ---
 

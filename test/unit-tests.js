@@ -13,6 +13,19 @@ describe('check-more-types', function () {
     la(check.fn(check.lowerCase));
   });
 
+  describe('commit ids', function () {
+
+    /** @sample check/commitId */
+    it('commitId', function () {
+      la(check.commitId('3b819803cdf2225ca1338beb17e0c506fdeedefc'));
+    });
+
+    /** @sample check/shortCommitId */
+    it('shortCommitId', function () {
+      la(check.shortCommitId('3b81980'));
+    });
+  });
+
   describe('check/then', function () {
     var done = false;
     function doIt() { done = true; }
