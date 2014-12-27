@@ -78,6 +78,16 @@
   }
 
   /**
+    Returns true for urls of the format `git@....git`
+
+    @method git
+  */
+  function git(url) {
+    return check.unemptyString(url) &&
+      /^git@/.test(url);
+  }
+
+  /**
     Checks if given value is 0 or 1
 
     @method bit
@@ -437,7 +447,8 @@
     sameLength: sameLength,
     commitId: commitId,
     shortCommitId: shortCommitId,
-    index: index
+    index: index,
+    git: git
   };
 
   Object.keys(predicates).forEach(function (name) {

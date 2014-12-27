@@ -252,6 +252,13 @@ describe('check-more-types', function () {
     });
   });
 
+  describe('check.git', function () {
+    /** @sample check/git */
+    it('detects git url', function () {
+      la(check.git('git@github.com:kensho/check-more-types.git'));
+    });
+  });
+
   describe('check.bit', function () {
     la(check.fn(check.bit));
 

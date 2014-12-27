@@ -22,6 +22,12 @@
 
 ---
 
+### check.git
+
+    check.git('url string');
+
+---
+
 ### check.commitId
 
 ---

@@ -1,4 +1,4 @@
-# check-more-types v1.1.0
+# check-more-types v1.1.1
 
 > Additional type checks for [check-types.js](https://github.com/philbooth/check-types.js)
 
@@ -50,6 +50,7 @@ for advice and examples.
 
 * **API**
   * [check.bit](#checkbit)
+  * [check.git](#checkgit)
   * [check.commitId](#checkcommitid)
   * [check.shortCommitId](#checkshortcommitid)
   * [check.index](#checkindex)
@@ -109,6 +110,12 @@ for advice and examples.
     check.bit('1'); // false
     check.bit(2); // false
     check.bit(true); // false
+
+---
+
+#### check.git
+
+    check.git('url string');
 
 ---
 
