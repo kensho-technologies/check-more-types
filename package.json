@@ -6,6 +6,7 @@
   "bugs": {
     "url": "https://github.com/kensho/check-more-types/issues"
   },
+  "contributors": [],
   "devDependencies": {
     "check-types": "1.4.0",
     "coveralls": "2.11.2",

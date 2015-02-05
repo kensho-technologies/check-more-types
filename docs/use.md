@@ -268,6 +268,8 @@ argument application
     isValidPerson(h1); // true
     isValidPerson(h2); // false
 
+You can use `Function.prototype.bind` or any partial application method, for example
+`_.partial(check.schema, personSchema);`.
 Because bound schema parameter generates a valid function, you can nest checks using
 schema composition. For example let us combine the reuse `isValidPerson` as part of
 another check
