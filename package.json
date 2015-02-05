@@ -22,9 +22,9 @@
     "grunt-toc": "0.1.0",
     "grunt-xplain": "0.2.4",
     "lazy-ass": "0.5.3",
-    "lazy-ass-helpful": "0.6.0",
+    "lazy-ass-helpful": "0.6.1",
     "lcov-filter": "0.0.1",
-    "lodash": "2.4.1",
+    "lodash": "3.1.0",
     "matchdep": "0.3.0",
     "pre-git": "0.1.1"
   },
@@ -41,7 +41,10 @@
   ],
   "license": "MIT",
   "main": "check-more-types.js",
-  "pre-commit": ["npm test", "npm version"],
+  "pre-commit": [
+    "npm test",
+    "npm version"
+  ],
   "repository": {
     "type": "git",
     "url": "git@github.com:kensho/check-more-types.git"
