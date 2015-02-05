@@ -41,7 +41,7 @@
   ],
   "license": "MIT",
   "main": "check-more-types.js",
-  "pre-commit": "npm test",
+  "pre-commit": ["npm test", "npm version"],
   "repository": {
     "type": "git",
     "url": "git@github.com:kensho/check-more-types.git"
