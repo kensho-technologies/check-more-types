@@ -133,6 +133,16 @@
   }
 
   /**
+  Returns true if each item in the array passes predicate
+  @method arrayOf
+  @param rule Predicate function
+  @param a Array to check
+  */
+  function arrayOf(rule, a) {
+    return check.array(a) && a.every(rule);
+  }
+
+  /**
   Returns true if given array only has strings
   @method arrayOfStrings
   @param a Array to check
@@ -448,7 +458,8 @@
     commitId: commitId,
     shortCommitId: shortCommitId,
     index: index,
-    git: git
+    git: git,
+    arrayOf: arrayOf
   };
 
   Object.keys(predicates).forEach(function (name) {

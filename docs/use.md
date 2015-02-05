@@ -159,6 +159,26 @@
 
 ---
 
+### check.arrayOf
+
+```js
+check.arrayOf(check.unemptyString, ['foo', '']); // false
+check.arrayOf(check.unemptyString, ['foo', 'bar']); // true
+// can be partially applied and combined with check.schema
+var person = {
+  first: check.unemptyString,
+  last: check.unemptyString
+};
+var isPerson = check.schema.bind(null, person);
+var arePeople = check.arrayOf.bind(null, isPerson);
+var people = [{
+  first: 'foo',
+  last: 'bar'
+}];
+arePeople(people); // true
+```
+---
+
 ### check.arrayOfArraysOfStrings
 
     // second argument is checkLowerCase

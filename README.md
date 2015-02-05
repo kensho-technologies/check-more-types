@@ -1,4 +1,4 @@
-# check-more-types v1.1.1
+# check-more-types v1.2.0
 
 > Additional type checks for [check-types.js](https://github.com/philbooth/check-types.js)
 
@@ -65,6 +65,7 @@ for advice and examples.
   * [check.unempty](#checkunempty)
   * [check.unemptyArray](#checkunemptyarray)
   * [check.arrayOfStrings](#checkarrayofstrings)
+  * [check.arrayOf](#checkarrayof)
   * [check.arrayOfArraysOfStrings](#checkarrayofarraysofstrings)
   * [check.lowerCase](#checklowercase)
   * [check.has(obj, property)](#checkhasobj-property)
@@ -248,6 +249,26 @@ for advice and examples.
     check.arrayOfStrings(['foo', 'bar'], true); // true
     check.arrayOfStrings(['FOO', 'BAR'], true); // false
 
+---
+
+#### check.arrayOf
+
+```js
+check.arrayOf(check.unemptyString, ['foo', '']); // false
+check.arrayOf(check.unemptyString, ['foo', 'bar']); // true
+// can be partially applied and combined with check.schema
+var person = {
+  first: check.unemptyString,
+  last: check.unemptyString
+};
+var isPerson = check.schema.bind(null, person);
+var arePeople = check.arrayOf.bind(null, isPerson);
+var people = [{
+  first: 'foo',
+  last: 'bar'
+}];
+arePeople(people); // true
+```
 ---
 
 #### check.arrayOfArraysOfStrings

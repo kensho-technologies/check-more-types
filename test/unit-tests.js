@@ -13,6 +13,35 @@ describe('check-more-types', function () {
     la(check.fn(check.lowerCase));
   });
 
+  describe('check/arrayOf', function () {
+    it('validates array of strings', function () {
+      la(check.arrayOf(check.string, ['foo', '']));
+    });
+
+    it('validates array of empty strings', function () {
+      la(!check.arrayOf(check.unemptyString, ['foo', '']));
+      la(check.arrayOf(check.unemptyString, ['foo', 'bar']));
+    });
+
+    it('validates array of positive numbers', function () {
+      la(check.arrayOf(check.positiveNumber, [10, 20, 30]));
+    });
+
+    it('validates schema for objects', function () {
+      var person = {
+        first: check.unemptyString,
+        last: check.unemptyString
+      };
+      var isPerson = check.schema.bind(null, person);
+      var arePeople = check.arrayOf.bind(null, isPerson);
+      var people = [{
+        first: 'foo',
+        last: 'bar'
+      }];
+      la(arePeople(people), 'checked people');
+    });
+  });
+
   describe('check/shortCommitId', function () {
     /** @sample check/shortCommitId */
     it('shortCommitId', function () {
