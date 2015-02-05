@@ -42,6 +42,22 @@ describe('check-more-types', function () {
     });
   });
 
+  describe('check/badItems', function () {
+    it('finds empty strings', function () {
+      var empty = check.badItems(check.unemptyString, ['foo', '', 'bar']);
+      la(check.array(empty), 'returns array');
+      la(empty.length === 1, 'has single item');
+      la(empty[0] === '', 'has empty string');
+    });
+
+    it('finds non strings', function () {
+      var empty = check.badItems(check.string, ['foo', '', 'bar', 10]);
+      la(check.array(empty), 'returns array');
+      la(empty.length === 1, 'has single item');
+      la(empty[0] === 10, 'has number');
+    });
+  });
+
   describe('check/shortCommitId', function () {
     /** @sample check/shortCommitId */
     it('shortCommitId', function () {

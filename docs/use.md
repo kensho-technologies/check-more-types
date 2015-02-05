@@ -179,6 +179,14 @@ arePeople(people); // true
 ```
 ---
 
+### check.badItems
+
+Finds items that do not pass predicate
+
+```js
+check.badItems(check.unemptyString, ['foo', '', 'bar']); // ['']
+```
+
 ### check.arrayOfArraysOfStrings
 
     // second argument is checkLowerCase

@@ -133,13 +133,24 @@
   }
 
   /**
-  Returns true if each item in the array passes predicate
+  Returns true if each item in the array passes the predicate
   @method arrayOf
   @param rule Predicate function
   @param a Array to check
   */
   function arrayOf(rule, a) {
     return check.array(a) && a.every(rule);
+  }
+
+  /**
+  Returns items from array that do not passes the predicate
+  @method badItems
+  @param rule Predicate function
+  @param a Array with items
+  */
+  function badItems(rule, a) {
+    check.verify.array(a, 'expected array to find bad items');
+    return a.filter(notModifier(rule));
   }
 
   /**
@@ -347,6 +358,18 @@
     };
   }
 
+  /**
+  * Public modifier `not`.
+  *
+  * Negates `predicate`.
+  * copied from check-types.js
+  */
+  function notModifier(predicate) {
+    return function () {
+      return !predicate.apply(null, arguments);
+    };
+  }
+
   if (!check.mixin) {
     /** Adds new predicate to all objects
     @method mixin */
@@ -380,18 +403,6 @@
             return true;
           }
           return predicate.apply(null, arguments);
-        };
-      }
-
-      /**
-      * Public modifier `not`.
-      *
-      * Negates `predicate`.
-      * copied from check-types.js
-      */
-      function notModifier(predicate) {
-        return function () {
-          return !predicate.apply(null, arguments);
         };
       }
 
@@ -459,7 +470,8 @@
     shortCommitId: shortCommitId,
     index: index,
     git: git,
-    arrayOf: arrayOf
+    arrayOf: arrayOf,
+    badItems: badItems
   };
 
   Object.keys(predicates).forEach(function (name) {

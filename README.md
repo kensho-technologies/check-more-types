@@ -1,4 +1,4 @@
-# check-more-types v1.2.0
+# check-more-types v1.3.0
 
 > Additional type checks for [check-types.js](https://github.com/philbooth/check-types.js)
 
@@ -66,6 +66,7 @@ for advice and examples.
   * [check.unemptyArray](#checkunemptyarray)
   * [check.arrayOfStrings](#checkarrayofstrings)
   * [check.arrayOf](#checkarrayof)
+  * [check.badItems](#checkbaditems)
   * [check.arrayOfArraysOfStrings](#checkarrayofarraysofstrings)
   * [check.lowerCase](#checklowercase)
   * [check.has(obj, property)](#checkhasobj-property)
@@ -270,6 +271,14 @@ var people = [{
 arePeople(people); // true
 ```
 ---
+
+#### check.badItems
+
+Finds items that do not pass predicate
+
+```js
+check.badItems(check.unemptyString, ['foo', '', 'bar']); // ['']
+```
 
 #### check.arrayOfArraysOfStrings
 
