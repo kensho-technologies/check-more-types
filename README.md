@@ -272,6 +272,9 @@ arePeople(people); // true
 ```
 ---
 
+Why would you need `check.arrayOf(predicate, x)` and not simply use `x.every(predicate)`?
+Because `x` might not be an Array.
+
 #### check.badItems
 
 Finds items that do not pass predicate
