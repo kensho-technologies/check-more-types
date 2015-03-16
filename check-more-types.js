@@ -78,6 +78,16 @@
   }
 
   /**
+    Returns true if given item is in the array
+
+    @method oneOf
+  */
+  function oneOf(arr, x) {
+    check.verify.array(arr, 'expected an array');
+    return arr.indexOf(x) !== -1;
+  }
+
+  /**
     Returns true for urls of the format `git@....git`
 
     @method git
@@ -471,7 +481,8 @@
     index: index,
     git: git,
     arrayOf: arrayOf,
-    badItems: badItems
+    badItems: badItems,
+    oneOf: oneOf
   };
 
   Object.keys(predicates).forEach(function (name) {

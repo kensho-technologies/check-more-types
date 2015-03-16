@@ -40,6 +40,15 @@
 
 ---
 
+### check.oneOf
+
+    var colors = ['red', 'green', 'blue'];
+    var color = 'green';
+    check.oneOf(colors, color)); // true
+    check.oneOf(colors, 'brown')); // false
+
+---
+
 ### check.same
 
     var foo = {},

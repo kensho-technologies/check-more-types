@@ -1,4 +1,4 @@
-# check-more-types v1.3.0
+# check-more-types v1.4.0
 
 > Additional type checks for [check-types.js](https://github.com/philbooth/check-types.js)
 
@@ -54,6 +54,7 @@ for advice and examples.
   * [check.commitId](#checkcommitid)
   * [check.shortCommitId](#checkshortcommitid)
   * [check.index](#checkindex)
+  * [check.oneOf](#checkoneof)
   * [check.same](#checksame)
   * [check.sameLength](#checksamelength)
   * [check.allSame](#checkallsame)
@@ -130,6 +131,15 @@ for advice and examples.
 ---
 
 #### check.index
+
+---
+
+#### check.oneOf
+
+    var colors = ['red', 'green', 'blue'];
+    var color = 'green';
+    check.oneOf(colors, color)); // true
+    check.oneOf(colors, 'brown')); // false
 
 ---
 

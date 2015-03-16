@@ -13,6 +13,15 @@ describe('check-more-types', function () {
     la(check.fn(check.lowerCase));
   });
 
+  describe('check/oneOf', function () {
+    it('validates color', function () {
+      var colors = ['red', 'green', 'blue'];
+      var color = 'green';
+      la(check.oneOf(colors, color), color, 'is one of', colors);
+      la(!check.oneOf(colors, 'brown'));
+    });
+  });
+
   describe('check/arrayOf', function () {
     it('validates array of strings', function () {
       la(check.arrayOf(check.string, ['foo', '']));
