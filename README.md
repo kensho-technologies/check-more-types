@@ -138,8 +138,8 @@ for advice and examples.
 
     var colors = ['red', 'green', 'blue'];
     var color = 'green';
-    check.oneOf(colors, color)); // true
-    check.oneOf(colors, 'brown')); // false
+    check.oneOf(colors, color); // true
+    check.oneOf(colors, 'brown'); // false
 
 ---
 
