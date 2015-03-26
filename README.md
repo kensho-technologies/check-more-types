@@ -1,4 +1,4 @@
-# check-more-types v1.4.0
+# check-more-types v1.5.0
 
 > Additional type checks for [check-types.js](https://github.com/philbooth/check-types.js)
 
@@ -90,6 +90,7 @@ for advice and examples.
   * [check.defend in module pattern](#checkdefend-in-module-pattern)
 * [Safe callback execution](#safe-callback-execution)
   * [check.then](#checkthen)
+  * [check.promise](#checkpromise)
 
 
 #### check.defined
@@ -609,6 +610,10 @@ exception. For these cases, there is `check.then`
     // sum is never called because isSum10 condition is false
 
 ----
+
+#### check.promise
+
+Returns true if given object has promise methods (`.then`, etc)
 
 ### Small print
 

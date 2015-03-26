@@ -515,3 +515,7 @@ exception. For these cases, there is `check.then`
     // sum is never called because isSum10 condition is false
 
 ----
+
+### check.promise
+
+Returns true if given object has promise methods (`.then`, etc)

@@ -13,6 +13,21 @@ describe('check-more-types', function () {
     la(check.fn(check.lowerCase));
   });
 
+  describe('check/promise', function () {
+    it('checks objects api', function () {
+      var p = {
+        then: function () {},
+        catch: function () {},
+        finally: function () {}
+      };
+      la(check.promise(p));
+      la(!check.promise({}));
+      la(!check.promise('foo'));
+      la(!check.promise());
+    });
+
+  });
+
   describe('check/oneOf', function () {
     it('validates color', function () {
       var colors = ['red', 'green', 'blue'];

@@ -455,6 +455,25 @@
     };
   }
 
+  var promiseSchema = {
+    then: check.fn
+  };
+
+  // work around reserved keywords checks
+  promiseSchema['catch'] = check.fn;
+  promiseSchema['finally'] = check.fn;
+
+  var hasPromiseApi = schema.bind(null, promiseSchema);
+
+  /**
+    Returns true if argument implements promise api (.then, .catch, .finally)
+    @method promise
+  */
+  function isPromise(p) {
+    return typeof p === 'object' &&
+      hasPromiseApi(p);
+  }
+
   // new predicates to be added to check object. Use object to preserve names
   var predicates = {
     defined: defined,
@@ -482,7 +501,8 @@
     git: git,
     arrayOf: arrayOf,
     badItems: badItems,
-    oneOf: oneOf
+    oneOf: oneOf,
+    promise: isPromise
   };
 
   Object.keys(predicates).forEach(function (name) {
