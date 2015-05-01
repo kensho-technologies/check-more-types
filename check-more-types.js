@@ -28,6 +28,16 @@
   }
 
   /**
+    Checks if argument is a valid Date instance
+
+    @method validDate
+  */
+  function validDate(value) {
+    return check.date(value) &&
+      check.number(Number(value));
+  }
+
+  /**
     same as ===
 
     @method same
@@ -474,6 +484,22 @@
       hasPromiseApi(p);
   }
 
+  /**
+    Shallow strict comparison
+    @method equal
+  */
+  function equal(a, b) {
+    if (arguments.length === 2) {
+      return a === b;
+    } else if (arguments.length === 1) {
+      return function equalTo(b) {
+        return a === b;
+      };
+    } else {
+      throw new Error('Expected at least 1 or 2 arguments to check.equal');
+    }
+  }
+
   // new predicates to be added to check object. Use object to preserve names
   var predicates = {
     defined: defined,
@@ -502,7 +528,9 @@
     arrayOf: arrayOf,
     badItems: badItems,
     oneOf: oneOf,
-    promise: isPromise
+    promise: isPromise,
+    validDate: validDate,
+    equal: equal
   };
 
   Object.keys(predicates).forEach(function (name) {

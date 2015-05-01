@@ -13,6 +13,38 @@ describe('check-more-types', function () {
     la(check.fn(check.lowerCase));
   });
 
+  describe('check/validDate', function () {
+    it('validates date', function () {
+      la(check.validDate(new Date()), 'now date');
+      la(check.validDate(new Date(2015, 1, 10)), '2015');
+      la(!check.validDate(), 'undefined is not a valid date');
+      la(!check.validDate(new Date(NaN)), 'NaN is not a valid date');
+    });
+  });
+
+  describe('check/equal', function () {
+    it('compares strings', function () {
+      la(check.equal('foo', 'foo'), 'foo');
+      la(!check.equal('foo', 'bar'), 'foo !== bar');
+    });
+
+    it('compares variable values', function () {
+      var foo = 'foo',
+        bar = 'bar';
+      la(check.equal(foo, foo), 'foo');
+      la(!check.equal(foo, bar), 'foo !== bar');
+    });
+
+    it('is curried', function () {
+      var foo = 'foo';
+      la(check.equal(foo, 'foo'), '2 arguments');
+      var isFoo = check.equal('foo');
+      la(check.fn(isFoo), 'returns function when 1 argument');
+      la(isFoo('foo'), 'compares to foo');
+      la(!isFoo('bar'), 'compares to bar');
+    });
+  });
+
   describe('check/promise', function () {
     it('checks objects api', function () {
       var p = {

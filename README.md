@@ -1,4 +1,4 @@
-# check-more-types v1.5.0
+# check-more-types v1.6.0
 
 > Additional type checks for [check-types.js](https://github.com/philbooth/check-types.js)
 
@@ -91,6 +91,8 @@ for advice and examples.
 * [Safe callback execution](#safe-callback-execution)
   * [check.then](#checkthen)
   * [check.promise](#checkpromise)
+  * [check.validDate](#checkvaliddate)
+  * [check.equal](#checkequal)
 
 
 #### check.defined
@@ -614,6 +616,22 @@ exception. For these cases, there is `check.then`
 #### check.promise
 
 Returns true if given object has promise methods (`.then`, etc)
+
+#### check.validDate
+
+Returns true if the given instance is a Date and is valid.
+
+#### check.equal
+
+Curried shallow strict comparison
+
+```js
+var foo = 'foo';
+check.equal(foo, 'foo'); // true
+var isFoo = check.equal('foo');
+isFoo('foo'); // true
+isFoo('bar'); // false
+```
 
 ### Small print
 

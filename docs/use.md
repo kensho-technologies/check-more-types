@@ -519,3 +519,19 @@ exception. For these cases, there is `check.then`
 ### check.promise
 
 Returns true if given object has promise methods (`.then`, etc)
+
+### check.validDate
+
+Returns true if the given instance is a Date and is valid.
+
+### check.equal
+
+Curried shallow strict comparison
+
+```js
+var foo = 'foo';
+check.equal(foo, 'foo'); // true
+var isFoo = check.equal('foo');
+isFoo('foo'); // true
+isFoo('bar'); // false
+```
