@@ -13,6 +13,23 @@ describe('check-more-types', function () {
     la(check.fn(check.lowerCase));
   });
 
+  describe('check/number', function () {
+    it('does not pass nulls as numbers', function () {
+      la(!check.number(null), 'null is not a number');
+      la(check.not.number(null), 'null is .not.number');
+    });
+
+    it('does not pass undefined as numbers', function () {
+      la(!check.number(undefined), 'undefined is not a number');
+      la(check.not.number(undefined), 'undefined is .not.number');
+    });
+
+    it('does not pass NaN as numbers', function () {
+      la(!check.number(NaN), 'NaN is not a number');
+      la(check.not.number(NaN), 'NaN is .not.number');
+    });
+  });
+
   describe('check/validDate', function () {
     it('validates date', function () {
       la(check.validDate(new Date()), 'now date');

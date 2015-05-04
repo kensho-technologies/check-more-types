@@ -1,3 +1,14 @@
+### check.number
+
+`check.number` is part of the `check-types` library, but as a note, it does not pass
+`null`, `undefined` or `NaN` values
+
+```js
+check.number(null); // false
+check.not.number(undefined); // true
+check.number(NaN); // false
+```
+
 ### check.defined
 
     check.defined(0); // true

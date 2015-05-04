@@ -1,4 +1,4 @@
-# check-more-types v1.6.0
+# check-more-types v1.6.1
 
 > Additional type checks for [check-types.js](https://github.com/philbooth/check-types.js)
 
@@ -49,6 +49,7 @@ for advice and examples.
 
 
 * **API**
+  * [check.defined](#checkdefined)
   * [check.bit](#checkbit)
   * [check.git](#checkgit)
   * [check.commitId](#checkcommitid)
@@ -94,6 +95,17 @@ for advice and examples.
   * [check.validDate](#checkvaliddate)
   * [check.equal](#checkequal)
 
+
+#### check.number
+
+`check.number` is part of the `check-types` library, but as a note, it does not pass
+`null`, `undefined` or `NaN` values
+
+```js
+check.number(null); // false
+check.not.number(undefined); // true
+check.number(NaN); // false
+```
 
 #### check.defined
 
