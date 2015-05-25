@@ -1,14 +1,16 @@
 {
   "name": "check-more-types",
   "description": "Additional type checks for https://github.com/philbooth/check-types.js",
-  "version": "1.6.1",
+  "version": "1.7.0",
   "author": "Gleb Bahmutov <gleb.bahmutov@gmail.com>",
   "bugs": {
     "url": "https://github.com/kensho/check-more-types/issues"
   },
   "contributors": [],
+  "dependencies": {
+    "check-types": "1.4.0"
+  },
   "devDependencies": {
-    "check-types": "1.4.0",
     "coveralls": "2.11.2",
     "grunt-contrib-jshint": "0.11.0",
     "grunt-contrib-uglify": "0.7.0",
