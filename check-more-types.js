@@ -480,8 +480,7 @@
     @method promise
   */
   function isPromise(p) {
-    return typeof p === 'object' &&
-      hasPromiseApi(p);
+    return check.object(p) && hasPromiseApi(p);
   }
 
   /**

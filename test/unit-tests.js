@@ -75,6 +75,9 @@ describe('check-more-types', function () {
       la(!check.promise());
     });
 
+    it('does not throw exception when passed array', function () {
+      la(!check.promise([]));
+    });
   });
 
   describe('check/oneOf', function () {
