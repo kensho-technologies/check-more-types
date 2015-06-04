@@ -130,6 +130,9 @@
     @method has
   */
   function has(o, property) {
+    if (arguments.length !== 2) {
+      throw new Error('Expected two arguments to check.has, got only ' + arguments.length);
+    }
     return Boolean(o && property &&
       typeof property === 'string' &&
       typeof o[property] !== 'undefined');

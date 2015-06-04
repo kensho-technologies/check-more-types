@@ -775,6 +775,16 @@ describe('check-more-types', function () {
       la(check.has('foo', 'length'));
     });
 
+    it('complaints if there is no property argument', function () {
+      var obj = {};
+      var crashed = true;
+      try {
+        check.has(obj);
+        crashed = false;
+      } catch (err) {}
+      la(crashed, 'has not crashed when checking non-existent property');
+    });
+
     it('passes', function () {
       var o = {
         foo: '',
@@ -794,8 +804,8 @@ describe('check-more-types', function () {
     });
 
     it('fails for invalid args', function () {
-      la(!check.has(), 'no arguments');
-      la(!check.has({}), 'no property name');
+      la(check.raises(check.has), 'no arguments');
+      la(check.raises(check.has.bind(check, {})), 'no property name');
       la(!check.has({}, 99), 'invalid property name');
       la(!check.has({}, ''), 'empty property name');
     });

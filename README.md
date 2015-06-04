@@ -1,4 +1,4 @@
-# check-more-types v1.7.1
+# check-more-types v1.7.2
 
 > Additional type checks for [check-types.js](https://github.com/philbooth/check-types.js)
 
