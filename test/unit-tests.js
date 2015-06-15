@@ -921,6 +921,14 @@ describe('check-more-types', function () {
       la(!check.not.bar('bar'));
     });
 
+    it('check.mixin(name, predicate)', function () {
+      function isItFoo(a) {
+        return a === 'foo';
+      }
+      check.mixin('isItFooA', isItFoo);
+      la(check.isItFooA('foo'), 'it is not foo');
+    });
+
     it('check.mixin(predicate)', function () {
       // will use function name if just passed a function
       function isBar(a) {

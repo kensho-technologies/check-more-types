@@ -2,7 +2,7 @@
   'use strict';
 
   /**
-    Custom assertions and predicates for https://github.com/philbooth/check-types.js
+    Custom assertions and predicates around https://github.com/philbooth/check-types.js
     Created by Kensho https://github.com/kensho
     Copyright @ 2014 Kensho https://www.kensho.com/
     License: MIT
@@ -397,6 +397,12 @@
     /** Adds new predicate to all objects
     @method mixin */
     check.mixin = function mixin(fn, name) {
+      if (check.string(fn) && check.fn(name)) {
+        var tmp = fn;
+        fn = name;
+        name = tmp;
+      }
+
       check.verify.fn(fn, 'expected predicate function');
       if (!check.unemptyString(name)) {
         name = fn.name;

@@ -1,7 +1,7 @@
 {
   "name": "check-more-types",
   "description": "Additional type checks for https://github.com/philbooth/check-types.js",
-  "version": "1.7.2",
+  "version": "1.7.3",
   "author": "Gleb Bahmutov <gleb.bahmutov@gmail.com>",
   "bugs": {
     "url": "https://github.com/kensho/check-more-types/issues"
@@ -44,17 +44,18 @@
   ],
   "license": "MIT",
   "main": "check-more-types.js",
+  "post-commit": "git status",
   "pre-commit": [
     "npm test",
     "npm version"
   ],
-  "post-commit": "git status",
   "repository": {
     "type": "git",
     "url": "git@github.com:kensho/check-more-types.git"
   },
   "scripts": {
     "test": "grunt && npm run node-test",
+    "watch": "grunt watch",
     "node-test": "node test/load-under-node-test.js",
     "coveralls": "node node_modules/lcov-filter/index.js cover/lcov.info test | ./node_modules/coveralls/bin/coveralls.js"
   }
