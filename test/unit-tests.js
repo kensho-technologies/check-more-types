@@ -921,6 +921,15 @@ describe('check-more-types', function () {
       la(!check.not.bar('bar'));
     });
 
+    it('check.mixin(predicate)', function () {
+      // will use function name if just passed a function
+      function isBar(a) {
+        return a === 'bar';
+      }
+      check.mixin(isBar);
+      la(check.isBar('bar'));
+    });
+
     it('check.mixin does not override', function () {
       function isFoo(a) {
         return a === 'foo';

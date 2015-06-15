@@ -388,7 +388,7 @@ Every predicate can also throw an exception if it fails
 ## Adding your own predicates
 
 You can add new predicates to `check`, `check.maybe`, etc. by using `check.mixin(predicate)`
-method
+method. If you do not pass a name, it will try using function's name.
 
 ### check.mixin(predicate, name)
 
