@@ -48,6 +48,7 @@
     "npm test",
     "npm version"
   ],
+  "post-commit": "git status",
   "repository": {
     "type": "git",
     "url": "git@github.com:kensho/check-more-types.git"
