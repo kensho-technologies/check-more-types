@@ -4,7 +4,7 @@
 
 {%= _.doc("./docs/badges.md") %}
 
-See [Readable conditions](http://bahmutov.calepin.co/readable-conditions-using-check-typesjs.html)
+See [Readable conditions](http://glebbahmutov.com/blog/readable-conditions-using-check-types/)
 for advice and examples.
 
 {%= _.doc("./docs/install.md") %}
