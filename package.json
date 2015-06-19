@@ -17,7 +17,7 @@
     "grunt-contrib-watch": "0.6.1",
     "grunt-deps-ok": "0.8.0",
     "grunt-gt": "0.1.4",
-    "grunt-jshint-solid": "0.1.0",
+    "grunt-jshint-solid": "0.1.1",
     "grunt-mocha-test": "0.12.7",
     "grunt-nice-package": "0.9.2",
     "grunt-npm2bower-sync": "0.9.1",
@@ -29,7 +29,7 @@
     "lcov-filter": "0.0.3",
     "lodash": "3.9.3",
     "matchdep": "0.3.0",
-    "pre-git": "0.5.1"
+    "pre-git": "0.6.0"
   },
   "engines": {
     "node": ">= 0.8.0"
