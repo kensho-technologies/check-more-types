@@ -13,6 +13,67 @@ describe('check-more-types', function () {
     la(check.fn(check.lowerCase));
   });
 
+  describe('check.or', function () {
+    it('combines predicate functions', function () {
+      var predicate = check.or(check.bool, check.unemptyString);
+      la(check.fn(predicate), 'got new predicate function');
+      la(predicate(true), 'boolean');
+      la(predicate('foo'), 'unempty string');
+      la(!predicate(42), 'not for a number');
+    });
+
+    it('allows single function', function () {
+      var predicate = check.or(check.number);
+      la(predicate(10));
+      la(!predicate(true));
+    });
+
+    it('handles non-function values as truthy', function () {
+      var predicate = check.or(check.unemptyString, 42);
+      la(predicate(), '42 wins');
+      la(predicate('foo'), 'string wins');
+    });
+
+    it('works with schema check', function () {
+      var isFirstLastNames = check.schema.bind(null, {
+        first: check.unemptyString,
+        last: check.unemptyString
+      });
+      var isValidPerson = check.schema.bind(null, {
+        name: check.or(check.unemptyString, isFirstLastNames)
+      });
+      la(isValidPerson({ name: 'foo' }));
+      la(isValidPerson({ name: {
+        first: 'foo',
+        last: 'bar'
+      }}));
+      la(!isValidPerson({ first: 'foo' }));
+    });
+  });
+
+  describe('check.and', function () {
+    function isFoo(x) { return x === 'foo'; }
+
+    it('combines predicate functions', function () {
+      var predicate = check.and(check.unemptyString, isFoo);
+      la(check.fn(predicate), 'got new predicate function');
+      la(predicate('foo'), 'foo');
+      la(!predicate(42), 'not for a number');
+    });
+
+    it('allows single function', function () {
+      var predicate = check.and(check.number);
+      la(predicate(10));
+      la(!predicate(true));
+    });
+
+    it('handles non-function values as truthy', function () {
+      var predicate = check.and(check.unemptyString, 42);
+      la(!predicate());
+      la(predicate('f'));
+    });
+  });
+
   describe('check/number', function () {
     it('does not pass nulls as numbers', function () {
       la(!check.number(null), 'null is not a number');

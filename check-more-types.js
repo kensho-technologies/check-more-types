@@ -382,6 +382,49 @@
   }
 
   /**
+    Combines multiple predicate functions to produce new OR predicate
+    @method or
+  */
+  function or() {
+    var predicates = Array.prototype.slice.call(arguments, 0);
+    if (!predicates.length) {
+      throw new Error('empty list of arguments to or');
+    }
+
+    return function orCheck() {
+      var values = Array.prototype.slice.call(arguments, 0);
+      return predicates.some(function (predicate) {
+        try {
+          return check.fn(predicate) ?
+            predicate.apply(null, values) : Boolean(predicate);
+        } catch (err) {
+          // treat exceptions as false
+          return false;
+        }
+      });
+    };
+  }
+
+  /**
+    Combines multiple predicate functions to produce new AND predicate
+    @method or
+  */
+  function and() {
+    var predicates = Array.prototype.slice.call(arguments, 0);
+    if (!predicates.length) {
+      throw new Error('empty list of arguments to or');
+    }
+
+    return function orCheck() {
+      var values = Array.prototype.slice.call(arguments, 0);
+      return predicates.every(function (predicate) {
+        return check.fn(predicate) ?
+          predicate.apply(null, values) : Boolean(predicate);
+      });
+    };
+  }
+
+  /**
   * Public modifier `not`.
   *
   * Negates `predicate`.
@@ -538,7 +581,9 @@
     oneOf: oneOf,
     promise: isPromise,
     validDate: validDate,
-    equal: equal
+    equal: equal,
+    or: or,
+    and: and
   };
 
   Object.keys(predicates).forEach(function (name) {

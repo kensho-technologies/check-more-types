@@ -1,4 +1,4 @@
-# check-more-types v1.7.3
+# check-more-types v1.8.0
 
 > Additional type checks for [check-types.js](https://github.com/philbooth/check-types.js)
 
@@ -94,6 +94,8 @@ for advice and examples.
   * [check.promise](#checkpromise)
   * [check.validDate](#checkvaliddate)
   * [check.equal](#checkequal)
+  * [check.or](#checkor)
+  * [check.and](#checkand)
 
 
 #### check.number
@@ -643,6 +645,57 @@ check.equal(foo, 'foo'); // true
 var isFoo = check.equal('foo');
 isFoo('foo'); // true
 isFoo('bar'); // false
+```
+
+#### check.or
+
+Combines multiple predicates into single one using OR logic
+
+```js
+var predicate = check.or(check.bool, check.unemptyString);
+predicate(true); // true
+predicate('foo'); // true
+predicate(42); // false
+```
+
+It treats non-functions as boolean values
+
+```js
+var predicate = check.or(check.unemptyString, 42);
+// will always return true
+predicate('foo'); // true, because it is unempty string
+predicate(false); // true, because 42 is truthy
+```
+
+Note: if there are any exceptions inside the individual predicate functions, they are
+treated as `false` values.
+
+#### check.and
+
+Combines multiple predicates using AND. If the predicate is not a function,
+evaluates it as a boolean value.
+
+```js
+function isFoo(x) { return x === 'foo'; }
+check.and(check.unemptyString, isFoo); // only true for "foo"
+```
+
+Both `check.or` and `check.and` are very useful inside `check.schema` to create
+more powerful predicates on the fly.
+
+```js
+var isFirstLastNames = check.schema.bind(null, {
+  first: check.unemptyString,
+  last: check.unemptyString
+});
+var isValidPerson = check.schema.bind(null, {
+  name: check.or(check.unemptyString, isFirstLastNames)
+});
+isValidPerson({ name: 'foo' }); // true
+isValidPerson({ name: {
+  first: 'foo',
+  last: 'bar'
+}}); // true
 ```
 
 ### Small print
