@@ -17,6 +17,10 @@
     check = require('check-types');
   }
 
+  if (typeof Function.prototype.bind !== 'function') {
+    throw new Error('Missing Function.prototype.bind, please load es5-shim first');
+  }
+
   /**
     Checks if argument is defined or not
 
