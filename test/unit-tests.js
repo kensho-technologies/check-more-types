@@ -33,6 +33,10 @@ describe('check-more-types', function () {
       la(!check.zero(), 'not for undefined');
       la(!check.zero(null), 'not for null');
     });
+
+    it('edge cases', function () {
+      la(!check.not.zero(0));
+    });
   });
 
   describe('check.or', function () {
