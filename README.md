@@ -51,6 +51,7 @@ for advice and examples.
 * **API**
   * [check.defined](#checkdefined)
   * [check.bit](#checkbit)
+  * [check.primitive](#checkprimitive)
   * [check.git](#checkgit)
   * [check.commitId](#checkcommitid)
   * [check.shortCommitId](#checkshortcommitid)
@@ -130,6 +131,17 @@ check.number(NaN); // false
     check.bit('1'); // false
     check.bit(2); // false
     check.bit(true); // false
+
+---
+
+#### check.primitive
+
+Returns true for primitive JavaScript types
+
+    check.primitive(42); // true
+    check.primitive(true); // true
+    check.primitive('foo'); // true
+    check.primitive([]); // false
 
 ---
 

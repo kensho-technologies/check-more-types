@@ -41,6 +41,13 @@
       check.number(Number(value));
   }
 
+  function primitive(value) {
+    var type = typeof value;
+    return type === 'number' ||
+      type === 'boolean' ||
+      type === 'string';
+  }
+
   /**
     same as ===
 
@@ -587,7 +594,8 @@
     validDate: validDate,
     equal: equal,
     or: or,
-    and: and
+    and: and,
+    primitive: primitive
   };
 
   Object.keys(predicates).forEach(function (name) {

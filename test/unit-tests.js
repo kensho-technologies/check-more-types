@@ -13,6 +13,20 @@ describe('check-more-types', function () {
     la(check.fn(check.lowerCase));
   });
 
+  describe('check.primitive', function () {
+    it('returns true for primitive javascript types', function () {
+      la(check.primitive(42), 'number');
+      la(check.primitive(true), 'boolean');
+      la(check.primitive('foo'), 'string');
+    });
+
+    it('returns false for objects, arrays and functions', function () {
+      la(!check.primitive([]), 'array');
+      la(!check.primitive(describe), 'function');
+      la(!check.primitive({}), 'object');
+    });
+  });
+
   describe('check.or', function () {
     it('combines predicate functions', function () {
       var predicate = check.or(check.bool, check.unemptyString);

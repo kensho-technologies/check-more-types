@@ -33,6 +33,17 @@ check.number(NaN); // false
 
 ---
 
+### check.primitive
+
+Returns true for primitive JavaScript types
+
+    check.primitive(42); // true
+    check.primitive(true); // true
+    check.primitive('foo'); // true
+    check.primitive([]); // false
+
+---
+
 ### check.git
 
     check.git('url string');
