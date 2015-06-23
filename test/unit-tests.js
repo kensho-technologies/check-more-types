@@ -27,6 +27,14 @@ describe('check-more-types', function () {
     });
   });
 
+  describe('check.zero', function () {
+    it('returns true if the argument is a number 0', function () {
+      la(check.zero(0), '0');
+      la(!check.zero(), 'not for undefined');
+      la(!check.zero(null), 'not for null');
+    });
+  });
+
   describe('check.or', function () {
     it('combines predicate functions', function () {
       var predicate = check.or(check.bool, check.unemptyString);

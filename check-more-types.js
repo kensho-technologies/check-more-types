@@ -41,11 +41,25 @@
       check.number(Number(value));
   }
 
+  /**
+    Returns true if the argument is primitive JavaScript type
+
+    @method primitive
+  */
   function primitive(value) {
     var type = typeof value;
     return type === 'number' ||
       type === 'boolean' ||
       type === 'string';
+  }
+
+  /**
+    Returns true if the value is a number 0
+
+    @method zero
+  */
+  function zero(x) {
+    return typeof x === 'number' && x === 0;
   }
 
   /**
@@ -595,7 +609,8 @@
     equal: equal,
     or: or,
     and: and,
-    primitive: primitive
+    primitive: primitive,
+    zero: zero
   };
 
   Object.keys(predicates).forEach(function (name) {
