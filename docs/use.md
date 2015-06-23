@@ -44,6 +44,14 @@ Returns true for primitive JavaScript types
 
 ---
 
+### check.zero
+
+    check.zero(0); // true
+    check.zero(); // false
+    check.zero(null); // false
+
+---
+
 ### check.git
 
     check.git('url string');

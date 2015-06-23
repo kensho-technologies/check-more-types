@@ -52,6 +52,7 @@ for advice and examples.
   * [check.defined](#checkdefined)
   * [check.bit](#checkbit)
   * [check.primitive](#checkprimitive)
+  * [check.zero](#checkzero)
   * [check.git](#checkgit)
   * [check.commitId](#checkcommitid)
   * [check.shortCommitId](#checkshortcommitid)
@@ -142,6 +143,14 @@ Returns true for primitive JavaScript types
     check.primitive(true); // true
     check.primitive('foo'); // true
     check.primitive([]); // false
+
+---
+
+#### check.zero
+
+    check.zero(0); // true
+    check.zero(); // false
+    check.zero(null); // false
 
 ---
 
