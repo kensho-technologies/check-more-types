@@ -1,7 +1,7 @@
 {
   "name": "check-more-types",
   "description": "Additional type checks for https://github.com/philbooth/check-types.js",
-  "version": "1.8.2",
+  "version": "1.9.0",
   "author": "Gleb Bahmutov <gleb.bahmutov@gmail.com>",
   "bugs": {
     "url": "https://github.com/kensho/check-more-types/issues"
@@ -11,6 +11,7 @@
     "check-types": "1.4.0"
   },
   "devDependencies": {
+    "benv": "1.1.0",
     "coveralls": "2.11.2",
     "grunt-contrib-jshint": "0.11.2",
     "grunt-contrib-uglify": "0.9.1",
@@ -54,7 +55,7 @@
     "url": "git@github.com:kensho/check-more-types.git"
   },
   "scripts": {
-    "test": "grunt && npm run node-test",
+    "test": "grunt && npm run node-test && grunt mochaTest:syntheticBrowser",
     "watch": "grunt watch",
     "node-test": "node test/load-under-node-test.js",
     "coveralls": "node node_modules/lcov-filter/index.js cover/lcov.info test | ./node_modules/coveralls/bin/coveralls.js"

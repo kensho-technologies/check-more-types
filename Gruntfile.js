@@ -67,6 +67,9 @@ module.exports = function(grunt) {
           reporter: 'spec'
         },
         src: ['test/check-more-types-minified-spec.js']
+      },
+      syntheticBrowser: {
+        src: ['test/synthetic-browser-spec.js']
       }
     },
 

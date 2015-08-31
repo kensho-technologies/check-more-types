@@ -620,4 +620,11 @@
   if (typeof module === 'object') {
     module.exports = check;
   }
+
+  // if we are loaded under Node, but "window" object is available, put a reference
+  // there too - maybe we are running inside a synthetic browser environment
+  if (typeof window === 'object' && !window.check) {
+    window.check = check;
+  }
+
 }(typeof window === 'object' ? window.check : global.check));
