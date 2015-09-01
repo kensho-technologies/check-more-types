@@ -1,4 +1,4 @@
-(function checkMoreTypes(check) {
+(function checkMoreTypes() {
   'use strict';
 
   /**
@@ -10,16 +10,81 @@
     @module check
   */
 
-  if (!check) {
-    if (typeof require === 'undefined') {
-      throw new Error('Cannot find check-types library, has it been loaded?');
-    }
-    check = require('check-types');
-  }
-
   if (typeof Function.prototype.bind !== 'function') {
     throw new Error('Missing Function.prototype.bind, please load es5-shim first');
   }
+
+  // most of the old methods from check-types.js
+  function isFn(x) { return typeof x === 'function'; }
+  function isString(x) { return typeof x === 'string'; }
+  function unemptyString(x) {
+    return isString(x) && x;
+  }
+  function isObject(x) {
+    return typeof x === 'object' &&
+      !Array.isArray(x) &&
+      !isNull(x) &&
+      !isDate(x);
+  }
+  function isNumber(x) {
+    return typeof x === 'number' && !isNaN(x);
+  }
+  function isNull(x) { return x === null; }
+  function positiveNumber(x) {
+    return isNumber(x) && x > 0;
+  }
+  function negativeNumber(x) {
+    return isNumber(x) && x < 0;
+  }
+  function isDate(x) {
+    return x instanceof Date;
+  }
+  function instance(x, type) {
+    return x instanceof type;
+  }
+
+  function every(predicateResults) {
+    var property, value;
+    for (property in predicateResults) {
+      if (predicateResults.hasOwnProperty(property)) {
+        value = predicateResults[property];
+
+        if (isObject(value) && every(value) === false) {
+          return false;
+        }
+
+        if (value === false) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
+  function map(things, predicates) {
+      var property, result = {}, predicate;
+      for (property in predicates) {
+          if (predicates.hasOwnProperty(property)) {
+              predicate = predicates[property];
+
+              if (isFn(predicate)) {
+                  result[property] = predicate(things[property]);
+              } else if (isObject(predicate)) {
+                  result[property] = map(things[property], predicate);
+              }
+          }
+      }
+
+      return result;
+  }
+
+  var check = {
+    maybe: {},
+    verify: {},
+    not: {},
+    every: every,
+    map: map
+  };
 
   /**
     Checks if argument is defined or not
@@ -242,10 +307,15 @@
     @returns true or false
   */
   function all(obj, predicates) {
+    check.verify.fn(check.every, 'missing check.every method');
+    check.verify.fn(check.map, 'missing check.map method');
+
     check.verify.object(obj, 'missing object to check');
     check.verify.object(predicates, 'missing predicates object');
     Object.keys(predicates).forEach(function (property) {
-      check.verify.fn(predicates[property], 'not a predicate function for ' + property);
+      if (!check.fn(predicates[property])) {
+        throw new Error('not a predicate function for ' + property + ' but ' + predicates[property]);
+      }
     });
     return check.every(check.map(obj, predicates));
   }
@@ -465,22 +535,32 @@
     /** Adds new predicate to all objects
     @method mixin */
     check.mixin = function mixin(fn, name) {
-      if (check.string(fn) && check.fn(name)) {
+      if (isString(fn) && isFn(name)) {
         var tmp = fn;
         fn = name;
         name = tmp;
       }
 
-      check.verify.fn(fn, 'expected predicate function');
-      if (!check.unemptyString(name)) {
+      if (!isFn(fn)) {
+        throw new Error('expected predicate function');
+      }
+      if (!unemptyString(name)) {
         name = fn.name;
       }
-      check.verify.unemptyString(name, 'predicate function missing name\n' + fn.toString());
+      if (!unemptyString(name)) {
+        throw new Error('predicate function missing name\n' + fn.toString());
+      }
 
       function registerPredicate(obj, name, fn) {
-        check.verify.object(obj, 'missing object');
-        check.verify.unemptyString(name, 'missing name');
-        check.verify.fn(fn, 'missing function');
+        if (!isObject(obj)) {
+          throw new Error('missing object ' + obj);
+        }
+        if (!unemptyString(name)) {
+          throw new Error('missing name');
+        }
+        if (!isFn(fn)) {
+          throw new Error('missing function');
+        }
 
         if (!obj[name]) {
           obj[name] = fn;
@@ -543,12 +623,12 @@
   }
 
   var promiseSchema = {
-    then: check.fn
+    then: isFn
   };
 
   // work around reserved keywords checks
-  promiseSchema['catch'] = check.fn;
-  promiseSchema['finally'] = check.fn;
+  promiseSchema['catch'] = isFn;
+  promiseSchema['finally'] = isFn;
 
   var hasPromiseApi = schema.bind(null, promiseSchema);
 
@@ -578,6 +658,15 @@
 
   // new predicates to be added to check object. Use object to preserve names
   var predicates = {
+    nulled: isNull,
+    fn: isFn,
+    string: isString,
+    unemptyString: unemptyString,
+    object: isObject,
+    number: isNumber,
+    array: Array.isArray,
+    positiveNumber: positiveNumber,
+    negativeNumber: negativeNumber,
     defined: defined,
     same: same,
     allSame: allSame,
@@ -610,7 +699,9 @@
     or: or,
     and: and,
     primitive: primitive,
-    zero: zero
+    zero: zero,
+    date: isDate,
+    instance: instance
   };
 
   Object.keys(predicates).forEach(function (name) {
@@ -626,5 +717,8 @@
   if (typeof window === 'object') {
     window.check = check;
   }
+  if (typeof global === 'object') {
+    global.check = check;
+  }
 
-}(typeof window === 'object' ? window.check : global.check));
+}());

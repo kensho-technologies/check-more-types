@@ -156,10 +156,13 @@ describe('check-more-types', function () {
         catch: function () {},
         finally: function () {}
       };
-      la(check.promise(p));
-      la(!check.promise({}));
-      la(!check.promise('foo'));
-      la(!check.promise());
+      la(check.promise(p), 'promise passes');
+    });
+
+    it('does not pass some values', function () {
+      la(!check.promise({}), 'empty object is not a promise');
+      la(!check.promise('foo'), 'string is not a promise');
+      la(!check.promise(), 'undefined value is not a promise');
     });
 
     it('does not throw exception when passed array', function () {
@@ -642,6 +645,22 @@ describe('check-more-types', function () {
       la(!check.schema(schema, {}));
     });
 
+    it('check.schema', function () {
+      la(typeof check.schema === 'function', 'check.schema function');
+    });
+
+    it('checks person schema', function () {
+      var personSchema = {
+        name: check.unemptyString,
+        age: check.positiveNumber
+      };
+      var person = {
+        name: 'joe',
+        age: 20
+      };
+      la(check.schema(personSchema, person));
+    });
+
     it('check.schema bind', function () {
       var personSchema = {
         name: check.unemptyString,
@@ -656,8 +675,8 @@ describe('check-more-types', function () {
         name: 'ann'
         // missing age property
       };
-      la(isValidPerson(h1));
-      la(!isValidPerson(h2));
+      la(isValidPerson(h1), 'first person is valid', h1);
+      la(!isValidPerson(h2), 'second person is invalid', h2);
     });
 
     describe('nesting schemas', function () {

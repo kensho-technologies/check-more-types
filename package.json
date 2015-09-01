@@ -1,15 +1,13 @@
 {
   "name": "check-more-types",
   "description": "Additional type checks for https://github.com/philbooth/check-types.js",
-  "version": "1.9.2",
+  "version": "2.0.0",
   "author": "Gleb Bahmutov <gleb.bahmutov@gmail.com>",
   "bugs": {
     "url": "https://github.com/kensho/check-more-types/issues"
   },
   "contributors": [],
-  "dependencies": {
-    "check-types": "1.4.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "benv": "1.1.0",
     "coveralls": "2.11.4",
