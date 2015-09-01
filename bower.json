@@ -1,7 +1,7 @@
 {
   "name": "check-more-types",
   "main": "check-more-types.js",
-  "version": "1.9.1",
+  "version": "1.9.2",
   "homepage": "https://github.com/kensho/check-more-types",
   "license": "MIT",
   "ignore": [
@@ -16,11 +16,11 @@
     "index.html"
   ],
   "keywords": [
-    "types",
-    "type-checking",
-    "duck-typing",
+    "check-types",
     "checks",
-    "check-types"
+    "duck-typing",
+    "type-checking",
+    "types"
   ],
   "description": "Additional type checks for https://github.com/philbooth/check-types.js",
   "authors": [
