@@ -26,6 +26,20 @@ describe('check-more-types', function () {
     la(check.length([1, 2], 2));
   });
 
+  it('has floatNumber', function () {
+    la(check.fn(check.floatNumber));
+    la(check.floatNumber(1.1), '1.1 is a float');
+    la(!check.floatNumber(1));
+    la(!check.floatNumber('one'));
+  });
+
+  it('has intNumber', function () {
+    la(check.fn(check.intNumber));
+    la(!check.intNumber(1.1), '1.1 is a float');
+    la(check.intNumber(1));
+    la(!check.intNumber('one'));
+  });
+
   describe('check.primitive', function () {
     it('returns true for primitive javascript types', function () {
       la(check.primitive(42), 'number');

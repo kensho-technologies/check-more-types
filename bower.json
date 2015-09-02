@@ -1,7 +1,7 @@
 {
   "name": "check-more-types",
   "main": "check-more-types.js",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "homepage": "https://github.com/kensho/check-more-types",
   "license": "MIT",
   "ignore": [

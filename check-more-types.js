@@ -33,6 +33,12 @@
   function isNumber(x) {
     return typeof x === 'number' && !isNaN(x);
   }
+  function isInteger(x) {
+    return isNumber(x) && x % 1 === 0;
+  }
+  function isFloat(x) {
+    return isNumber(x) && x % 1 !== 0;
+  }
   function isNull(x) { return x === null; }
   function positiveNumber(x) {
     return isNumber(x) && x > 0;
@@ -710,7 +716,9 @@
     date: isDate,
     instance: instance,
     emptyObject: isEmptyObject,
-    length: hasLength
+    length: hasLength,
+    floatNumber: isFloat,
+    intNumber: isInteger
   };
 
   Object.keys(predicates).forEach(function (name) {
