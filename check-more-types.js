@@ -46,6 +46,9 @@
   function instance(x, type) {
     return x instanceof type;
   }
+  function hasLength(x, k) {
+    return (Array.isArray(x) || isString(x)) && x.length === k;
+  }
 
   function every(predicateResults) {
     var property, value;
@@ -706,7 +709,8 @@
     zero: zero,
     date: isDate,
     instance: instance,
-    emptyObject: isEmptyObject
+    emptyObject: isEmptyObject,
+    length: hasLength
   };
 
   Object.keys(predicates).forEach(function (name) {

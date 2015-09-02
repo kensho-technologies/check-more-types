@@ -20,6 +20,12 @@ describe('check-more-types', function () {
     la(!check.emptyObject(''), 'empty string is not an empty object');
   });
 
+  it('has check.length', function () {
+    la(!check.length({}, 0));
+    la(check.length('', 0));
+    la(check.length([1, 2], 2));
+  });
+
   describe('check.primitive', function () {
     it('returns true for primitive javascript types', function () {
       la(check.primitive(42), 'number');
