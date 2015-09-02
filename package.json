@@ -15,7 +15,7 @@
     "grunt-contrib-uglify": "0.9.2",
     "grunt-contrib-watch": "0.6.1",
     "grunt-deps-ok": "0.8.0",
-    "grunt-gt": "0.1.4",
+    "grunt-gt": "0.1.5",
     "grunt-jshint-solid": "0.1.1",
     "grunt-mocha-test": "0.12.7",
     "grunt-nice-package": "0.9.3",
