@@ -26,6 +26,10 @@
       !isNull(x) &&
       !isDate(x);
   }
+  function isEmptyObject(x) {
+    return isObject(x) &&
+      Object.keys(x).length === 0;
+  }
   function isNumber(x) {
     return typeof x === 'number' && !isNaN(x);
   }
@@ -701,7 +705,8 @@
     primitive: primitive,
     zero: zero,
     date: isDate,
-    instance: instance
+    instance: instance,
+    emptyObject: isEmptyObject
   };
 
   Object.keys(predicates).forEach(function (name) {

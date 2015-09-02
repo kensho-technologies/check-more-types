@@ -13,6 +13,13 @@ describe('check-more-types', function () {
     la(check.fn(check.lowerCase));
   });
 
+  it('has emptyObject', function () {
+    la(check.fn(check.emptyObject));
+    la(check.emptyObject({}));
+    la(!check.emptyObject([]), 'empty array is not an empty object');
+    la(!check.emptyObject(''), 'empty string is not an empty object');
+  });
+
   describe('check.primitive', function () {
     it('returns true for primitive javascript types', function () {
       la(check.primitive(42), 'number');
