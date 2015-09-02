@@ -22,7 +22,7 @@
     "grunt-npm2bower-sync": "0.9.1",
     "grunt-readme": "0.4.5",
     "grunt-toc": "0.1.0",
-    "grunt-xplain": "0.2.4",
+    "grunt-xplain": "0.2.6",
     "lazy-ass": "0.6.0",
     "lazy-ass-helpful": "0.6.1",
     "lcov-filter": "0.0.3",

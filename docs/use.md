@@ -313,7 +313,7 @@ argument application
     };
     var h2 = {
       name: 'ann'
-      // missing age property
+        // missing age property
     };
     isValidPerson(h1); // true
     isValidPerson(h2); // false
@@ -509,9 +509,9 @@ This works great when combined with JavaScript module pattern as in this example
     var add = (function() {
       // inner private function without any argument checks
       function add(a, b) {
-        return a + b;
-      }
-      // return defended function
+          return a + b;
+        }
+        // return defended function
       return check.defend(add, check.number, check.number);
     }());
     add(2, 3); // 5
