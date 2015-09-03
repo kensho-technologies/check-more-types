@@ -40,6 +40,20 @@ describe('check-more-types', function () {
     la(!check.intNumber('one'));
   });
 
+  it('has webUrl', function () {
+    la(check.webUrl('http://localhost:8000/'));
+    la(check.webUrl('http://127.0.0.1/'));
+    la(check.webUrl('https://www.google.com/'));
+    la(!check.webUrl('www.google.com/'));
+  });
+
+  it('has startsWith', function () {
+    la(check.startsWith('foo', 'foo-bar'));
+    la(check.startsWith('foo', 'foo/bar'));
+    la(check.startsWith('foo', 'foo/bar/foo'));
+    la(!check.startsWith('foo', 'bar/foo'));
+  });
+
   describe('check.primitive', function () {
     it('returns true for primitive javascript types', function () {
       la(check.primitive(42), 'number');

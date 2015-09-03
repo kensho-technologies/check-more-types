@@ -56,6 +56,20 @@
     return (Array.isArray(x) || isString(x)) && x.length === k;
   }
 
+  function startsWith(prefix, x) {
+    return isString(prefix) &&
+      isString(x) &&
+      x.indexOf(prefix) === 0;
+  }
+
+  var startsWithHttp = startsWith.bind(null, 'http://');
+  var startsWithHttps = startsWith.bind(null, 'https://');
+
+  function webUrl(x) {
+    return isString(x) &&
+      (startsWithHttp(x) || startsWithHttps(x));
+  }
+
   function every(predicateResults) {
     var property, value;
     for (property in predicateResults) {
@@ -718,7 +732,9 @@
     emptyObject: isEmptyObject,
     length: hasLength,
     floatNumber: isFloat,
-    intNumber: isInteger
+    intNumber: isInteger,
+    startsWith: startsWith,
+    webUrl: webUrl
   };
 
   Object.keys(predicates).forEach(function (name) {
