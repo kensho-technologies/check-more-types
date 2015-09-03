@@ -1,7 +1,7 @@
 {
   "name": "check-more-types",
-  "description": "Additional type checks for https://github.com/philbooth/check-types.js",
-  "version": "2.1.0",
+  "description": "Large collection of predicates",
+  "version": "2.1.1",
   "author": "Gleb Bahmutov <gleb.bahmutov@gmail.com>",
   "bugs": {
     "url": "https://github.com/kensho/check-more-types/issues"

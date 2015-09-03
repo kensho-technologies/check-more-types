@@ -1,6 +1,6 @@
 # {%= name %} v{%= version %}
 
-> Additional type checks for [check-types.js](https://github.com/philbooth/check-types.js)
+> Large collection of predicates, inspired by [check-types.js](https://github.com/philbooth/check-types.js)
 
 {%= _.doc("./docs/badges.md") %}
 

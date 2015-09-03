@@ -1,6 +1,6 @@
-# check-more-types v2.1.0
+# check-more-types v2.1.1
 
-> Additional type checks for [check-types.js](https://github.com/philbooth/check-types.js)
+> Large collection of predicates, inspired by [check-types.js](https://github.com/philbooth/check-types.js)
 
 [![NPM][check-more-types-icon] ][check-more-types-url]
 
@@ -36,15 +36,11 @@ for advice and examples.
 
 **node:** `npm install check-more-types --save`
 
-    // instead of
-    var check = require('check-types');
-    // use this
     var check = require('check-more-types');
     console.assert(check.bit(1), 'check.bit works');
 
 **browser** `bower install check-more-types --save`
 
-    <script src="check-types.js"></script>
     <script src="check-more-types.js"></script>
 
 
