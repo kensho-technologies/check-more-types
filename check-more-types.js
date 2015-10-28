@@ -31,7 +31,10 @@
       Object.keys(x).length === 0;
   }
   function isNumber(x) {
-    return typeof x === 'number' && !isNaN(x);
+    return typeof x === 'number' &&
+      !isNaN(x) &&
+      x !== Infinity &&
+      x !== -Infinity;
   }
   function isInteger(x) {
     return isNumber(x) && x % 1 === 0;

@@ -156,6 +156,12 @@ describe('check-more-types', function () {
       la(!check.number(NaN), 'NaN is not a number');
       la(check.not.number(NaN), 'NaN is .not.number');
     });
+
+    it('does not pass Infinity as numbers', function () {
+      la(!check.number(Infinity), 'Infinity is not a number');
+      la(!check.number(-Infinity), '-Infinity is not a number');
+      la(check.not.number(Infinity), 'Infinity is .not.number');
+    });
   });
 
   describe('check/validDate', function () {
