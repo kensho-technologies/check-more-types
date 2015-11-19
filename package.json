@@ -74,7 +74,10 @@
         "npm test",
         "npm version"
       ],
-      "pre-push": [],
+      "pre-push": [
+        "npm run size",
+        "npm run pkgfiles"
+      ],
       "post-commit": [
         "git status"
       ],
