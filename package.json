@@ -31,6 +31,7 @@
     "lodash": "3.10.1",
     "matchdep": "0.3.0",
     "mocha": "2.3.4",
+    "pkgfiles": "2.3.0",
     "pre-git": "1.3.0"
   },
   "engines": {
@@ -51,12 +52,14 @@
     "url": "git@github.com:kensho/check-more-types.git"
   },
   "scripts": {
+    "build": "grunt",
     "coveralls": "node node_modules/lcov-filter/index.js cover/lcov.info test | ./node_modules/coveralls/bin/coveralls.js",
     "node-test": "node test/load-under-node-test.js",
     "test": "grunt && npm run node-test && grunt mochaTest:syntheticBrowser",
     "watch": "grunt watch",
     "issues": "git-issues",
-    "commit": "git-issues && commit-wizard"
+    "commit": "git-issues && commit-wizard",
+    "prepublish": "pkgfiles"
   },
   "config": {
     "pre-git": {
