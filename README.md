@@ -1,4 +1,4 @@
-# check-more-types v2.1.2
+# check-more-types v2.2.0
 
 > Large collection of predicates, inspired by [check-types.js](https://github.com/philbooth/check-types.js)
 
