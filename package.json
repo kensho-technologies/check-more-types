@@ -6,6 +6,11 @@
   "bugs": {
     "url": "https://github.com/kensho/check-more-types/issues"
   },
+  "files": [
+    "bower.json",
+    "check-more-types.js",
+    "check-more-types.min.js"
+  ],
   "contributors": [],
   "dependencies": {},
   "devDependencies": {
