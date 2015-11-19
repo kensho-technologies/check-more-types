@@ -74,12 +74,7 @@
         "npm test",
         "npm version"
       ],
-      "pre-push": [
-        "tarball='$(npm pack .)'",
-        "wc -c '${tarball}'",
-        "tar tvf '${tarball}'",
-        "rm '${tarball}'"
-      ],
+      "pre-push": [],
       "post-commit": [
         "git status"
       ],
