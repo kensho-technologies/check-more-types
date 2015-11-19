@@ -64,7 +64,8 @@
     "watch": "grunt watch",
     "issues": "git-issues",
     "commit": "git-issues && commit-wizard",
-    "prepublish": "pkgfiles"
+    "pkgfiles": "pkgfiles",
+    "size": "tarball=\"$(npm pack .)\"; wc -c \"${tarball}\"; tar tvf \"${tarball}\"; rm \"${tarball}\";"
   },
   "config": {
     "pre-git": {
@@ -73,7 +74,12 @@
         "npm test",
         "npm version"
       ],
-      "pre-push": [],
+      "pre-push": [
+        "tarball='$(npm pack .)'",
+        "wc -c '${tarball}'",
+        "tar tvf '${tarball}'",
+        "rm '${tarball}'"
+      ],
       "post-commit": [
         "git status"
       ],
