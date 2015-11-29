@@ -1,11 +1,13 @@
 [![NPM][check-more-types-icon] ][check-more-types-url]
 
+[![manpm](https://img.shields.io/badge/manpm-%E2%9C%93-3399ff.svg)](https://github.com/bahmutov/manpm)
 [![Build status][check-more-types-ci-image] ][check-more-types-ci-url]
+[![dependencies][check-more-types-dependencies-image] ][check-more-types-dependencies-url]
+[![devdependencies][check-more-types-devdependencies-image] ][check-more-types-devdependencies-url]
+
 [![Coverage Status][check-more-types-coverage-image] ][check-more-types-coverage-url]
 [![Codacy Badge][check-more-types-codacy-image] ][check-more-types-codacy-url]
 [![Code Climate][check-more-types-code-climate-image] ][check-more-types-code-climate-url]
-[![dependencies][check-more-types-dependencies-image] ][check-more-types-dependencies-url]
-[![devdependencies][check-more-types-devdependencies-image] ][check-more-types-devdependencies-url]
 ![issue](http://issuestats.com/github/kensho/check-more-types/badge/issue)
 
 [check-more-types-icon]: https://nodei.co/npm/check-more-types.png?downloads=true
