@@ -32,7 +32,7 @@
     "grunt-xplain": "0.2.7",
     "lazy-ass": "0.6.0",
     "lazy-ass-helpful": "0.6.1",
-    "lcov-filter": "0.0.3",
+    "lcov-filter": "0.1.1",
     "lodash": "3.10.1",
     "matchdep": "0.3.0",
     "mocha": "2.3.4",
@@ -58,7 +58,7 @@
   },
   "scripts": {
     "build": "grunt",
-    "coveralls": "node node_modules/lcov-filter/index.js cover/lcov.info test | ./node_modules/coveralls/bin/coveralls.js",
+    "coveralls": "lcov-filter cover/lcov.info test | ./node_modules/coveralls/bin/coveralls.js",
     "node-test": "node test/load-under-node-test.js",
     "test": "grunt && npm run node-test && grunt mochaTest:syntheticBrowser",
     "watch": "grunt watch",
@@ -75,8 +75,7 @@
         "npm version"
       ],
       "pre-push": [
-        "npm run size",
-        "npm run pkgfiles"
+        "npm run size"
       ],
       "post-commit": [
         "git status"
