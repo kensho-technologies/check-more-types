@@ -25,7 +25,7 @@
   "contributors": [],
   "dependencies": {},
   "devDependencies": {
-    "benv": "3.0.0",
+    "benv": "1.1.0",
     "coveralls": "2.11.4",
     "git-issues": "1.2.0",
     "grunt-cli": "0.1.13",
