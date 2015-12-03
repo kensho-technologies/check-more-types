@@ -7,16 +7,10 @@
     "url": "https://github.com/kensho/check-more-types/issues"
   },
   "config": {
-    "next-update": {
-      "skip": [
-        "benv"
-      ]
-    },
     "pre-git": {
       "commit-msg": "validate-commit-msg",
       "pre-commit": [
-        "npm test",
-        "npm version"
+        "npm test"
       ],
       "pre-push": [
         "npm run size"
@@ -30,7 +24,6 @@
   "contributors": [],
   "dependencies": {},
   "devDependencies": {
-    "benv": "1.1.0",
     "coveralls": "2.11.4",
     "git-issues": "1.2.0",
     "grunt-cli": "0.1.13",
@@ -46,6 +39,7 @@
     "grunt-readme": "0.4.5",
     "grunt-toc": "0.1.0",
     "grunt-xplain": "0.2.7",
+    "jshint-summary": "0.4.0",
     "lazy-ass": "1.1.0",
     "lazy-ass-helpful": "0.6.1",
     "lcov-filter": "0.1.1",

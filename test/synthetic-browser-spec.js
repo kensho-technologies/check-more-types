@@ -1,11 +1,18 @@
 /* global describe, beforeEach, afterEach, it */
-var benv = require('benv');
 describe('check inside synthetic browser', function () {
-  beforeEach(function setupEnvironment(done) {
-    benv.setup(function () {
-      done();
-    });
-  });
+  var bro = {
+    setup: function () {
+      if (typeof window === 'undefined') {
+        /* jshint -W020 */
+        window = {};
+      }
+    },
+    teardown: function () {
+      console.assert(typeof window === 'object', 'cannot find window');
+    }
+  };
+
+  beforeEach(bro.setup);
 
   beforeEach(function loadCheckMoreTypes() {
     require('../check-more-types');
@@ -25,7 +32,5 @@ describe('check inside synthetic browser', function () {
     console.assert(typeof window.check.or === 'function');
   });
 
-  afterEach(function destroySyntheticBrowser() {
-    benv.teardown(false);
-  });
+  afterEach(bro.teardown);
 });
