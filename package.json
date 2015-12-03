@@ -24,6 +24,7 @@
   "contributors": [],
   "dependencies": {},
   "devDependencies": {
+    "condition-node-version": "1.0.0",
     "coveralls": "2.11.4",
     "git-issues": "1.2.0",
     "grunt-cli": "0.1.13",
@@ -70,7 +71,7 @@
   "main": "check-more-types.js",
   "release": {
     "verifyConditions": {
-      "path": "./test/publish-from-specific-node",
+      "path": "condition-node-version",
       "node": "4.2.2"
     }
   },
