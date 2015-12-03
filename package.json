@@ -1,7 +1,7 @@
 {
   "name": "check-more-types",
   "description": "Large collection of predicates.",
-  "version": "2.2.0",
+  "version": "0.0.0",
   "author": "Gleb Bahmutov <gleb.bahmutov@gmail.com>",
   "bugs": {
     "url": "https://github.com/kensho/check-more-types/issues"
@@ -53,7 +53,8 @@
     "matchdep": "1.0.0",
     "mocha": "2.3.4",
     "pkgfiles": "2.3.0",
-    "pre-git": "1.4.0"
+    "pre-git": "1.4.0",
+    "semantic-release": "4.3.5"
   },
   "engines": {
     "node": ">= 0.8.0"
@@ -75,7 +76,7 @@
   "main": "check-more-types.js",
   "repository": {
     "type": "git",
-    "url": "git@github.com:kensho/check-more-types.git"
+    "url": "https://github.com/kensho/check-more-types.git"
   },
   "scripts": {
     "build": "grunt",
@@ -84,6 +85,7 @@
     "issues": "git-issues",
     "node-test": "node test/load-under-node-test.js",
     "pkgfiles": "pkgfiles",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post",
     "size": "tarball=\"$(npm pack .)\"; wc -c \"${tarball}\"; tar tvf \"${tarball}\"; rm \"${tarball}\";",
     "test": "grunt && npm run node-test && grunt mochaTest:syntheticBrowser",
     "watch": "grunt watch"

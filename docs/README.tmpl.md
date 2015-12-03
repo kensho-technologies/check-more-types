@@ -1,4 +1,4 @@
-# {%= name %} v{%= version %}
+# {%= name %}
 
 > Large collection of predicates, inspired by [check-types.js](https://github.com/philbooth/check-types.js)
 

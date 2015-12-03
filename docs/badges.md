@@ -5,6 +5,7 @@
 [![dependencies][check-more-types-dependencies-image] ][check-more-types-dependencies-url]
 [![devdependencies][check-more-types-devdependencies-image] ][check-more-types-devdependencies-url]
 
+[![semantic-release][semantic-image] ][semantic-url]
 [![Coverage Status][check-more-types-coverage-image] ][check-more-types-coverage-url]
 [![Codacy Badge][check-more-types-codacy-image] ][check-more-types-codacy-url]
 [![Code Climate][check-more-types-code-climate-image] ][check-more-types-code-climate-url]
@@ -24,3 +25,5 @@
 [check-more-types-codacy-url]: https://www.codacy.com/public/kensho/check-more-types.git
 [check-more-types-code-climate-image]: https://codeclimate.com/github/kensho/check-more-types/badges/gpa.svg
 [check-more-types-code-climate-url]: https://codeclimate.com/github/kensho/check-more-types
+[semantic-image]: https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg
+[semantic-url]: https://github.com/semantic-release/semantic-release
