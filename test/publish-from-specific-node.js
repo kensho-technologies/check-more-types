@@ -29,7 +29,9 @@ function publishFromSpecificNode(options, config, callback) {
     return fail('Travis is invalid');
   }
 
-  callback(new Error('nope'), null);
+  console.log('ok to publish from Node', options.node);
+
+  callback(null);
 }
 
 module.exports = publishFromSpecificNode;
