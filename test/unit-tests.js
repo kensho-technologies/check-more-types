@@ -744,6 +744,13 @@ describe('check-more-types', function () {
   describe('check.schema', function () {
     la(check.fn(check.schema));
 
+    it('is curried', function () {
+      var hasName = check.schema({ name: check.unemptyString });
+      la(check.fn(hasName), 'returned a function');
+      la(hasName({ name: 'my name' }));
+      la(!hasName({ age: 42 }));
+    });
+
     it('check.schema', function () {
       var obj = {
         foo: 'foo',

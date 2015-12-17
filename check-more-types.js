@@ -15,9 +15,9 @@
   }
 
   // utility method
-  function curry2(fn) {
+  function curry2(fn, strict2) {
     return function curried(a) {
-      if (arguments.length > 2) {
+      if (strict2 && arguments.length > 2) {
         throw new Error('Curry2 function ' + fn.name +
           ' called with too many arguments ' + arguments.length);
       }
@@ -747,7 +747,7 @@
     arrayOfStrings: arrayOfStrings,
     arrayOfArraysOfStrings: arrayOfArraysOfStrings,
     all: all,
-    schema: schema,
+    schema: curry2(schema),
     raises: raises,
     empty: empty,
     found: found,
@@ -762,7 +762,7 @@
     git: git,
     arrayOf: arrayOf,
     badItems: badItems,
-    oneOf: curry2(oneOf),
+    oneOf: curry2(oneOf, true),
     promise: isPromise,
     validDate: validDate,
     equal: curry2(equal),
