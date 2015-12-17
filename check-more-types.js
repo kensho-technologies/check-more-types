@@ -14,6 +14,22 @@
     throw new Error('Missing Function.prototype.bind, please load es5-shim first');
   }
 
+  // utility method
+  function curry2(fn) {
+    return function curried(a) {
+      if (arguments.length > 2) {
+        throw new Error('Curry2 function ' + fn.name +
+          ' called with too many arguments ' + arguments.length);
+      }
+      if (arguments.length === 2) {
+        return fn(arguments[0], arguments[1]);
+      }
+      return function second(b) {
+        return fn(a, b);
+      };
+    };
+  }
+
   // most of the old methods from check-types.js
   function isFn(x) { return typeof x === 'function'; }
   function isString(x) { return typeof x === 'string'; }
@@ -758,7 +774,7 @@
     startsWith: startsWith,
     webUrl: webUrl,
     semver: semver,
-    type: type
+    type: curry2(type)
   };
 
   Object.keys(predicates).forEach(function (name) {

@@ -67,6 +67,13 @@ describe('check-more-types', function () {
       la(check.type('undefined', foo), 'undefined reference');
       la(check.type('object', null), 'null is an object');
     });
+
+    it('is curried', function () {
+      var isNumber = check.type('number');
+      la(check.fn(isNumber), 'returned number');
+      la(isNumber(42), '42 is a number');
+      la(!isNumber('foo'), 'foo is not a number');
+    });
   });
 
   describe('check.semver', function () {

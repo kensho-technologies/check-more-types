@@ -35,6 +35,8 @@ check.number(NaN); // false
     check.type('string', 'foo'); // true
     check.type('number', 42); // true
 
+`check.type` is curried.
+
 ---
 
 ### check.bit
