@@ -30,6 +30,13 @@ check.number(NaN); // false
 
 ---
 
+### check.type
+
+    check.type('string', 'foo'); // true
+    check.type('number', 42); // true
+
+---
+
 ### check.bit
 
     check.bit(0); // true

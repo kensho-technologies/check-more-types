@@ -54,6 +54,21 @@ describe('check-more-types', function () {
     la(!check.startsWith('foo', 'bar/foo'));
   });
 
+  describe('check.type', function () {
+    it('compares types', function () {
+      la(check.type('string', 'foo'), 'string type');
+      la(check.type('number', 42), 'number type');
+      la(check.type('object', {}), 'object type');
+    });
+
+    it('tricky types', function () {
+      var foo;
+      la(check.type('object', []), 'arrays are objects');
+      la(check.type('undefined', foo), 'undefined reference');
+      la(check.type('object', null), 'null is an object');
+    });
+  });
+
   describe('check.semver', function () {
     it('is a function', function () {
       la(check.fn(check.semver));

@@ -65,6 +65,15 @@
       x.indexOf(prefix) === 0;
   }
 
+  /**
+    Checks if the type of second argument matches the name in the first
+
+    @method type
+  */
+  function type(expectedType, x) {
+    return typeof x === expectedType;
+  }
+
   var startsWithHttp = startsWith.bind(null, 'http://');
   var startsWithHttps = startsWith.bind(null, 'https://');
 
@@ -748,7 +757,8 @@
     intNumber: isInteger,
     startsWith: startsWith,
     webUrl: webUrl,
-    semver: semver
+    semver: semver,
+    type: type
   };
 
   Object.keys(predicates).forEach(function (name) {
