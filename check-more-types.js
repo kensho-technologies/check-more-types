@@ -78,6 +78,15 @@
     return (Array.isArray(x) || isString(x)) && x.length === k;
   }
 
+  /**
+    Checks if the given index is valid in an array or string or -1
+
+    @method found
+  */
+  function found(index) {
+    return index >= 0;
+  }
+
   function startsWith(prefix, x) {
     return isString(prefix) &&
       isString(x) &&
@@ -741,6 +750,7 @@
     schema: schema,
     raises: raises,
     empty: empty,
+    found: found,
     emptyString: emptyString,
     unempty: unempty,
     unit: unit,

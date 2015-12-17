@@ -564,6 +564,15 @@ exception. For these cases, there is `check.then`
 
 ----
 
+### check.found
+
+Great for quickly checking string or array search results
+
+```js
+check.found('foo'.indexOf('f')); // true
+check.found('foo bar'.indexOf('bar')); // true
+```
+
 ### check.regexp
 
 Returns true if the passed value is a regular expression.

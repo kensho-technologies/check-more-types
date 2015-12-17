@@ -96,6 +96,7 @@ for advice and examples.
   * [check.defend in module pattern](#checkdefend-in-module-pattern)
 * [Safe callback execution](#safe-callback-execution)
   * [check.then](#checkthen)
+  * [check.found](#checkfound)
   * [check.regexp](#checkregexp)
   * [check.promise](#checkpromise)
   * [check.validDate](#checkvaliddate)
@@ -669,6 +670,15 @@ exception. For these cases, there is `check.then`
     // sum is never called because isSum10 condition is false
 
 ----
+
+#### check.found
+
+Great for quickly checking string or array search results
+
+```js
+check.found('foo'.indexOf('f')); // true
+check.found('foo bar'.indexOf('bar')); // true
+```
 
 #### check.regexp
 

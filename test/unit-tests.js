@@ -202,6 +202,20 @@ describe('check-more-types', function () {
     });
   });
 
+  describe('check/found', function () {
+    it('returns true for found indices', function () {
+      la(check.found('foo'.indexOf('f')));
+      la(check.found('foo'.indexOf('oo')));
+      la(check.found('foo bar'.indexOf('bar')));
+    });
+
+    it('fails for negative numbers', function () {
+      la(!check.found('foo'.indexOf('a')));
+      la(!check.found(-1), '-1');
+      la(!check.found(-2), '-2');
+    });
+  });
+
   describe('check/regexp', function () {
     it('passes regular expressions', function () {
       la(check.regexp(/foo/));
