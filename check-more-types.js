@@ -137,6 +137,16 @@
   }
 
   /**
+    Checks if it is exact semver
+
+    @method semver
+  */
+  function semver(s) {
+    return check.unemptyString(s) &&
+      /^\d+\.\d+\.\d+$/.test(s);
+  }
+
+  /**
     Returns true if the argument is primitive JavaScript type
 
     @method primitive
@@ -737,7 +747,8 @@
     floatNumber: isFloat,
     intNumber: isInteger,
     startsWith: startsWith,
-    webUrl: webUrl
+    webUrl: webUrl,
+    semver: semver
   };
 
   Object.keys(predicates).forEach(function (name) {

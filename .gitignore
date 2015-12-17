@@ -5,3 +5,4 @@ docs/use-toc.md
 cover/
 min-cover/
 npm-debug.log
+.DS_Store

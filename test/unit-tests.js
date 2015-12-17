@@ -54,6 +54,22 @@ describe('check-more-types', function () {
     la(!check.startsWith('foo', 'bar/foo'));
   });
 
+  describe('check.semver', function () {
+    it('is a function', function () {
+      la(check.fn(check.semver));
+    });
+
+    it('allows numbers', function () {
+      la(check.semver('1.2.3'));
+      la(check.semver('0.2.0'));
+    });
+
+    it('does not allow anything else', function () {
+      la(!check.semver('1.0'));
+      la(!check.semver('1.0.0-alpha'));
+    });
+  });
+
   describe('check.primitive', function () {
     it('returns true for primitive javascript types', function () {
       la(check.primitive(42), 'number');

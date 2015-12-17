@@ -23,6 +23,13 @@ check.number(NaN); // false
 
 ---
 
+### check.semver
+
+    check.semver('1.0.2'); // true
+    check.semver('1.0.2-alpha'); // false
+
+---
+
 ### check.bit
 
     check.bit(0); // true
