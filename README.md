@@ -52,6 +52,7 @@ for advice and examples.
 * **API**
   * [check.defined](#checkdefined)
   * [check.semver](#checksemver)
+  * [check.type](#checktype)
   * [check.bit](#checkbit)
   * [check.primitive](#checkprimitive)
   * [check.zero](#checkzero)
@@ -131,6 +132,13 @@ check.number(NaN); // false
 
     check.semver('1.0.2'); // true
     check.semver('1.0.2-alpha'); // false
+
+---
+
+#### check.type
+
+    check.type('string', 'foo'); // true
+    check.type('number', 42); // true
 
 ---
 
