@@ -710,15 +710,7 @@
     @method equal
   */
   function equal(a, b) {
-    if (arguments.length === 2) {
-      return a === b;
-    } else if (arguments.length === 1) {
-      return function equalTo(b) {
-        return a === b;
-      };
-    } else {
-      throw new Error('Expected at least 1 or 2 arguments to check.equal');
-    }
+    return a === b;
   }
 
   // new predicates to be added to check object. Use object to preserve names
@@ -757,10 +749,10 @@
     git: git,
     arrayOf: arrayOf,
     badItems: badItems,
-    oneOf: oneOf,
+    oneOf: curry2(oneOf),
     promise: isPromise,
     validDate: validDate,
-    equal: equal,
+    equal: curry2(equal),
     or: or,
     and: and,
     primitive: primitive,

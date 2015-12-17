@@ -93,6 +93,8 @@ Returns true for primitive JavaScript types
     check.oneOf(colors, color); // true
     check.oneOf(colors, 'brown'); // false
 
+Function is curried
+
 ---
 
 ### check.same

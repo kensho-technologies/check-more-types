@@ -256,11 +256,16 @@ describe('check-more-types', function () {
   });
 
   describe('check/oneOf', function () {
+    var colors = ['red', 'green', 'blue'];
+    var color = 'green';
+
     it('validates color', function () {
-      var colors = ['red', 'green', 'blue'];
-      var color = 'green';
       la(check.oneOf(colors, color), color, 'is one of', colors);
       la(!check.oneOf(colors, 'brown'));
+    });
+
+    it('is curried', function () {
+      la(check.oneOf(colors)('green'));
     });
   });
 
