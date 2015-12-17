@@ -202,6 +202,17 @@ describe('check-more-types', function () {
     });
   });
 
+  describe('check/regexp', function () {
+    it('passes regular expressions', function () {
+      la(check.regexp(/foo/));
+    });
+
+    it('rejects other values', function () {
+      la(!check.regexp('foo'));
+      la(!check.regexp(), 'empty value');
+    });
+  });
+
   describe('check/validDate', function () {
     it('validates date', function () {
       la(check.validDate(new Date()), 'now date');

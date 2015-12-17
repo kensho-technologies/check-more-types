@@ -564,6 +564,10 @@ exception. For these cases, there is `check.then`
 
 ----
 
+### check.regexp
+
+Returns true if the passed value is a regular expression.
+
 ### check.promise
 
 Returns true if given object has promise methods (`.then`, etc)

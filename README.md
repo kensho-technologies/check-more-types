@@ -96,6 +96,7 @@ for advice and examples.
   * [check.defend in module pattern](#checkdefend-in-module-pattern)
 * [Safe callback execution](#safe-callback-execution)
   * [check.then](#checkthen)
+  * [check.regexp](#checkregexp)
   * [check.promise](#checkpromise)
   * [check.validDate](#checkvaliddate)
   * [check.equal](#checkequal)
@@ -668,6 +669,10 @@ exception. For these cases, there is `check.then`
     // sum is never called because isSum10 condition is false
 
 ----
+
+#### check.regexp
+
+Returns true if the passed value is a regular expression.
 
 #### check.promise
 

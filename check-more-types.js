@@ -68,6 +68,9 @@
   function isDate(x) {
     return x instanceof Date;
   }
+  function isRegExp(x) {
+    return x instanceof RegExp;
+  }
   function instance(x, type) {
     return x instanceof type;
   }
@@ -758,6 +761,7 @@
     primitive: primitive,
     zero: zero,
     date: isDate,
+    regexp: isRegExp,
     instance: instance,
     emptyObject: isEmptyObject,
     length: hasLength,
