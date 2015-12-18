@@ -30,6 +30,24 @@ check.number(NaN); // false
 
 ---
 
+### check.positiveNumber (alias `check.positive`)
+
+```js
+check.positive(100); // true
+check.not.positive(-1); // true
+```
+
+---
+
+### check.negativeNumber (alias `check.negative`)
+
+```js
+check.negative(-10); // true
+check.not.negativeNumber(1); // true
+```
+
+---
+
 ### check.type
 
     check.type('string', 'foo'); // true

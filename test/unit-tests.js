@@ -741,6 +741,25 @@ describe('check-more-types', function () {
     });
   });
 
+  describe('positive and negative numbers', function () {
+    it('has aliases', function () {
+      la(check.fn(check.positiveNumber));
+      la(check.fn(check.positive));
+      la(check.fn(check.negativeNumber));
+      la(check.fn(check.negative));
+    });
+
+    it('works for negative numbers', function () {
+      la(check.negative(-1));
+      la(check.negativeNumber(-1000));
+    });
+
+    it('works for positive numbers', function () {
+      la(check.not.positive(-1));
+      la(check.positiveNumber(1000));
+    });
+  });
+
   describe('check.schema', function () {
     la(check.fn(check.schema));
 

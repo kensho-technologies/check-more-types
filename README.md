@@ -52,6 +52,8 @@ for advice and examples.
 * **API**
   * [check.defined](#checkdefined)
   * [check.semver](#checksemver)
+  * [check.positiveNumber (alias `check.positive`)](#checkpositivenumber-alias-checkpositive)
+  * [check.negativeNumber (alias `check.negative`)](#checknegativenumber-alias-checknegative)
   * [check.type](#checktype)
   * [check.bit](#checkbit)
   * [check.primitive](#checkprimitive)
@@ -134,6 +136,24 @@ check.number(NaN); // false
 
     check.semver('1.0.2'); // true
     check.semver('1.0.2-alpha'); // false
+
+---
+
+#### check.positiveNumber (alias `check.positive`)
+
+```js
+check.positive(100); // true
+check.not.positive(-1); // true
+```
+
+---
+
+#### check.negativeNumber (alias `check.negative`)
+
+```js
+check.negative(-10); // true
+check.not.negativeNumber(1); // true
+```
 
 ---
 

@@ -736,6 +736,9 @@
     array: Array.isArray,
     positiveNumber: positiveNumber,
     negativeNumber: negativeNumber,
+    // a couple of aliases
+    positive: positiveNumber,
+    negative: negativeNumber,
     defined: defined,
     same: same,
     allSame: allSame,
