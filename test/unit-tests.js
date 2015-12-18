@@ -114,6 +114,10 @@ describe('check-more-types', function () {
       la(check.primitive(42), 'number');
       la(check.primitive(true), 'boolean');
       la(check.primitive('foo'), 'string');
+      if (typeof Symbol === 'function') {
+        /* global Symbol */
+        la(check.primitive(Symbol('test')), 'symbol');
+      }
     });
 
     it('returns false for objects, arrays and functions', function () {

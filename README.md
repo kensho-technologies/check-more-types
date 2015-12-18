@@ -186,6 +186,8 @@ Returns true for primitive JavaScript types
     check.primitive('foo'); // true
     check.primitive([]); // false
 
+Also returns true for `Symbol` ES6 syntax.
+
 ---
 
 #### check.zero

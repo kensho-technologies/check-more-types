@@ -196,7 +196,8 @@
     var type = typeof value;
     return type === 'number' ||
       type === 'boolean' ||
-      type === 'string';
+      type === 'string' ||
+      type === 'symbol';
   }
 
   /**
