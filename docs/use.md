@@ -129,6 +129,23 @@ Function is curried
 
 ---
 
+### check.length
+
+Confirms length of a string or an Array. The function is curried and
+can guess the argument order
+
+```js
+check.length([1, 2], 2); // true
+check.length('foo', 3); // true
+// argument order
+check.length(3, 'foo'); // true
+// curried call
+check.length('foo')(3); // true
+check.length(3)('foo'); // true
+```
+
+---
+
 ### check.sameLength
 
     check.sameLength([1, 2], ['a', 'b']); // true

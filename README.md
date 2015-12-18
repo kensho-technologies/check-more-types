@@ -64,6 +64,7 @@ for advice and examples.
   * [check.index](#checkindex)
   * [check.oneOf](#checkoneof)
   * [check.same](#checksame)
+  * [check.length](#checklength)
   * [check.sameLength](#checksamelength)
   * [check.allSame](#checkallsame)
   * [check.unit](#checkunit)
@@ -235,6 +236,23 @@ Function is curried
     check.same('foo', 'foo'); // true
 
 `check.same` should produce same result as `===`.
+
+---
+
+#### check.length
+
+Confirms length of a string or an Array. The function is curried and
+can guess the argument order
+
+```js
+check.length([1, 2], 2); // true
+check.length('foo', 3); // true
+// argument order
+check.length(3, 'foo'); // true
+// curried call
+check.length('foo')(3); // true
+check.length(3)('foo'); // true
+```
 
 ---
 

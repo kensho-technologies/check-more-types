@@ -20,10 +20,27 @@ describe('check-more-types', function () {
     la(!check.emptyObject(''), 'empty string is not an empty object');
   });
 
-  it('has check.length', function () {
-    la(!check.length({}, 0));
-    la(check.length('', 0));
-    la(check.length([1, 2], 2));
+  describe('check.length', function () {
+    it('has check.length', function () {
+      la(!check.length({}, 0));
+      la(check.length('', 0));
+      la(check.length([1, 2], 2));
+    });
+
+    it('is curried', function () {
+      la(check.length('foo')(3), 'string');
+      la(check.length([1, 2])(2), 'array');
+    });
+
+    it('knows the order of arguments', function () {
+      la(check.length('foo', 3), 'string, number');
+      la(check.length(3, 'foo'), 'number, string');
+    });
+
+    it('curried and knows the order of arguments', function () {
+      la(check.length(3)('foo'), 'number, string');
+      la(check.length('foo')(3), 'string, number');
+    });
   });
 
   it('has floatNumber', function () {

@@ -75,6 +75,10 @@
     return x instanceof type;
   }
   function hasLength(x, k) {
+    if (typeof x === 'number' && typeof k !== 'number') {
+      // swap arguments
+      return hasLength(k, x);
+    }
     return (Array.isArray(x) || isString(x)) && x.length === k;
   }
 
@@ -777,7 +781,7 @@
     regexp: isRegExp,
     instance: instance,
     emptyObject: isEmptyObject,
-    length: hasLength,
+    length: curry2(hasLength),
     floatNumber: isFloat,
     intNumber: isInteger,
     startsWith: startsWith,
