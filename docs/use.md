@@ -9,6 +9,10 @@ check.not.number(undefined); // true
 check.number(NaN); // false
 ```
 
+### check.error
+
+Returns true if given argument is an instance of type `Error`
+
 ### check.https
 
 Returns true if the provided url starts with `https://`. Alias `secure`.

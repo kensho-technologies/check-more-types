@@ -20,6 +20,16 @@ describe('check-more-types', function () {
     la(!check.emptyObject(''), 'empty string is not an empty object');
   });
 
+  describe('error', function () {
+    it('returns true if given argument is Error', function () {
+      la(check.error(new Error('foo')));
+    });
+
+    it('returns false for everything else', function () {
+      la(check.not.error('foo'));
+    });
+  });
+
   describe('https', function () {
     it('has function and alias', function () {
       la(check.fn(check.https), 'has https');

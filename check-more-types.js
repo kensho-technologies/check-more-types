@@ -71,6 +71,9 @@
   function isRegExp(x) {
     return x instanceof RegExp;
   }
+  function isError(x) {
+    return x instanceof Error;
+  }
   function instance(x, type) {
     return x instanceof type;
   }
@@ -799,7 +802,8 @@
     type: curry2(type),
     http: http,
     https: https,
-    secure: https
+    secure: https,
+    error: isError
   };
 
   Object.keys(predicates).forEach(function (name) {

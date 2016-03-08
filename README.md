@@ -50,6 +50,7 @@ for advice and examples.
 
 
 * **API**
+  * [check.error](#checkerror)
   * [check.https](#checkhttps)
   * [check.http](#checkhttp)
   * [check.defined](#checkdefined)
@@ -120,6 +121,10 @@ check.number(null); // false
 check.not.number(undefined); // true
 check.number(NaN); // false
 ```
+
+#### check.error
+
+Returns true if given argument is an instance of type `Error`
 
 #### check.https
 
