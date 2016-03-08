@@ -109,6 +109,14 @@
   var startsWithHttp = startsWith.bind(null, 'http://');
   var startsWithHttps = startsWith.bind(null, 'https://');
 
+  function http(x) {
+    return isString(x) && startsWithHttp(x);
+  }
+
+  function https(x) {
+    return isString(x) && startsWithHttps(x);
+  }
+
   function webUrl(x) {
     return isString(x) &&
       (startsWithHttp(x) || startsWithHttps(x));
@@ -788,7 +796,10 @@
     startsWith: startsWith,
     webUrl: webUrl,
     semver: semver,
-    type: curry2(type)
+    type: curry2(type),
+    http: http,
+    https: https,
+    secure: https
   };
 
   Object.keys(predicates).forEach(function (name) {

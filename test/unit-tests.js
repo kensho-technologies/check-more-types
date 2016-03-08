@@ -20,6 +20,23 @@ describe('check-more-types', function () {
     la(!check.emptyObject(''), 'empty string is not an empty object');
   });
 
+  describe('https', function () {
+    it('has function and alias', function () {
+      la(check.fn(check.https), 'has https');
+      la(check.fn(check.secure), 'has secure');
+    });
+
+    it('returns true for https urls', function () {
+      la(check.https('https://localhost'));
+      la(check.secure('https://google.com'));
+    });
+
+    it('returns false for non-https urls', function () {
+      la(check.not.https('http://localhost'));
+      la(!check.secure('http://google.com'));
+    });
+  });
+
   describe('check.length', function () {
     it('has check.length', function () {
       la(!check.length({}, 0));

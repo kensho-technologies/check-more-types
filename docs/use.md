@@ -9,6 +9,14 @@ check.not.number(undefined); // true
 check.number(NaN); // false
 ```
 
+### check.https
+
+Returns true if the provided url starts with `https://`. Alias `secure`.
+
+### check.http
+
+Returns true if the provided url starts with `http://`
+
 ### check.defined
 
     check.defined(0); // true

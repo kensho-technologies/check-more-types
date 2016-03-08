@@ -50,6 +50,8 @@ for advice and examples.
 
 
 * **API**
+  * [check.https](#checkhttps)
+  * [check.http](#checkhttp)
   * [check.defined](#checkdefined)
   * [check.semver](#checksemver)
   * [check.positiveNumber (alias `check.positive`)](#checkpositivenumber-alias-checkpositive)
@@ -118,6 +120,14 @@ check.number(null); // false
 check.not.number(undefined); // true
 check.number(NaN); // false
 ```
+
+#### check.https
+
+Returns true if the provided url starts with `https://`. Alias `secure`.
+
+#### check.http
+
+Returns true if the provided url starts with `http://`
 
 #### check.defined
 
