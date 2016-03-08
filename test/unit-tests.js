@@ -30,6 +30,18 @@ describe('check-more-types', function () {
     });
   });
 
+  describe('port', function () {
+    it('returns true for system and user ports', function () {
+      la(check.port(80), '80');
+      la(check.port(1337), '1337');
+    });
+
+    it('returns false for other numbers', function () {
+      la(check.not.port(-80), '-80');
+      la(!check.port(70000), 'too large');
+    });
+  });
+
   describe('https', function () {
     it('has function and alias', function () {
       la(check.fn(check.https), 'has https');

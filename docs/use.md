@@ -9,6 +9,11 @@ check.not.number(undefined); // true
 check.number(NaN); // false
 ```
 
+### check.port
+
+Returns true if passed argument is positive number less or equal to largest
+allowed port number 65535
+
 ### check.error
 
 Returns true if given argument is an instance of type `Error`

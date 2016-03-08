@@ -50,6 +50,7 @@ for advice and examples.
 
 
 * **API**
+  * [check.port](#checkport)
   * [check.error](#checkerror)
   * [check.https](#checkhttps)
   * [check.http](#checkhttp)
@@ -121,6 +122,11 @@ check.number(null); // false
 check.not.number(undefined); // true
 check.number(NaN); // false
 ```
+
+#### check.port
+
+Returns true if passed argument is positive number less or equal to largest
+allowed port number 65535
 
 #### check.error
 

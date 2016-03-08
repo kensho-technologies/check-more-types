@@ -482,6 +482,10 @@
     return true;
   }
 
+  function isPortNumber(x) {
+    return check.positive(x) && x <= 65535;
+  }
+
   /**
     Returns true if 0 <= value <= 1
     @method unit
@@ -803,7 +807,8 @@
     http: http,
     https: https,
     secure: https,
-    error: isError
+    error: isError,
+    port: isPortNumber
   };
 
   Object.keys(predicates).forEach(function (name) {
