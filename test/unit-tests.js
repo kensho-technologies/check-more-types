@@ -30,6 +30,18 @@ describe('check-more-types', function () {
     });
   });
 
+  describe('system port', function () {
+    it('returns true for system ports', function () {
+      la(check.systemPort(80), '80');
+      la(check.systemPort(1000), '1000');
+    });
+
+    it('returns false for other numbers', function () {
+      la(check.not.systemPort(-80), '-80');
+      la(!check.systemPort(1337), 'too large');
+    });
+  });
+
   describe('port', function () {
     it('returns true for system and user ports', function () {
       la(check.port(80), '80');

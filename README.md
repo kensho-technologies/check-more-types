@@ -50,6 +50,7 @@ for advice and examples.
 
 
 * **API**
+  * [check.systemPort](#checksystemport)
   * [check.port](#checkport)
   * [check.error](#checkerror)
   * [check.https](#checkhttps)
@@ -122,6 +123,10 @@ check.number(null); // false
 check.not.number(undefined); // true
 check.number(NaN); // false
 ```
+
+#### check.systemPort
+
+Returns true if passed argument is number between 0 and 1024
 
 #### check.port
 

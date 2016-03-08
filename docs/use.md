@@ -9,6 +9,10 @@ check.not.number(undefined); // true
 check.number(NaN); // false
 ```
 
+### check.systemPort
+
+Returns true if passed argument is number between 0 and 1024
+
 ### check.port
 
 Returns true if passed argument is positive number less or equal to largest
