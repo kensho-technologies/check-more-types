@@ -8,7 +8,7 @@
   },
   "config": {
     "pre-git": {
-      "commit-msg": "validate-commit-msg",
+      "commit-msg": "simple",
       "pre-commit": [
         "npm test"
       ],
@@ -30,32 +30,32 @@
   "dependencies": {},
   "devDependencies": {
     "@semantic-release/condition-travis": "4.1.4",
-    "condition-node-version": "1.1.0",
-    "coveralls": "2.11.4",
+    "condition-node-version": "1.2.0",
+    "coveralls": "2.11.8",
     "git-issues": "1.2.0",
     "grunt-cli": "0.1.13",
-    "grunt-contrib-jshint": "0.11.3",
-    "grunt-contrib-uglify": "0.11.0",
+    "grunt-contrib-jshint": "1.0.0",
+    "grunt-contrib-uglify": "1.0.0",
     "grunt-contrib-watch": "0.6.1",
     "grunt-deps-ok": "0.9.0",
     "grunt-gt": "0.1.6",
     "grunt-jshint-solid": "0.1.1",
     "grunt-mocha-test": "0.12.7",
-    "grunt-nice-package": "0.10.1",
+    "grunt-nice-package": "0.10.2",
     "grunt-npm2bower-sync": "0.9.1",
     "grunt-readme": "0.4.5",
     "grunt-toc": "0.1.0",
     "grunt-xplain": "0.2.7",
     "jshint-summary": "0.4.0",
-    "lazy-ass": "1.1.0",
+    "lazy-ass": "1.4.0",
     "lazy-ass-helpful": "0.6.1",
     "lcov-filter": "0.1.1",
-    "lodash": "3.10.1",
-    "matchdep": "1.0.0",
-    "mocha": "2.3.4",
+    "lodash": "4.6.1",
+    "matchdep": "1.0.1",
+    "mocha": "2.4.5",
     "pkgfiles": "2.3.0",
-    "pre-git": "1.4.0",
-    "semantic-release": "6.0.3"
+    "pre-git": "3.4.1",
+    "semantic-release": "6.2.0"
   },
   "engines": {
     "node": ">= 0.8.0"
@@ -97,9 +97,10 @@
     "issues": "git-issues",
     "node-test": "node test/load-under-node-test.js",
     "pkgfiles": "pkgfiles",
+    "pretest": "grunt",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
     "size": "tarball=\"$(npm pack .)\"; wc -c \"${tarball}\"; tar tvf \"${tarball}\"; rm \"${tarball}\";",
-    "test": "grunt && npm run node-test && grunt mochaTest:syntheticBrowser",
+    "test": "npm run node-test && grunt mochaTest:syntheticBrowser",
     "watch": "grunt watch"
   }
 }
