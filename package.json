@@ -21,7 +21,9 @@
       "post-merge": []
     },
     "next-update": {
-      "skip": ["grunt-cli"]
+      "skip": [
+        "grunt-cli"
+      ]
     }
   },
   "contributors": [],
