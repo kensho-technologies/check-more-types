@@ -19,6 +19,9 @@
         "git status"
       ],
       "post-merge": []
+    },
+    "next-update": {
+      "skip": ["grunt-cli"]
     }
   },
   "contributors": [],
