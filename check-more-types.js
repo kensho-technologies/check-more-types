@@ -34,7 +34,7 @@
   function isFn(x) { return typeof x === 'function'; }
   function isString(x) { return typeof x === 'string'; }
   function unemptyString(x) {
-    return isString(x) && x;
+    return isString(x) && Boolean(x);
   }
   function isObject(x) {
     return typeof x === 'object' &&

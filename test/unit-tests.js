@@ -1494,4 +1494,21 @@ describe('check-more-types', function () {
       la(!check.emptyString([]));
     });
   });
+
+  describe('check.unemptyString', function () {
+    it('is defined', function() {
+      la(check.fn(check.unemptyString));
+    });
+
+    it('returns a boolean', function () {
+      la(check.unemptyString('') === false);
+      la(check.unemptyString(' ') === true);
+    });
+
+    it('can be combined with "verify"', function () {
+      la(check.raises(function () {
+        check.verify.unemptyString('');
+      }));
+    });
+  });
 });
