@@ -95,12 +95,14 @@
     "commit": "git-issues && commit-wizard",
     "coveralls": "lcov-filter cover/lcov.info test | ./node_modules/coveralls/bin/coveralls.js",
     "issues": "git-issues",
+    "mocha": "mocha test/check-more-types-spec.js",
+    "mocha:synthetic": "grunt mochaTest:syntheticBrowser",
     "node-test": "node test/load-under-node-test.js",
     "pkgfiles": "pkgfiles",
     "pretest": "grunt",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
     "size": "tarball=\"$(npm pack .)\"; wc -c \"${tarball}\"; tar tvf \"${tarball}\"; rm \"${tarball}\";",
-    "test": "npm run node-test && grunt mochaTest:syntheticBrowser && mocha test/check-more-types-spec.js",
+    "test": "npm run node-test && npm run mocha:synthetic && npm run mocha",
     "watch": "grunt watch"
   }
 }
