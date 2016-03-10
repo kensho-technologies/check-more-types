@@ -490,6 +490,10 @@
     return check.positive(x) && x <= 1024;
   }
 
+  function isUserPortNumber(x) {
+    return isPortNumber(x) && x > 1024;
+  }
+
   /**
     Returns true if 0 <= value <= 1
     @method unit
@@ -813,7 +817,8 @@
     secure: https,
     error: isError,
     port: isPortNumber,
-    systemPort: isSystemPortNumber
+    systemPort: isSystemPortNumber,
+    userPort: isUserPortNumber
   };
 
   Object.keys(predicates).forEach(function (name) {

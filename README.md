@@ -50,10 +50,11 @@ for advice and examples.
 
 
 * **API**
-  * [check.systemPort](#checksystemport)
   * [check.port](#checkport)
+  * [check.systemPort](#checksystemport)
+  * [check.userPort](#checkuserport)
   * [check.error](#checkerror)
-  * [check.https](#checkhttps)
+  * [check.https (alias `secure`)](#checkhttps-alias-secure)
   * [check.http](#checkhttp)
   * [check.defined](#checkdefined)
   * [check.semver](#checksemver)
@@ -124,20 +125,24 @@ check.not.number(undefined); // true
 check.number(NaN); // false
 ```
 
-#### check.systemPort
-
-Returns true if passed argument is number between 0 and 1024
-
 #### check.port
 
 Returns true if passed argument is positive number less or equal to largest
 allowed port number 65535
 
+#### check.systemPort
+
+Returns true if passed argument is number between 0 and 1024
+
+#### check.userPort
+
+Returns true if passed argument is a port number and larger than 1024
+
 #### check.error
 
 Returns true if given argument is an instance of type `Error`
 
-#### check.https
+#### check.https (alias `secure`)
 
 Returns true if the provided url starts with `https://`. Alias `secure`.
 
