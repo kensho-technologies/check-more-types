@@ -100,7 +100,7 @@
     "pretest": "grunt",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
     "size": "tarball=\"$(npm pack .)\"; wc -c \"${tarball}\"; tar tvf \"${tarball}\"; rm \"${tarball}\";",
-    "test": "npm run node-test && grunt mochaTest:syntheticBrowser",
+    "test": "npm run node-test && grunt mochaTest:syntheticBrowser && mocha test/check-more-types-spec.js",
     "watch": "grunt watch"
   }
 }
