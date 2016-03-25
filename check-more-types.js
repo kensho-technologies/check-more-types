@@ -752,8 +752,18 @@
     return a === b;
   }
 
+  /**
+    Really simple email sanity check
+    @method email
+  */
+  function email(s) {
+    return isString(s) &&
+      /^.+@.+\..+$/.test(s);
+  }
+
   // new predicates to be added to check object. Use object to preserve names
   var predicates = {
+    email: email,
     nulled: isNull,
     fn: isFn,
     string: isString,

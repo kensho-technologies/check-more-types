@@ -9,6 +9,15 @@ check.not.number(undefined); // true
 check.number(NaN); // false
 ```
 
+### check.email
+
+Really simple regex email check. Should not be relied to be robust.
+
+```js
+check.email('me@foo.bar') // true
+check.email('me.foo.bar') // false
+```
+
 ### check.port
 
 Returns true if passed argument is positive number less or equal to largest

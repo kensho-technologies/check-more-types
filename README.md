@@ -50,6 +50,7 @@ for advice and examples.
 
 
 * **API**
+  * [check.email](#checkemail)
   * [check.port](#checkport)
   * [check.systemPort](#checksystemport)
   * [check.userPort](#checkuserport)
@@ -123,6 +124,15 @@ for advice and examples.
 check.number(null); // false
 check.not.number(undefined); // true
 check.number(NaN); // false
+```
+
+#### check.email
+
+Really simple regex email check. Should not be relied to be robust.
+
+```js
+check.email('me@foo.bar') // true
+check.email('me.foo.bar') // false
 ```
 
 #### check.port

@@ -373,6 +373,22 @@ describe('check-more-types', function () {
     }
   });
 
+  describe('check/email', function () {
+    it('passes simple emails', function () {
+      ['g@kensho.com', 'foo@foo.bar', 'my-email@gmail.com']
+        .forEach(function (s) {
+          la(check.email(s), s);
+        });
+    });
+
+    it('fails simple non-emails', function () {
+      ['g.kensho.com', 'foo@foo', 'my-email@gmail@com']
+        .forEach(function (s) {
+          la(!check.email(s), s);
+        });
+    });
+  });
+
   describe('check/oneOf', function () {
     var colors = ['red', 'green', 'blue'];
     var color = 'green';
