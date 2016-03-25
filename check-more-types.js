@@ -733,7 +733,6 @@
 
   // work around reserved keywords checks
   promiseSchema['catch'] = isFn;
-  promiseSchema['finally'] = isFn;
 
   var hasPromiseApi = schema.bind(null, promiseSchema);
 

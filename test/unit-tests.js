@@ -363,6 +363,14 @@ describe('check-more-types', function () {
     it('does not throw exception when passed array', function () {
       la(!check.promise([]));
     });
+
+    if (typeof Promise !== 'undefined') {
+      /* global Promise */
+      it('works for native ES6 Promises', function () {
+        var p = Promise.resolve(42);
+        la(check.promise(p), 'native Promise is detected');
+      });
+    }
   });
 
   describe('check/oneOf', function () {
