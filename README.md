@@ -57,6 +57,7 @@ for advice and examples.
   * [check.error](#checkerror)
   * [check.https (alias `secure`)](#checkhttps-alias-secure)
   * [check.http](#checkhttp)
+  * [check.webUrl (alias `url`)](#checkweburl-alias-url)
   * [check.defined](#checkdefined)
   * [check.semver](#checksemver)
   * [check.positiveNumber (alias `check.positive`)](#checkpositivenumber-alias-checkpositive)
@@ -159,6 +160,10 @@ Returns true if the provided url starts with `https://`. Alias `secure`.
 #### check.http
 
 Returns true if the provided url starts with `http://`
+
+#### check.webUrl (alias `url`)
+
+Returns true if the given string is http or https url.
 
 #### check.defined
 

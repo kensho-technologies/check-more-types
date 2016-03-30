@@ -128,6 +128,10 @@ describe('check-more-types', function () {
     la(!check.webUrl('www.google.com/'));
   });
 
+  it('has url as alias to webUrl', function () {
+    la(check.webUrl === check.url);
+  });
+
   it('has startsWith', function () {
     la(check.startsWith('foo', 'foo-bar'));
     la(check.startsWith('foo', 'foo/bar'));

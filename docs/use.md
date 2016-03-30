@@ -43,6 +43,10 @@ Returns true if the provided url starts with `https://`. Alias `secure`.
 
 Returns true if the provided url starts with `http://`
 
+### check.webUrl (alias `url`)
+
+Returns true if the given string is http or https url.
+
 ### check.defined
 
     check.defined(0); // true

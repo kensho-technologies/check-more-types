@@ -819,6 +819,7 @@
     intNumber: isInteger,
     startsWith: startsWith,
     webUrl: webUrl,
+    url: webUrl,
     semver: semver,
     type: curry2(type),
     http: http,
