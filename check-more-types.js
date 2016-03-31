@@ -101,6 +101,24 @@
   }
 
   /**
+    Checks if the given item is the given {arrya, string}
+
+    @method contains
+  */
+  function contains(where, what) {
+    if (Array.isArray(where)) {
+      return where.indexOf(what) !== -1;
+    }
+    if (typeof where === 'string') {
+      if (typeof what !== 'string') {
+        throw new Error('Contains in string should search for string also ' + what);
+      }
+      return where.indexOf(what) !== -1;
+    }
+    return false;
+  }
+
+  /**
     Checks if the type of second argument matches the name in the first
 
     @method type
@@ -828,7 +846,8 @@
     error: isError,
     port: isPortNumber,
     systemPort: isSystemPortNumber,
-    userPort: isUserPortNumber
+    userPort: isUserPortNumber,
+    contains: contains
   };
 
   Object.keys(predicates).forEach(function (name) {

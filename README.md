@@ -58,6 +58,7 @@ for advice and examples.
   * [check.https (alias `secure`)](#checkhttps-alias-secure)
   * [check.http](#checkhttp)
   * [check.webUrl (alias `url`)](#checkweburl-alias-url)
+  * [check.contains](#checkcontains)
   * [check.defined](#checkdefined)
   * [check.semver](#checksemver)
   * [check.positiveNumber (alias `check.positive`)](#checkpositivenumber-alias-checkpositive)
@@ -164,6 +165,15 @@ Returns true if the provided url starts with `http://`
 #### check.webUrl (alias `url`)
 
 Returns true if the given string is http or https url.
+
+#### check.contains
+
+Returns true if given array contains an item, or given string contains substring.
+
+```js
+check.contains(['foo', 42], 'foo'); // true
+check.contains('apple', 'pp'); // true
+```
 
 #### check.defined
 

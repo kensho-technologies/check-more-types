@@ -47,6 +47,15 @@ Returns true if the provided url starts with `http://`
 
 Returns true if the given string is http or https url.
 
+### check.contains
+
+Returns true if given array contains an item, or given string contains substring.
+
+```js
+check.contains(['foo', 42], 'foo'); // true
+check.contains('apple', 'pp'); // true
+```
+
 ### check.defined
 
     check.defined(0); // true

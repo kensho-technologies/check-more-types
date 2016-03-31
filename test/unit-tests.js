@@ -478,6 +478,30 @@ describe('check-more-types', function () {
     });
   });
 
+  describe('check/contains', function () {
+    it('is a function', function () {
+      la(check.fn(check.contains));
+    });
+
+    /** @sample check/contains */
+    it('contains item in an array', function () {
+      var items = ['foo', 1, 'bar'];
+      la(check.contains(items, 'foo'));
+      la(check.contains(items, 1));
+      la(check.contains(items, 'bar'));
+      la(check.not.contains(items, 42));
+    });
+
+    /** @sample check/contains */
+    it('contains substring', function () {
+      var str = 'foo bar baz';
+      la(check.contains(str, 'foo'));
+      la(check.contains(str, 'bar'));
+      la(check.contains(str, 'r ba'));
+      la(check.not.contains(str, 'foobar'));
+    });
+  });
+
   describe('check/then', function () {
     var done = false;
     function doIt() { done = true; }

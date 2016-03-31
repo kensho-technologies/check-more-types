@@ -103,6 +103,7 @@
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
     "size": "tarball=\"$(npm pack .)\"; wc -c \"${tarball}\"; tar tvf \"${tarball}\"; rm \"${tarball}\";",
     "test": "npm run node-test && npm run mocha:synthetic && npm run mocha",
+    "unit": "npm run mocha",
     "watch": "grunt watch"
   }
 }
