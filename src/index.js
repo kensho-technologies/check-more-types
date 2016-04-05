@@ -1,7 +1,7 @@
 'use strict'
 
 /**
-  Custom assertions and predicates around https://github.com/philbooth/check-types.js
+  Custom JavaScript assertions and predicates
   Created by Kensho https://github.com/kensho
   Copyright @ 2014 Kensho https://www.kensho.com/
   License: MIT
@@ -13,21 +13,7 @@ if (typeof Function.prototype.bind !== 'function') {
   throw new Error('Missing Function.prototype.bind, please load es5-shim first')
 }
 
-// utility method
-function curry2 (fn, strict2) {
-  return function curried (a) {
-    if (strict2 && arguments.length > 2) {
-      throw new Error('Curry2 function ' + fn.name +
-        ' called with too many arguments ' + arguments.length)
-    }
-    if (arguments.length === 2) {
-      return fn(arguments[0], arguments[1])
-    }
-    return function second (b) {
-      return fn(a, b)
-    }
-  }
-}
+var lowLevel = require('./low-level')
 
 // most of the old methods from check-types.js
 function isFn (x) { return typeof x === 'function' }
@@ -803,7 +789,7 @@ var predicates = {
   arrayOfStrings: arrayOfStrings,
   arrayOfArraysOfStrings: arrayOfArraysOfStrings,
   all: all,
-  schema: curry2(schema),
+  schema: lowLevel.curry2(schema),
   raises: raises,
   empty: empty,
   found: found,
@@ -818,10 +804,10 @@ var predicates = {
   git: git,
   arrayOf: arrayOf,
   badItems: badItems,
-  oneOf: curry2(oneOf, true),
+  oneOf: lowLevel.curry2(oneOf, true),
   promise: isPromise,
   validDate: validDate,
-  equal: curry2(equal),
+  equal: lowLevel.curry2(equal),
   or: or,
   and: and,
   primitive: primitive,
@@ -830,14 +816,14 @@ var predicates = {
   regexp: isRegExp,
   instance: instance,
   emptyObject: isEmptyObject,
-  length: curry2(hasLength),
+  length: lowLevel.curry2(hasLength),
   floatNumber: isFloat,
   intNumber: isInteger,
   startsWith: startsWith,
   webUrl: webUrl,
   url: webUrl,
   semver: semver,
-  type: curry2(type),
+  type: lowLevel.curry2(type),
   http: http,
   https: https,
   secure: https,
