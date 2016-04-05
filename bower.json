@@ -1,6 +1,6 @@
 {
   "name": "check-more-types",
-  "main": "check-more-types.js",
+  "main": "dist/check-more-types.js",
   "version": "0.0.0",
   "homepage": "https://github.com/kensho/check-more-types",
   "license": "MIT",
@@ -22,7 +22,7 @@
     "type-checking",
     "types"
   ],
-  "description": "Additional type checks for https://github.com/philbooth/check-types.js",
+  "description": "Collection of predicates and type checks",
   "authors": [
     "Gleb Bahmutov <gleb.bahmutov@gmail.com>"
   ]

@@ -1,3 +1,3 @@
 global.la = require('lazy-ass');
-require('../check-more-types');
+require('..');
 require('./unit-tests');

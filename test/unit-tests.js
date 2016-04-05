@@ -1,9 +1,10 @@
 /* global describe, la, check, it, beforeEach */
 describe('check-more-types', function () {
+  var check = require('..')
   var root = typeof window === 'object' ? window : global;
 
   it('has check', function () {
-    la(global.check);
+    la(check);
     la(typeof check === 'object');
     la(check.object(check));
   });

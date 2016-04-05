@@ -30,8 +30,8 @@ function curry2 (fn, strict2) {
 }
 
 // most of the old methods from check-types.js
-function isFn (x) { return typeof x === 'function'; }
-function isString (x) { return typeof x === 'string'; }
+function isFn (x) { return typeof x === 'function' }
+function isString (x) { return typeof x === 'string' }
 function unemptyString (x) {
   return isString(x) && Boolean(x)
 }
@@ -57,7 +57,7 @@ function isInteger (x) {
 function isFloat (x) {
   return isNumber(x) && x % 1 !== 0
 }
-function isNull (x) { return x === null; }
+function isNull (x) { return x === null }
 function positiveNumber (x) {
   return isNumber(x) && x > 0
 }
@@ -161,7 +161,9 @@ function every (predicateResults) {
 }
 
 function map (things, predicates) {
-  var property, result = {}, predicate
+  var property
+  var result = {}
+  var predicate
   for (property in predicates) {
     if (predicates.hasOwnProperty(property)) {
       predicate = predicates[property]
@@ -567,9 +569,9 @@ if (!check.defend) {
     check.verify.array(predicates, 'expected list of predicates')
     check.verify.defined(args, 'missing args')
 
-    var k = 0, // iterates over predicates
-      j = 0, // iterates over arguments
-      n = predicates.length
+    var k = 0 // iterates over predicates
+    var j = 0 // iterates over arguments
+    var n = predicates.length
 
     for (k = 0; k < n; k += 1) {
       var predicate = predicates[k]
@@ -577,7 +579,7 @@ if (!check.defend) {
         continue
       }
 
-      if (!predicate.call(null, args[j])) {
+      if (!predicate(args[j])) {
         var msg = 'Argument ' + (j + 1) + ': ' + args[j] + ' does not pass predicate'
         if (check.unemptyString(predicates[k + 1])) {
           msg += ': ' + predicates[k + 1]
@@ -612,8 +614,7 @@ function or () {
     var values = Array.prototype.slice.call(arguments, 0)
     return predicates.some(function (predicate) {
       try {
-        return check.fn(predicate) ?
-          predicate.apply(null, values) : Boolean(predicate)
+        return check.fn(predicate) ? predicate.apply(null, values) : Boolean(predicate)
       } catch (err) {
         // treat exceptions as false
         return false
@@ -635,8 +636,7 @@ function and () {
   return function orCheck () {
     var values = Array.prototype.slice.call(arguments, 0)
     return predicates.every(function (predicate) {
-      return check.fn(predicate) ?
-        predicate.apply(null, values) : Boolean(predicate)
+      return check.fn(predicate) ? predicate.apply(null, values) : Boolean(predicate)
     })
   }
 }
@@ -735,8 +735,7 @@ if (!check.then) {
   */
   check.then = function then (condition, fn) {
     return function () {
-      var ok = typeof condition === 'function' ?
-        condition.apply(null, arguments) : condition
+      var ok = typeof condition === 'function' ? condition.apply(null, arguments) : condition
       if (ok) {
         return fn.apply(null, arguments)
       }

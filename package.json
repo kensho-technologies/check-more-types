@@ -65,8 +65,8 @@
   },
   "files": [
     "bower.json",
-    "check-more-types.js",
-    "check-more-types.min.js"
+    "dist/check-more-types.js",
+    "dist/check-more-types.min.js"
   ],
   "homepage": "https://github.com/kensho/check-more-types",
   "keywords": [
@@ -77,7 +77,7 @@
     "types"
   ],
   "license": "MIT",
-  "main": "check-more-types.js",
+  "main": "dist/check-more-types.js",
   "release": {
     "verifyConditions": [
       {
@@ -97,19 +97,18 @@
     "build": "npm run pack && grunt",
     "commit": "git-issues && commit-wizard",
     "coveralls": "lcov-filter cover/lcov.info test | ./node_modules/coveralls/bin/coveralls.js",
+    "format": "standard-format -w src/*.js",
     "issues": "git-issues",
+    "lint": "standard --verbose src/*.js",
     "mocha": "mocha test/check-more-types-spec.js",
-    "mocha:synthetic": "grunt mochaTest:syntheticBrowser",
     "node-test": "node test/load-under-node-test.js",
+    "pack": "webpack",
     "pkgfiles": "pkgfiles",
     "pretest": "npm run format && npm run lint",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
     "size": "tarball=\"$(npm pack .)\"; wc -c \"${tarball}\"; tar tvf \"${tarball}\"; rm \"${tarball}\";",
-    "test": "npm run node-test && npm run mocha:synthetic && npm run mocha",
+    "test": "npm run node-test && npm run mocha",
     "unit": "npm run mocha",
-    "watch": "grunt watch",
-    "pack": "webpack",
-    "lint": "standard --verbose src/*.js",
-    "format": "standard-format -w src/*.js"
+    "watch": "grunt watch"
   }
 }
