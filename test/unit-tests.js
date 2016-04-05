@@ -1,12 +1,18 @@
-/* global describe, la, check, it, beforeEach */
+/* global describe, it, beforeEach */
 describe('check-more-types', function () {
   var check = require('..')
+  var la = require('lazy-ass')
   var root = typeof window === 'object' ? window : global;
 
   it('has check', function () {
     la(check);
     la(typeof check === 'object');
     la(check.object(check));
+  });
+
+  it('has no global check (does not pollute)', function () {
+    la(root, 'has root');
+    la(!root.check, 'has no root.check');
   });
 
   it('has extra checks', function () {

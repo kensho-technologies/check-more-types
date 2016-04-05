@@ -69,7 +69,7 @@ module.exports = function(grunt) {
           cover: 'cover',
           bdd: true
         },
-        src: ['test/check-more-types-spec.js']
+        src: ['test/unit-tests.js']
       },
       minified: {
         options: {
@@ -110,5 +110,5 @@ module.exports = function(grunt) {
   grunt.registerTask('test', ['gt']);
   grunt.registerTask('doc', ['xplain', 'toc', 'readme']);
   grunt.registerTask('default',
-    ['nice-package', 'deps-ok', 'sync', 'test', 'uglify', 'doc']);
+    ['nice-package', 'deps-ok', 'sync', 'uglify', 'doc']);
 };
