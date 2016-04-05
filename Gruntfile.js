@@ -4,17 +4,6 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
 
-    jshint: {
-      all: [
-        'check-more-types.js'
-      ],
-      specs: ['test/*.js'],
-      options: {
-        jshintrc: '.jshintrc',
-        reporter: require('jshint-summary')
-      }
-    },
-
     sync: {
       all: {
         options: {
@@ -99,7 +88,7 @@ module.exports = function(grunt) {
       },
       minified: {
         files: {
-          'check-more-types.min.js': ['check-more-types.js']
+          'dist/check-more-types.min.js': ['dist/check-more-types.js']
         }
       }
     },
@@ -110,7 +99,7 @@ module.exports = function(grunt) {
       },
       all: {
         files: ['*.js', 'test/*.js', 'package.json'],
-        tasks: ['jshint', 'test']
+        tasks: ['test']
       }
     }
   });
@@ -121,5 +110,5 @@ module.exports = function(grunt) {
   grunt.registerTask('test', ['gt']);
   grunt.registerTask('doc', ['xplain', 'toc', 'readme']);
   grunt.registerTask('default',
-    ['nice-package', 'deps-ok', 'sync', 'jshint', 'test', 'uglify', 'doc']);
+    ['nice-package', 'deps-ok', 'sync', 'test', 'uglify', 'doc']);
 };

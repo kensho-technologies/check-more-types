@@ -56,6 +56,8 @@
     "pkgfiles": "2.3.0",
     "pre-git": "3.4.1",
     "semantic-release": "6.2.0",
+    "standard": "6.0.8",
+    "standard-format": "2.1.1",
     "webpack": "1.12.14"
   },
   "engines": {
@@ -92,7 +94,7 @@
     "url": "https://github.com/kensho/check-more-types.git"
   },
   "scripts": {
-    "build": "grunt",
+    "build": "npm run pack && grunt",
     "commit": "git-issues && commit-wizard",
     "coveralls": "lcov-filter cover/lcov.info test | ./node_modules/coveralls/bin/coveralls.js",
     "issues": "git-issues",
@@ -100,11 +102,14 @@
     "mocha:synthetic": "grunt mochaTest:syntheticBrowser",
     "node-test": "node test/load-under-node-test.js",
     "pkgfiles": "pkgfiles",
-    "pretest": "grunt",
+    "pretest": "npm run format && npm run lint",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
     "size": "tarball=\"$(npm pack .)\"; wc -c \"${tarball}\"; tar tvf \"${tarball}\"; rm \"${tarball}\";",
     "test": "npm run node-test && npm run mocha:synthetic && npm run mocha",
     "unit": "npm run mocha",
-    "watch": "grunt watch"
+    "watch": "grunt watch",
+    "pack": "webpack",
+    "lint": "standard --verbose src/*.js",
+    "format": "standard-format -w src/*.js"
   }
 }

@@ -1,6 +1,6 @@
 module.exports = {
   output: {
-    library: 'checkMoreTypes',
+    library: 'check',
     libraryTarget: 'umd',
     path: './dist',
     filename: 'check-more-types.js'
