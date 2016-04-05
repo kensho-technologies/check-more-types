@@ -4,51 +4,51 @@ describe('check inside synthetic browser', function () {
     setup: function () {
       if (typeof window === 'undefined') {
         /* jshint -W020 */
-        window = {};
+        window = {} // eslint-disable-line
       }
     },
     teardown: function () {
-      console.assert(typeof window === 'object', 'cannot find window');
+      console.assert(typeof window === 'object', 'cannot find window')
     }
-  };
+  }
 
-  beforeEach(bro.setup);
+  beforeEach(bro.setup)
 
-  beforeEach(function loadCheckMoreTypes() {
-    require('../check-more-types');
-  });
+  beforeEach(function loadCheckMoreTypes () {
+    require('../check-more-types')
+  })
 
-  it('dummy test', function () {});
+  it('dummy test', function () {})
 
   it('has window', function () {
-    console.assert(typeof window === 'object');
-  });
+    console.assert(typeof window === 'object')
+  })
 
   it('has window.check', function () {
-    console.assert(typeof window.check === 'object');
-  });
+    console.assert(typeof window.check === 'object')
+  })
 
   it('has check.or', function () {
-    console.assert(typeof window.check.or === 'function');
-  });
+    console.assert(typeof window.check.or === 'function')
+  })
 
   it('has verify', function () {
-    console.assert(typeof window.check.verify === 'object');
-  });
+    console.assert(typeof window.check.verify === 'object')
+  })
 
   it('has verify.unemptyString', function () {
-    console.assert(typeof window.check.verify.unemptyString === 'function');
-  });
+    console.assert(typeof window.check.verify.unemptyString === 'function')
+  })
 
   it('throws on empty string', function () {
-    var threw;
+    var threw
     try {
-      window.check.verify.unemptyString('', 'should throw');
+      window.check.verify.unemptyString('', 'should throw')
     } catch (err) {
-      threw = true;
+      threw = true
     }
-    console.assert(threw, 'did not throw an error');
-  });
+    console.assert(threw, 'did not throw an error')
+  })
 
-  afterEach(bro.teardown);
-});
+  afterEach(bro.teardown)
+})

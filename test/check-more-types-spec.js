@@ -1,1 +1,1 @@
-require('./unit-tests');
+require('./unit-tests')
