@@ -1,14 +1,30 @@
 module.exports = function(grunt) {
   'use strict';
 
+  var pkg = grunt.file.readJSON('package.json');
+
   grunt.initConfig({
-    pkg: grunt.file.readJSON('package.json'),
+    pkg: pkg,
 
     sync: {
       all: {
         options: {
           sync: ['author', 'name', 'version',
             'private', 'license', 'keywords', 'homepage'],
+        }
+      }
+    },
+
+    'string-replace': {
+      dist: {
+        files: {
+          'dist/check-more-types.js': 'dist/check-more-types.js'
+        },
+        options: {
+          replacements: [{
+            pattern: '{{ packageVersion }}',
+            replacement: pkg.version
+          }]
         }
       }
     },
@@ -110,5 +126,5 @@ module.exports = function(grunt) {
   grunt.registerTask('test', ['gt']);
   grunt.registerTask('doc', ['xplain', 'toc', 'readme']);
   grunt.registerTask('default',
-    ['nice-package', 'deps-ok', 'sync', 'uglify', 'doc']);
+    ['nice-package', 'deps-ok', 'sync', 'string-replace', 'uglify', 'doc']);
 };

@@ -908,6 +908,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  check.mixin(predicates[name], name)
 	})
 
+	check.VERSION = '0.0.0'
+
 	module.exports = check
 
 

@@ -852,4 +852,6 @@ Object.keys(predicates).forEach(function (name) {
   check.mixin(predicates[name], name)
 })
 
+check.VERSION = '{{ packageVersion }}'
+
 module.exports = check
