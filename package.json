@@ -55,7 +55,8 @@
     "mocha": "2.4.5",
     "pkgfiles": "2.3.0",
     "pre-git": "3.4.1",
-    "semantic-release": "6.2.0"
+    "semantic-release": "6.2.0",
+    "webpack": "1.12.14"
   },
   "engines": {
     "node": ">= 0.8.0"
