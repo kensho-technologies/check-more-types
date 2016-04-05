@@ -15,61 +15,6 @@ if (typeof Function.prototype.bind !== 'function') {
 
 var lowLevel = require('./low-level')
 
-// most of the old methods from check-types.js
-function isFn (x) { return typeof x === 'function' }
-function isString (x) { return typeof x === 'string' }
-function unemptyString (x) {
-  return isString(x) && Boolean(x)
-}
-function isObject (x) {
-  return typeof x === 'object' &&
-  !Array.isArray(x) &&
-  !isNull(x) &&
-  !isDate(x)
-}
-function isEmptyObject (x) {
-  return isObject(x) &&
-  Object.keys(x).length === 0
-}
-function isNumber (x) {
-  return typeof x === 'number' &&
-  !isNaN(x) &&
-  x !== Infinity &&
-  x !== -Infinity
-}
-function isInteger (x) {
-  return isNumber(x) && x % 1 === 0
-}
-function isFloat (x) {
-  return isNumber(x) && x % 1 !== 0
-}
-function isNull (x) { return x === null }
-function positiveNumber (x) {
-  return isNumber(x) && x > 0
-}
-function negativeNumber (x) {
-  return isNumber(x) && x < 0
-}
-function isDate (x) {
-  return x instanceof Date
-}
-function isRegExp (x) {
-  return x instanceof RegExp
-}
-function isError (x) {
-  return x instanceof Error
-}
-function instance (x, type) {
-  return x instanceof type
-}
-function hasLength (x, k) {
-  if (typeof x === 'number' && typeof k !== 'number') {
-    // swap arguments
-    return hasLength(k, x)
-  }
-  return (Array.isArray(x) || isString(x)) && x.length === k
-}
-
 /**
   Checks if the given index is valid in an array or string or -1
 
@@ -80,8 +25,8 @@ function found (index) {
 }
 
 function startsWith (prefix, x) {
-  return isString(prefix) &&
-  isString(x) &&
+  return lowLevel.isString(prefix) &&
+  lowLevel.isString(x) &&
   x.indexOf(prefix) === 0
 }
 
@@ -116,15 +61,15 @@ var startsWithHttp = startsWith.bind(null, 'http://')
 var startsWithHttps = startsWith.bind(null, 'https://')
 
 function http (x) {
-  return isString(x) && startsWithHttp(x)
+  return lowLevel.isString(x) && startsWithHttp(x)
 }
 
 function https (x) {
-  return isString(x) && startsWithHttps(x)
+  return lowLevel.isString(x) && startsWithHttps(x)
 }
 
 function webUrl (x) {
-  return isString(x) &&
+  return lowLevel.isString(x) &&
   (startsWithHttp(x) || startsWithHttps(x))
 }
 
@@ -134,7 +79,7 @@ function every (predicateResults) {
     if (predicateResults.hasOwnProperty(property)) {
       value = predicateResults[property]
 
-      if (isObject(value) && every(value) === false) {
+      if (lowLevel.isObject(value) && every(value) === false) {
         return false
       }
 
@@ -154,9 +99,9 @@ function map (things, predicates) {
     if (predicates.hasOwnProperty(property)) {
       predicate = predicates[property]
 
-      if (isFn(predicate)) {
+      if (lowLevel.isFn(predicate)) {
         result[property] = predicate(things[property])
-      } else if (isObject(predicate)) {
+      } else if (lowLevel.isObject(predicate)) {
         result[property] = map(things[property], predicate)
       }
     }
@@ -199,7 +144,7 @@ function validDate (value) {
   @method semver
 */
 function semver (s) {
-  return check.unemptyString(s) &&
+  return lowLevel.unemptyString(s) &&
   /^\d+\.\d+\.\d+$/.test(s)
 }
 
@@ -291,7 +236,7 @@ function oneOf (arr, x) {
   @method git
 */
 function git (url) {
-  return check.unemptyString(url) &&
+  return lowLevel.unemptyString(url) &&
   /^git@/.test(url)
 }
 
@@ -567,7 +512,7 @@ if (!check.defend) {
 
       if (!predicate(args[j])) {
         var msg = 'Argument ' + (j + 1) + ': ' + args[j] + ' does not pass predicate'
-        if (check.unemptyString(predicates[k + 1])) {
+        if (lowLevel.unemptyString(predicates[k + 1])) {
           msg += ': ' + predicates[k + 1]
         }
         throw new Error(msg)
@@ -643,30 +588,30 @@ if (!check.mixin) {
   /** Adds new predicate to all objects
   @method mixin */
   check.mixin = function mixin (fn, name) {
-    if (isString(fn) && isFn(name)) {
+    if (lowLevel.isString(fn) && lowLevel.isFn(name)) {
       var tmp = fn
       fn = name
       name = tmp
     }
 
-    if (!isFn(fn)) {
+    if (!lowLevel.isFn(fn)) {
       throw new Error('expected predicate function')
     }
-    if (!unemptyString(name)) {
+    if (!lowLevel.unemptyString(name)) {
       name = fn.name
     }
-    if (!unemptyString(name)) {
+    if (!lowLevel.unemptyString(name)) {
       throw new Error('predicate function missing name\n' + fn.toString())
     }
 
     function registerPredicate (obj, name, fn) {
-      if (!isObject(obj)) {
+      if (!lowLevel.isObject(obj)) {
         throw new Error('missing object ' + obj)
       }
-      if (!unemptyString(name)) {
+      if (!lowLevel.unemptyString(name)) {
         throw new Error('missing name')
       }
-      if (!isFn(fn)) {
+      if (!lowLevel.isFn(fn)) {
         throw new Error('missing function')
       }
 
@@ -702,7 +647,7 @@ if (!check.mixin) {
         var message
         if (predicate.apply(null, arguments) === false) {
           message = arguments[arguments.length - 1]
-          throw new Error(check.unemptyString(message) ? message : defaultMessage)
+          throw new Error(lowLevel.unemptyString(message) ? message : defaultMessage)
         }
       }
     }
@@ -730,11 +675,11 @@ if (!check.then) {
 }
 
 var promiseSchema = {
-  then: isFn
+  then: lowLevel.isFn
 }
 
 // work around reserved keywords checks
-promiseSchema['catch'] = isFn
+promiseSchema['catch'] = lowLevel.isFn
 
 var hasPromiseApi = schema.bind(null, promiseSchema)
 
@@ -759,25 +704,25 @@ function equal (a, b) {
   @method email
 */
 function email (s) {
-  return isString(s) &&
+  return lowLevel.isString(s) &&
   /^.+@.+\..+$/.test(s)
 }
 
 // new predicates to be added to check object. Use object to preserve names
 var predicates = {
   email: email,
-  nulled: isNull,
-  fn: isFn,
-  string: isString,
-  unemptyString: unemptyString,
-  object: isObject,
-  number: isNumber,
+  nulled: lowLevel.isNull,
+  fn: lowLevel.isFn,
+  string: lowLevel.isString,
+  unemptyString: lowLevel.unemptyString,
+  object: lowLevel.isObject,
+  number: lowLevel.isNumber,
   array: Array.isArray,
-  positiveNumber: positiveNumber,
-  negativeNumber: negativeNumber,
+  positiveNumber: lowLevel.positiveNumber,
+  negativeNumber: lowLevel.negativeNumber,
   // a couple of aliases
-  positive: positiveNumber,
-  negative: negativeNumber,
+  positive: lowLevel.positiveNumber,
+  negative: lowLevel.negativeNumber,
   defined: defined,
   same: same,
   allSame: allSame,
@@ -812,13 +757,13 @@ var predicates = {
   and: and,
   primitive: primitive,
   zero: zero,
-  date: isDate,
-  regexp: isRegExp,
-  instance: instance,
-  emptyObject: isEmptyObject,
-  length: lowLevel.curry2(hasLength),
-  floatNumber: isFloat,
-  intNumber: isInteger,
+  date: lowLevel.isDate,
+  regexp: lowLevel.isRegExp,
+  instance: lowLevel.instance,
+  emptyObject: lowLevel.isEmptyObject,
+  length: lowLevel.curry2(lowLevel.hasLength),
+  floatNumber: lowLevel.isFloat,
+  intNumber: lowLevel.isInteger,
   startsWith: startsWith,
   webUrl: webUrl,
   url: webUrl,
@@ -827,7 +772,7 @@ var predicates = {
   http: http,
   https: https,
   secure: https,
-  error: isError,
+  error: lowLevel.isError,
   port: isPortNumber,
   systemPort: isSystemPortNumber,
   userPort: isUserPortNumber,
