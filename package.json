@@ -108,7 +108,7 @@
     "issues": "git-issues",
     "karma": "karma start test/karma.conf.js",
     "lint": "standard --verbose src/*.js test/*.js",
-    "mocha": "mocha test/check-more-types-spec.js",
+    "mocha": "mocha src/*-spec.js test/check-more-types-spec.js",
     "node-test": "node test/load-under-node-test.js",
     "pack": "webpack",
     "pkgfiles": "pkgfiles",

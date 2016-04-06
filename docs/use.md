@@ -353,8 +353,8 @@ check.badItems(check.unemptyString, ['foo', '', 'bar']); // ['']
 ### check.has(obj, property)
 
     var obj = {
-      foo: 'foo',
-      bar: 0
+    foo: 'foo',
+    bar: 0
     }
     check.has(obj, 'foo'); // true
     check.has(obj, 'bar'); // true
