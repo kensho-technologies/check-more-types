@@ -1,5 +1,6 @@
 'use strict'
 
+var curry2 = require('./utils').curry2
 var low = require('./low-level')
 var verify = require('./verify')
 var every = require('./logic').every
@@ -44,5 +45,5 @@ function schema (predicates, obj) {
 
 module.exports = {
   all: all,
-  schema: schema
+  schema: curry2(schema)
 }

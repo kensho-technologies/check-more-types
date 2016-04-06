@@ -186,11 +186,6 @@ var predicates = {
   bool: low.bool,
   has: low.has,
   lowerCase: low.lowerCase,
-  unemptyArray: arrays.unemptyArray,
-  arrayOfStrings: arrays.arrayOfStrings,
-  arrayOfArraysOfStrings: arrays.arrayOfArraysOfStrings,
-  all: schema.all,
-  schema: curry2(schema.schema),
   raises: mid.raises,
   empty: low.empty,
   found: mid.found,
@@ -200,14 +195,10 @@ var predicates = {
   hexRgb: mid.hexRgb,
   sameLength: mid.sameLength,
   index: mid.index,
-  arrayOf: arrays.arrayOf,
-  badItems: arrays.badItems,
   oneOf: curry2(mid.oneOf, true),
   promise: isPromise,
   validDate: low.validDate,
   equal: curry2(low.equal),
-  or: logic.or,
-  and: logic.and,
   primitive: low.primitive,
   zero: low.zero,
   date: low.isDate,
@@ -223,17 +214,13 @@ var predicates = {
   type: curry2(mid.type)
 }
 
-Object.keys(predicates).forEach(function (name) {
-  check.mixin(predicates[name], name)
-})
+function mixCollection (collection) {
+  Object.keys(collection).forEach(function (name) {
+    check.mixin(collection[name], name)
+  })
+}
 
-Object.keys(git).forEach(function (name) {
-  check.mixin(git[name], name)
-})
-
-Object.keys(internet).forEach(function (name) {
-  check.mixin(internet[name], name)
-})
+[predicates, git, internet, arrays, logic, schema].forEach(mixCollection)
 
 check.VERSION = '{{ packageVersion }}'
 

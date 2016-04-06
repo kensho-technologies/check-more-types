@@ -61,9 +61,9 @@ function arrayOfArraysOfStrings (a, checkLowerCase) {
 }
 
 module.exports = {
-  unemptyArray: unemptyArray,
   arrayOf: arrayOf,
-  badItems: badItems,
+  arrayOfArraysOfStrings: arrayOfArraysOfStrings,
   arrayOfStrings: arrayOfStrings,
-  arrayOfArraysOfStrings: arrayOfArraysOfStrings
+  badItems: badItems,
+  unemptyArray: unemptyArray
 }
