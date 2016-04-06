@@ -13,6 +13,7 @@ if (typeof Function.prototype.bind !== 'function') {
   throw new Error('Missing Function.prototype.bind, please load es5-shim first')
 }
 
+var curry2 = require('./utils').curry2
 var low = require('./low-level')
 var mid = require('./mid-level')
 
@@ -677,7 +678,7 @@ var predicates = {
   arrayOfStrings: arrayOfStrings,
   arrayOfArraysOfStrings: arrayOfArraysOfStrings,
   all: all,
-  schema: low.curry2(schema),
+  schema: curry2(schema),
   raises: raises,
   empty: empty,
   found: mid.found,
@@ -692,10 +693,10 @@ var predicates = {
   git: git,
   arrayOf: arrayOf,
   badItems: badItems,
-  oneOf: low.curry2(oneOf, true),
+  oneOf: curry2(oneOf, true),
   promise: isPromise,
   validDate: validDate,
-  equal: low.curry2(equal),
+  equal: curry2(equal),
   or: or,
   and: and,
   primitive: primitive,
@@ -704,14 +705,14 @@ var predicates = {
   regexp: low.isRegExp,
   instance: low.instance,
   emptyObject: low.isEmptyObject,
-  length: low.curry2(low.hasLength),
+  length: curry2(low.hasLength),
   floatNumber: low.isFloat,
   intNumber: low.isInteger,
   startsWith: mid.startsWith,
   webUrl: mid.webUrl,
   url: mid.webUrl,
   semver: semver,
-  type: low.curry2(mid.type),
+  type: curry2(mid.type),
   http: mid.http,
   https: mid.https,
   secure: mid.https,

@@ -69,8 +69,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  throw new Error('Missing Function.prototype.bind, please load es5-shim first')
 	}
 
-	var low = __webpack_require__(1)
-	var mid = __webpack_require__(2)
+	var curry2 = __webpack_require__(1).curry2
+	var low = __webpack_require__(2)
+	var mid = __webpack_require__(3)
 
 	function every (predicateResults) {
 	  var property, value
@@ -733,7 +734,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  arrayOfStrings: arrayOfStrings,
 	  arrayOfArraysOfStrings: arrayOfArraysOfStrings,
 	  all: all,
-	  schema: low.curry2(schema),
+	  schema: curry2(schema),
 	  raises: raises,
 	  empty: empty,
 	  found: mid.found,
@@ -748,10 +749,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  git: git,
 	  arrayOf: arrayOf,
 	  badItems: badItems,
-	  oneOf: low.curry2(oneOf, true),
+	  oneOf: curry2(oneOf, true),
 	  promise: isPromise,
 	  validDate: validDate,
-	  equal: low.curry2(equal),
+	  equal: curry2(equal),
 	  or: or,
 	  and: and,
 	  primitive: primitive,
@@ -760,14 +761,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	  regexp: low.isRegExp,
 	  instance: low.instance,
 	  emptyObject: low.isEmptyObject,
-	  length: low.curry2(low.hasLength),
+	  length: curry2(low.hasLength),
 	  floatNumber: low.isFloat,
 	  intNumber: low.isInteger,
 	  startsWith: mid.startsWith,
 	  webUrl: mid.webUrl,
 	  url: mid.webUrl,
 	  semver: semver,
-	  type: low.curry2(mid.type),
+	  type: curry2(mid.type),
 	  http: mid.http,
 	  https: mid.https,
 	  secure: mid.https,
@@ -793,7 +794,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict'
 
-	// utility and low level methods
+	// utility methods
 	function curry2 (fn, strict2) {
 	  return function curried (a) {
 	    if (strict2 && arguments.length > 2) {
@@ -808,6 +809,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  }
 	}
+
+	module.exports = {
+	  curry2: curry2
+	}
+
+
+/***/ },
+/* 2 */
+/***/ function(module, exports) {
+
+	'use strict'
+
+	// low level predicates
 
 	// most of the old methods from check-types.js
 	function isFn (x) { return typeof x === 'function' }
@@ -865,7 +879,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 	module.exports = {
-	  curry2: curry2,
 	  isFn: isFn,
 	  isString: isString,
 	  isObject: isObject,
@@ -886,12 +899,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 2 */
+/* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict'
 
-	const low = __webpack_require__(1)
+	const low = __webpack_require__(2)
 
 	/**
 	  Checks if the given index is valid in an array or string or -1
