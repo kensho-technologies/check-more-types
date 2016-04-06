@@ -166,8 +166,8 @@ Function is curried
 
 ### check.same
 
-    var foo = {},
-      bar = {};
+    var foo = {}
+    var bar = {}
     check.same(foo, foo); // true
     check.same(foo, bar); // false
     // primitives are compared by value
@@ -206,8 +206,8 @@ check.length(3)('foo'); // true
 
 ### check.allSame
 
-    var foo = {},
-      bar = {};
+    var foo = {}
+    var bar = {}
     check.allSame([foo, foo, foo]); // true
     check.allSame([foo, foo, bar]); // false
     // primitives are compared by value
@@ -355,7 +355,7 @@ check.badItems(check.unemptyString, ['foo', '', 'bar']); // ['']
     var obj = {
       foo: 'foo',
       bar: 0
-    };
+    }
     check.has(obj, 'foo'); // true
     check.has(obj, 'bar'); // true
     check.has(obj, 'baz'); // false
@@ -371,13 +371,13 @@ check.badItems(check.unemptyString, ['foo', '', 'bar']); // ['']
       foo: 'foo',
       bar: 'bar',
       baz: 'baz'
-    };
+    }
     var predicates = {
       foo: check.unemptyString,
       bar: function(value) {
-        return value === 'bar';
+        return value === 'bar'
       }
-    };
+    }
     check.all(obj, predicates); // true
 
 ---
@@ -388,13 +388,13 @@ check.badItems(check.unemptyString, ['foo', '', 'bar']); // ['']
       foo: 'foo',
       bar: 'bar',
       baz: 'baz'
-    };
+    }
     var schema = {
       foo: check.unemptyString,
       bar: function(value) {
-        return value === 'bar';
+        return value === 'bar'
       }
-    };
+    }
     check.schema(schema, obj); // true
     check.schema(schema, {}); // false
 
@@ -414,16 +414,16 @@ hasName({ name: 'joe' }); // true
     var personSchema = {
       name: check.unemptyString,
       age: check.positiveNumber
-    };
-    var isValidPerson = check.schema.bind(null, personSchema);
+    }
+    var isValidPerson = check.schema.bind(null, personSchema)
     var h1 = {
       name: 'joe',
       age: 10
-    };
+    }
     var h2 = {
       name: 'ann'
         // missing age property
-    };
+    }
     isValidPerson(h1); // true
     isValidPerson(h2); // false
 
@@ -456,14 +456,14 @@ another check
     var teamSchema = {
       manager: isValidPerson,
       members: check.unemptyArray
-    };
+    }
     var team = {
       manager: {
         name: 'jim',
         age: 20
       },
       members: ['joe', 'ann']
-    };
+    }
     check.schema(teamSchema, team); // true
 
 ---
@@ -471,18 +471,18 @@ another check
 ### check.raises(fn, validator)
 
     function foo() {
-      throw new Error('foo');
+      throw new Error('foo')
     }
 
     function bar() {}
 
     function isValidError(err) {
-      return err.message === 'foo';
+      return err.message === 'foo'
     }
 
     function isInvalid(err) {
       check.instance(err, Error); // true
-      return false;
+      return false
     }
     check.raises(foo); // true
     check.raises(bar); // false
@@ -499,7 +499,7 @@ or the predicate returns true.
 
     check.maybe.bool(); // true
     check.maybe.bool('true'); // false
-    var empty;
+    var empty
     check.maybe.lowerCase(empty); // true
     check.maybe.unemptyArray(); // true
     check.maybe.unemptyArray([]); // false
@@ -517,15 +517,15 @@ Every predicate can also throw an exception if it fails
 
 ### check.verify
 
-    check.verify.arrayOfStrings(['foo', 'bar']);
-    check.verify.bit(1);
+    check.verify.arrayOfStrings(['foo', 'bar'])
+    check.verify.bit(1)
 
     function nonStrings() {
-      check.verify.arrayOfStrings(['Foo', 1]);
+      check.verify.arrayOfStrings(['Foo', 1])
     }
     check.raises(nonStrings); // true
     function nonLowerCase() {
-      check.verify.lowerCase('Foo');
+      check.verify.lowerCase('Foo')
     }
     check.raises(nonLowerCase); // true
 
@@ -539,9 +539,9 @@ method. If you do not pass a name, it will try using function's name.
 ### check.mixin(predicate, name)
 
     function isBar(a) {
-      return a === 'bar';
+      return a === 'bar'
     }
-    check.mixin(isBar, 'bar');
+    check.mixin(isBar, 'bar')
     check.bar('bar'); // true
     check.bar('anything else'); // false
     // supports modifiers
@@ -555,15 +555,15 @@ Mixin will not override existing functions
 ### check.mixin does not override
 
     function isFoo(a) {
-      return a === 'foo';
+      return a === 'foo'
     }
 
     function isBar(a) {
-      return a === 'bar';
+      return a === 'bar'
     }
-    check.mixin(isFoo, 'isFoo');
+    check.mixin(isFoo, 'isFoo')
     check.isFoo; // isFoo
-    check.mixin(isBar, 'isFoo');
+    check.mixin(isBar, 'isFoo')
     check.isFoo; // isFoo
 
 ## Defending a function
@@ -584,9 +584,9 @@ you can use `check.defend` function
 ### check.defend(fn, predicates)
 
     function add(a, b) {
-      return a + b;
+      return a + b
     }
-    var safeAdd = check.defend(add, check.number, check.number);
+    var safeAdd = check.defend(add, check.number, check.number)
     add('foo', 2); // 'foo2'
     // calling safeAdd('foo', 2) raises an exception
     check.raises(safeAdd.bind(null, 'foo', 2)); // true
@@ -597,12 +597,12 @@ you can use `check.defend` function
 
     function add(a, b) {
       if (typeof b === 'undefined') {
-        return 'foo';
+        return 'foo'
       }
-      return a + b;
+      return a + b
     }
     add(2); // 'foo'
-    var safeAdd = check.defend(add, check.number, check.maybe.number);
+    var safeAdd = check.defend(add, check.number, check.maybe.number)
     safeAdd(2, 3); // 5
     safeAdd(2); // 'foo'
 
@@ -613,17 +613,17 @@ You can add extra message after a predicate
 ### check.defend with messages
 
     function add(a, b) {
-      return a + b;
+      return a + b
     }
-    var safeAdd = check.defend(add, check.number, 'a should be a number', check.string, 'b should be a string');
+    var safeAdd = check.defend(add, check.number, 'a should be a number', check.string, 'b should be a string')
     safeAdd(2, 'foo'); // '2foo'
     function addNumbers() {
-      return safeAdd(2, 3);
+      return safeAdd(2, 3)
     }
 
     function checkException(err) {
       err.message; // 'Argument 2: 3 does not pass predicate: b should be a string'
-      return true;
+      return true
     }
     check.raises(addNumbers, checkException); // true
 
@@ -636,15 +636,15 @@ This works great when combined with JavaScript module pattern as in this example
     var add = (function() {
       // inner private function without any argument checks
       function add(a, b) {
-          return a + b;
+          return a + b
         }
         // return defended function
-      return check.defend(add, check.number, check.number);
-    }());
+      return check.defend(add, check.number, check.number)
+    }())
     add(2, 3); // 5
     // trying to call with non-numbers raises an exception
     function callAddWithNonNumbers() {
-      return add('foo', 'bar');
+      return add('foo', 'bar')
     }
     check.raises(callAddWithNonNumbers); // true
 
@@ -658,15 +658,15 @@ exception. For these cases, there is `check.then`
 ### check.then
 
     function isSum10(a, b) {
-      return a + b === 10;
+      return a + b === 10
     }
 
     function sum(a, b) {
-      return a + b;
+      return a + b
     }
-    var onlyAddTo10 = check.then(isSum10, sum);
-    // isSum10 returns true for these arguments
-    // then sum is executed
+    var onlyAddTo10 = check.then(isSum10, sum)
+      // isSum10 returns true for these arguments
+      // then sum is executed
     onlyAddTo10(3, 7); // 10
     onlyAddTo10(1, 2); // undefined
     // sum is never called because isSum10 condition is false

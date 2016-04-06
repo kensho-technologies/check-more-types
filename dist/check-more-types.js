@@ -52,12 +52,12 @@ return /******/ (function(modules) { // webpackBootstrap
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict'
 
 	/**
-	  Custom assertions and predicates around https://github.com/philbooth/check-types.js
+	  Custom JavaScript assertions and predicates
 	  Created by Kensho https://github.com/kensho
 	  Copyright @ 2014 Kensho https://www.kensho.com/
 	  License: MIT
@@ -69,134 +69,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  throw new Error('Missing Function.prototype.bind, please load es5-shim first')
 	}
 
-	// utility method
-	function curry2 (fn, strict2) {
-	  return function curried (a) {
-	    if (strict2 && arguments.length > 2) {
-	      throw new Error('Curry2 function ' + fn.name +
-	        ' called with too many arguments ' + arguments.length)
-	    }
-	    if (arguments.length === 2) {
-	      return fn(arguments[0], arguments[1])
-	    }
-	    return function second (b) {
-	      return fn(a, b)
-	    }
-	  }
-	}
-
-	// most of the old methods from check-types.js
-	function isFn (x) { return typeof x === 'function' }
-	function isString (x) { return typeof x === 'string' }
-	function unemptyString (x) {
-	  return isString(x) && Boolean(x)
-	}
-	function isObject (x) {
-	  return typeof x === 'object' &&
-	  !Array.isArray(x) &&
-	  !isNull(x) &&
-	  !isDate(x)
-	}
-	function isEmptyObject (x) {
-	  return isObject(x) &&
-	  Object.keys(x).length === 0
-	}
-	function isNumber (x) {
-	  return typeof x === 'number' &&
-	  !isNaN(x) &&
-	  x !== Infinity &&
-	  x !== -Infinity
-	}
-	function isInteger (x) {
-	  return isNumber(x) && x % 1 === 0
-	}
-	function isFloat (x) {
-	  return isNumber(x) && x % 1 !== 0
-	}
-	function isNull (x) { return x === null }
-	function positiveNumber (x) {
-	  return isNumber(x) && x > 0
-	}
-	function negativeNumber (x) {
-	  return isNumber(x) && x < 0
-	}
-	function isDate (x) {
-	  return x instanceof Date
-	}
-	function isRegExp (x) {
-	  return x instanceof RegExp
-	}
-	function isError (x) {
-	  return x instanceof Error
-	}
-	function instance (x, type) {
-	  return x instanceof type
-	}
-	function hasLength (x, k) {
-	  if (typeof x === 'number' && typeof k !== 'number') {
-	    // swap arguments
-	    return hasLength(k, x)
-	  }
-	  return (Array.isArray(x) || isString(x)) && x.length === k
-	}
-
-	/**
-	  Checks if the given index is valid in an array or string or -1
-
-	  @method found
-	*/
-	function found (index) {
-	  return index >= 0
-	}
-
-	function startsWith (prefix, x) {
-	  return isString(prefix) &&
-	  isString(x) &&
-	  x.indexOf(prefix) === 0
-	}
-
-	/**
-	  Checks if the given item is the given {arrya, string}
-
-	  @method contains
-	*/
-	function contains (where, what) {
-	  if (Array.isArray(where)) {
-	    return where.indexOf(what) !== -1
-	  }
-	  if (typeof where === 'string') {
-	    if (typeof what !== 'string') {
-	      throw new Error('Contains in string should search for string also ' + what)
-	    }
-	    return where.indexOf(what) !== -1
-	  }
-	  return false
-	}
-
-	/**
-	  Checks if the type of second argument matches the name in the first
-
-	  @method type
-	*/
-	function type (expectedType, x) {
-	  return typeof x === expectedType
-	}
-
-	var startsWithHttp = startsWith.bind(null, 'http://')
-	var startsWithHttps = startsWith.bind(null, 'https://')
-
-	function http (x) {
-	  return isString(x) && startsWithHttp(x)
-	}
-
-	function https (x) {
-	  return isString(x) && startsWithHttps(x)
-	}
-
-	function webUrl (x) {
-	  return isString(x) &&
-	  (startsWithHttp(x) || startsWithHttps(x))
-	}
+	var low = __webpack_require__(1)
+	var mid = __webpack_require__(2)
 
 	function every (predicateResults) {
 	  var property, value
@@ -204,7 +78,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    if (predicateResults.hasOwnProperty(property)) {
 	      value = predicateResults[property]
 
-	      if (isObject(value) && every(value) === false) {
+	      if (low.isObject(value) && every(value) === false) {
 	        return false
 	      }
 
@@ -224,9 +98,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    if (predicates.hasOwnProperty(property)) {
 	      predicate = predicates[property]
 
-	      if (isFn(predicate)) {
+	      if (low.isFn(predicate)) {
 	        result[property] = predicate(things[property])
-	      } else if (isObject(predicate)) {
+	      } else if (low.isObject(predicate)) {
 	        result[property] = map(things[property], predicate)
 	      }
 	    }
@@ -269,7 +143,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  @method semver
 	*/
 	function semver (s) {
-	  return check.unemptyString(s) &&
+	  return low.unemptyString(s) &&
 	  /^\d+\.\d+\.\d+$/.test(s)
 	}
 
@@ -361,7 +235,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  @method git
 	*/
 	function git (url) {
-	  return check.unemptyString(url) &&
+	  return low.unemptyString(url) &&
 	  /^git@/.test(url)
 	}
 
@@ -637,7 +511,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      if (!predicate(args[j])) {
 	        var msg = 'Argument ' + (j + 1) + ': ' + args[j] + ' does not pass predicate'
-	        if (check.unemptyString(predicates[k + 1])) {
+	        if (low.unemptyString(predicates[k + 1])) {
 	          msg += ': ' + predicates[k + 1]
 	        }
 	        throw new Error(msg)
@@ -713,30 +587,30 @@ return /******/ (function(modules) { // webpackBootstrap
 	  /** Adds new predicate to all objects
 	  @method mixin */
 	  check.mixin = function mixin (fn, name) {
-	    if (isString(fn) && isFn(name)) {
+	    if (low.isString(fn) && low.isFn(name)) {
 	      var tmp = fn
 	      fn = name
 	      name = tmp
 	    }
 
-	    if (!isFn(fn)) {
-	      throw new Error('expected predicate function')
+	    if (!low.isFn(fn)) {
+	      throw new Error('expected predicate function for name ' + name)
 	    }
-	    if (!unemptyString(name)) {
+	    if (!low.unemptyString(name)) {
 	      name = fn.name
 	    }
-	    if (!unemptyString(name)) {
+	    if (!low.unemptyString(name)) {
 	      throw new Error('predicate function missing name\n' + fn.toString())
 	    }
 
 	    function registerPredicate (obj, name, fn) {
-	      if (!isObject(obj)) {
+	      if (!low.isObject(obj)) {
 	        throw new Error('missing object ' + obj)
 	      }
-	      if (!unemptyString(name)) {
+	      if (!low.unemptyString(name)) {
 	        throw new Error('missing name')
 	      }
-	      if (!isFn(fn)) {
+	      if (!low.isFn(fn)) {
 	        throw new Error('missing function')
 	      }
 
@@ -772,7 +646,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var message
 	        if (predicate.apply(null, arguments) === false) {
 	          message = arguments[arguments.length - 1]
-	          throw new Error(check.unemptyString(message) ? message : defaultMessage)
+	          throw new Error(low.unemptyString(message) ? message : defaultMessage)
 	        }
 	      }
 	    }
@@ -800,11 +674,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 	var promiseSchema = {
-	  then: isFn
+	  then: low.isFn
 	}
 
 	// work around reserved keywords checks
-	promiseSchema['catch'] = isFn
+	promiseSchema['catch'] = low.isFn
 
 	var hasPromiseApi = schema.bind(null, promiseSchema)
 
@@ -829,25 +703,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	  @method email
 	*/
 	function email (s) {
-	  return isString(s) &&
+	  return low.isString(s) &&
 	  /^.+@.+\..+$/.test(s)
 	}
 
 	// new predicates to be added to check object. Use object to preserve names
 	var predicates = {
 	  email: email,
-	  nulled: isNull,
-	  fn: isFn,
-	  string: isString,
-	  unemptyString: unemptyString,
-	  object: isObject,
-	  number: isNumber,
+	  nulled: low.isNull,
+	  fn: low.isFn,
+	  string: low.isString,
+	  unemptyString: low.unemptyString,
+	  object: low.isObject,
+	  number: low.isNumber,
 	  array: Array.isArray,
-	  positiveNumber: positiveNumber,
-	  negativeNumber: negativeNumber,
+	  positiveNumber: low.positiveNumber,
+	  negativeNumber: low.negativeNumber,
 	  // a couple of aliases
-	  positive: positiveNumber,
-	  negative: negativeNumber,
+	  positive: low.positiveNumber,
+	  negative: low.negativeNumber,
 	  defined: defined,
 	  same: same,
 	  allSame: allSame,
@@ -859,10 +733,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  arrayOfStrings: arrayOfStrings,
 	  arrayOfArraysOfStrings: arrayOfArraysOfStrings,
 	  all: all,
-	  schema: curry2(schema),
+	  schema: low.curry2(schema),
 	  raises: raises,
 	  empty: empty,
-	  found: found,
+	  found: mid.found,
 	  emptyString: emptyString,
 	  unempty: unempty,
 	  unit: unit,
@@ -874,34 +748,34 @@ return /******/ (function(modules) { // webpackBootstrap
 	  git: git,
 	  arrayOf: arrayOf,
 	  badItems: badItems,
-	  oneOf: curry2(oneOf, true),
+	  oneOf: low.curry2(oneOf, true),
 	  promise: isPromise,
 	  validDate: validDate,
-	  equal: curry2(equal),
+	  equal: low.curry2(equal),
 	  or: or,
 	  and: and,
 	  primitive: primitive,
 	  zero: zero,
-	  date: isDate,
-	  regexp: isRegExp,
-	  instance: instance,
-	  emptyObject: isEmptyObject,
-	  length: curry2(hasLength),
-	  floatNumber: isFloat,
-	  intNumber: isInteger,
-	  startsWith: startsWith,
-	  webUrl: webUrl,
-	  url: webUrl,
+	  date: low.isDate,
+	  regexp: low.isRegExp,
+	  instance: low.instance,
+	  emptyObject: low.isEmptyObject,
+	  length: low.curry2(low.hasLength),
+	  floatNumber: low.isFloat,
+	  intNumber: low.isInteger,
+	  startsWith: mid.startsWith,
+	  webUrl: mid.webUrl,
+	  url: mid.webUrl,
 	  semver: semver,
-	  type: curry2(type),
-	  http: http,
-	  https: https,
-	  secure: https,
-	  error: isError,
+	  type: low.curry2(mid.type),
+	  http: mid.http,
+	  https: mid.https,
+	  secure: mid.https,
+	  error: low.isError,
 	  port: isPortNumber,
 	  systemPort: isSystemPortNumber,
 	  userPort: isUserPortNumber,
-	  contains: contains
+	  contains: mid.contains
 	}
 
 	Object.keys(predicates).forEach(function (name) {
@@ -911,6 +785,180 @@ return /******/ (function(modules) { // webpackBootstrap
 	check.VERSION = '0.0.0'
 
 	module.exports = check
+
+
+/***/ },
+/* 1 */
+/***/ function(module, exports) {
+
+	'use strict'
+
+	// utility and low level methods
+	function curry2 (fn, strict2) {
+	  return function curried (a) {
+	    if (strict2 && arguments.length > 2) {
+	      throw new Error('Curry2 function ' + fn.name +
+	        ' called with too many arguments ' + arguments.length)
+	    }
+	    if (arguments.length === 2) {
+	      return fn(arguments[0], arguments[1])
+	    }
+	    return function second (b) {
+	      return fn(a, b)
+	    }
+	  }
+	}
+
+	// most of the old methods from check-types.js
+	function isFn (x) { return typeof x === 'function' }
+	function isString (x) { return typeof x === 'string' }
+	function unemptyString (x) {
+	  return isString(x) && Boolean(x)
+	}
+	function isObject (x) {
+	  return typeof x === 'object' &&
+	  !Array.isArray(x) &&
+	  !isNull(x) &&
+	  !isDate(x)
+	}
+	function isEmptyObject (x) {
+	  return isObject(x) &&
+	  Object.keys(x).length === 0
+	}
+	function isNumber (x) {
+	  return typeof x === 'number' &&
+	  !isNaN(x) &&
+	  x !== Infinity &&
+	  x !== -Infinity
+	}
+	function isInteger (x) {
+	  return isNumber(x) && x % 1 === 0
+	}
+	function isFloat (x) {
+	  return isNumber(x) && x % 1 !== 0
+	}
+	function isNull (x) { return x === null }
+	function positiveNumber (x) {
+	  return isNumber(x) && x > 0
+	}
+	function negativeNumber (x) {
+	  return isNumber(x) && x < 0
+	}
+	function isDate (x) {
+	  return x instanceof Date
+	}
+	function isRegExp (x) {
+	  return x instanceof RegExp
+	}
+	function isError (x) {
+	  return x instanceof Error
+	}
+	function instance (x, type) {
+	  return x instanceof type
+	}
+	function hasLength (x, k) {
+	  if (typeof x === 'number' && typeof k !== 'number') {
+	    // swap arguments
+	    return hasLength(k, x)
+	  }
+	  return (Array.isArray(x) || isString(x)) && x.length === k
+	}
+
+	module.exports = {
+	  curry2: curry2,
+	  isFn: isFn,
+	  isString: isString,
+	  isObject: isObject,
+	  isNull: isNull,
+	  unemptyString: unemptyString,
+	  isEmptyObject: isEmptyObject,
+	  isInteger: isInteger,
+	  isFloat: isFloat,
+	  positiveNumber: positiveNumber,
+	  negativeNumber: negativeNumber,
+	  isRegExp: isRegExp,
+	  isError: isError,
+	  instance: instance,
+	  hasLength: hasLength,
+	  isNumber: isNumber
+	}
+
+
+/***/ },
+/* 2 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict'
+
+	const low = __webpack_require__(1)
+
+	/**
+	  Checks if the given index is valid in an array or string or -1
+
+	  @method found
+	*/
+	function found (index) {
+	  return index >= 0
+	}
+
+	function startsWith (prefix, x) {
+	  return low.isString(prefix) &&
+	  low.isString(x) &&
+	  x.indexOf(prefix) === 0
+	}
+
+	/**
+	  Checks if the given item is the given {arrya, string}
+
+	  @method contains
+	*/
+	function contains (where, what) {
+	  if (Array.isArray(where)) {
+	    return where.indexOf(what) !== -1
+	  }
+	  if (typeof where === 'string') {
+	    if (typeof what !== 'string') {
+	      throw new Error('Contains in string should search for string also ' + what)
+	    }
+	    return where.indexOf(what) !== -1
+	  }
+	  return false
+	}
+
+	/**
+	  Checks if the type of second argument matches the name in the first
+
+	  @method type
+	*/
+	function type (expectedType, x) {
+	  return typeof x === expectedType
+	}
+
+	var startsWithHttp = startsWith.bind(null, 'http://')
+	var startsWithHttps = startsWith.bind(null, 'https://')
+
+	function http (x) {
+	  return low.isString(x) && startsWithHttp(x)
+	}
+
+	function https (x) {
+	  return low.isString(x) && startsWithHttps(x)
+	}
+
+	function webUrl (x) {
+	  return low.isString(x) &&
+	  (startsWithHttp(x) || startsWithHttps(x))
+	}
+
+	module.exports = {
+	  found: found,
+	  startsWith: startsWith,
+	  contains: contains,
+	  type: type,
+	  http: http,
+	  https: https,
+	  webUrl: webUrl
+	}
 
 
 /***/ }

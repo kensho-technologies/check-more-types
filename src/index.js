@@ -13,65 +13,8 @@ if (typeof Function.prototype.bind !== 'function') {
   throw new Error('Missing Function.prototype.bind, please load es5-shim first')
 }
 
-var lowLevel = require('./low-level')
-
-/**
-  Checks if the given index is valid in an array or string or -1
-
-  @method found
-*/
-function found (index) {
-  return index >= 0
-}
-
-function startsWith (prefix, x) {
-  return lowLevel.isString(prefix) &&
-  lowLevel.isString(x) &&
-  x.indexOf(prefix) === 0
-}
-
-/**
-  Checks if the given item is the given {arrya, string}
-
-  @method contains
-*/
-function contains (where, what) {
-  if (Array.isArray(where)) {
-    return where.indexOf(what) !== -1
-  }
-  if (typeof where === 'string') {
-    if (typeof what !== 'string') {
-      throw new Error('Contains in string should search for string also ' + what)
-    }
-    return where.indexOf(what) !== -1
-  }
-  return false
-}
-
-/**
-  Checks if the type of second argument matches the name in the first
-
-  @method type
-*/
-function type (expectedType, x) {
-  return typeof x === expectedType
-}
-
-var startsWithHttp = startsWith.bind(null, 'http://')
-var startsWithHttps = startsWith.bind(null, 'https://')
-
-function http (x) {
-  return lowLevel.isString(x) && startsWithHttp(x)
-}
-
-function https (x) {
-  return lowLevel.isString(x) && startsWithHttps(x)
-}
-
-function webUrl (x) {
-  return lowLevel.isString(x) &&
-  (startsWithHttp(x) || startsWithHttps(x))
-}
+var low = require('./low-level')
+var mid = require('./mid-level')
 
 function every (predicateResults) {
   var property, value
@@ -79,7 +22,7 @@ function every (predicateResults) {
     if (predicateResults.hasOwnProperty(property)) {
       value = predicateResults[property]
 
-      if (lowLevel.isObject(value) && every(value) === false) {
+      if (low.isObject(value) && every(value) === false) {
         return false
       }
 
@@ -99,9 +42,9 @@ function map (things, predicates) {
     if (predicates.hasOwnProperty(property)) {
       predicate = predicates[property]
 
-      if (lowLevel.isFn(predicate)) {
+      if (low.isFn(predicate)) {
         result[property] = predicate(things[property])
-      } else if (lowLevel.isObject(predicate)) {
+      } else if (low.isObject(predicate)) {
         result[property] = map(things[property], predicate)
       }
     }
@@ -144,7 +87,7 @@ function validDate (value) {
   @method semver
 */
 function semver (s) {
-  return lowLevel.unemptyString(s) &&
+  return low.unemptyString(s) &&
   /^\d+\.\d+\.\d+$/.test(s)
 }
 
@@ -236,7 +179,7 @@ function oneOf (arr, x) {
   @method git
 */
 function git (url) {
-  return lowLevel.unemptyString(url) &&
+  return low.unemptyString(url) &&
   /^git@/.test(url)
 }
 
@@ -512,7 +455,7 @@ if (!check.defend) {
 
       if (!predicate(args[j])) {
         var msg = 'Argument ' + (j + 1) + ': ' + args[j] + ' does not pass predicate'
-        if (lowLevel.unemptyString(predicates[k + 1])) {
+        if (low.unemptyString(predicates[k + 1])) {
           msg += ': ' + predicates[k + 1]
         }
         throw new Error(msg)
@@ -588,30 +531,30 @@ if (!check.mixin) {
   /** Adds new predicate to all objects
   @method mixin */
   check.mixin = function mixin (fn, name) {
-    if (lowLevel.isString(fn) && lowLevel.isFn(name)) {
+    if (low.isString(fn) && low.isFn(name)) {
       var tmp = fn
       fn = name
       name = tmp
     }
 
-    if (!lowLevel.isFn(fn)) {
-      throw new Error('expected predicate function')
+    if (!low.isFn(fn)) {
+      throw new Error('expected predicate function for name ' + name)
     }
-    if (!lowLevel.unemptyString(name)) {
+    if (!low.unemptyString(name)) {
       name = fn.name
     }
-    if (!lowLevel.unemptyString(name)) {
+    if (!low.unemptyString(name)) {
       throw new Error('predicate function missing name\n' + fn.toString())
     }
 
     function registerPredicate (obj, name, fn) {
-      if (!lowLevel.isObject(obj)) {
+      if (!low.isObject(obj)) {
         throw new Error('missing object ' + obj)
       }
-      if (!lowLevel.unemptyString(name)) {
+      if (!low.unemptyString(name)) {
         throw new Error('missing name')
       }
-      if (!lowLevel.isFn(fn)) {
+      if (!low.isFn(fn)) {
         throw new Error('missing function')
       }
 
@@ -647,7 +590,7 @@ if (!check.mixin) {
         var message
         if (predicate.apply(null, arguments) === false) {
           message = arguments[arguments.length - 1]
-          throw new Error(lowLevel.unemptyString(message) ? message : defaultMessage)
+          throw new Error(low.unemptyString(message) ? message : defaultMessage)
         }
       }
     }
@@ -675,11 +618,11 @@ if (!check.then) {
 }
 
 var promiseSchema = {
-  then: lowLevel.isFn
+  then: low.isFn
 }
 
 // work around reserved keywords checks
-promiseSchema['catch'] = lowLevel.isFn
+promiseSchema['catch'] = low.isFn
 
 var hasPromiseApi = schema.bind(null, promiseSchema)
 
@@ -704,25 +647,25 @@ function equal (a, b) {
   @method email
 */
 function email (s) {
-  return lowLevel.isString(s) &&
+  return low.isString(s) &&
   /^.+@.+\..+$/.test(s)
 }
 
 // new predicates to be added to check object. Use object to preserve names
 var predicates = {
   email: email,
-  nulled: lowLevel.isNull,
-  fn: lowLevel.isFn,
-  string: lowLevel.isString,
-  unemptyString: lowLevel.unemptyString,
-  object: lowLevel.isObject,
-  number: lowLevel.isNumber,
+  nulled: low.isNull,
+  fn: low.isFn,
+  string: low.isString,
+  unemptyString: low.unemptyString,
+  object: low.isObject,
+  number: low.isNumber,
   array: Array.isArray,
-  positiveNumber: lowLevel.positiveNumber,
-  negativeNumber: lowLevel.negativeNumber,
+  positiveNumber: low.positiveNumber,
+  negativeNumber: low.negativeNumber,
   // a couple of aliases
-  positive: lowLevel.positiveNumber,
-  negative: lowLevel.negativeNumber,
+  positive: low.positiveNumber,
+  negative: low.negativeNumber,
   defined: defined,
   same: same,
   allSame: allSame,
@@ -734,10 +677,10 @@ var predicates = {
   arrayOfStrings: arrayOfStrings,
   arrayOfArraysOfStrings: arrayOfArraysOfStrings,
   all: all,
-  schema: lowLevel.curry2(schema),
+  schema: low.curry2(schema),
   raises: raises,
   empty: empty,
-  found: found,
+  found: mid.found,
   emptyString: emptyString,
   unempty: unempty,
   unit: unit,
@@ -749,34 +692,34 @@ var predicates = {
   git: git,
   arrayOf: arrayOf,
   badItems: badItems,
-  oneOf: lowLevel.curry2(oneOf, true),
+  oneOf: low.curry2(oneOf, true),
   promise: isPromise,
   validDate: validDate,
-  equal: lowLevel.curry2(equal),
+  equal: low.curry2(equal),
   or: or,
   and: and,
   primitive: primitive,
   zero: zero,
-  date: lowLevel.isDate,
-  regexp: lowLevel.isRegExp,
-  instance: lowLevel.instance,
-  emptyObject: lowLevel.isEmptyObject,
-  length: lowLevel.curry2(lowLevel.hasLength),
-  floatNumber: lowLevel.isFloat,
-  intNumber: lowLevel.isInteger,
-  startsWith: startsWith,
-  webUrl: webUrl,
-  url: webUrl,
+  date: low.isDate,
+  regexp: low.isRegExp,
+  instance: low.instance,
+  emptyObject: low.isEmptyObject,
+  length: low.curry2(low.hasLength),
+  floatNumber: low.isFloat,
+  intNumber: low.isInteger,
+  startsWith: mid.startsWith,
+  webUrl: mid.webUrl,
+  url: mid.webUrl,
   semver: semver,
-  type: lowLevel.curry2(type),
-  http: http,
-  https: https,
-  secure: https,
-  error: lowLevel.isError,
+  type: low.curry2(mid.type),
+  http: mid.http,
+  https: mid.https,
+  secure: mid.https,
+  error: low.isError,
   port: isPortNumber,
   systemPort: isSystemPortNumber,
   userPort: isUserPortNumber,
-  contains: contains
+  contains: mid.contains
 }
 
 Object.keys(predicates).forEach(function (name) {

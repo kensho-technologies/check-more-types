@@ -10,6 +10,7 @@
     "pre-git": {
       "commit-msg": "simple",
       "pre-commit": [
+        "npm run build",
         "npm test"
       ],
       "pre-push": [

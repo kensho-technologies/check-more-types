@@ -74,6 +74,9 @@ function hasLength (x, k) {
 module.exports = {
   curry2: curry2,
   isFn: isFn,
+  isString: isString,
+  isObject: isObject,
+  isNull: isNull,
   unemptyString: unemptyString,
   isEmptyObject: isEmptyObject,
   isInteger: isInteger,
@@ -83,5 +86,7 @@ module.exports = {
   isRegExp: isRegExp,
   isError: isError,
   instance: instance,
-  hasLength: hasLength
+  hasLength: hasLength,
+  isNumber: isNumber,
+  isDate: isDate
 }
