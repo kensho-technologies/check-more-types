@@ -44,32 +44,6 @@ function type (expectedType, x) {
   return typeof x === expectedType
 }
 
-var startsWithHttp = startsWith.bind(null, 'http://')
-var startsWithHttps = startsWith.bind(null, 'https://')
-
-function http (x) {
-  return low.isString(x) && startsWithHttp(x)
-}
-
-function https (x) {
-  return low.isString(x) && startsWithHttps(x)
-}
-
-function webUrl (x) {
-  return low.isString(x) &&
-  (startsWithHttp(x) || startsWithHttps(x))
-}
-
-/**
-  Checks if it is exact semver
-
-  @method semver
-*/
-function semver (s) {
-  return low.unemptyString(s) &&
-  /^\d+\.\d+\.\d+$/.test(s)
-}
-
 /**
   Returns true if the index is valid for give string / array
 
@@ -123,28 +97,13 @@ function oneOf (arr, x) {
   return arr.indexOf(x) !== -1
 }
 
-/**
-  Returns true for urls of the format `git@....git`
-
-  @method git
-*/
-function git (url) {
-  return low.unemptyString(url) &&
-  /^git@/.test(url)
-}
-
 module.exports = {
   found: found,
   startsWith: startsWith,
   contains: contains,
   type: type,
-  http: http,
-  https: https,
-  webUrl: webUrl,
   index: index,
-  semver: semver,
   oneOf: oneOf,
   sameLength: sameLength,
-  allSame: allSame,
-  git: git
+  allSame: allSame
 }

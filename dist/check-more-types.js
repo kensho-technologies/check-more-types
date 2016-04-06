@@ -75,6 +75,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var arrays = __webpack_require__(4)
 	var logic = __webpack_require__(5)
 	var git = __webpack_require__(6)
+	var internet = __webpack_require__(7)
 
 	var check = {
 	  maybe: {},
@@ -416,7 +417,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  commitId: git.commitId,
 	  shortCommitId: git.shortCommitId,
 	  index: mid.index,
-	  git: mid.git,
+	  git: git.git,
 	  arrayOf: arrays.arrayOf,
 	  badItems: arrays.badItems,
 	  oneOf: curry2(mid.oneOf, true),
@@ -435,13 +436,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	  floatNumber: low.isFloat,
 	  intNumber: low.isInteger,
 	  startsWith: mid.startsWith,
-	  webUrl: mid.webUrl,
-	  url: mid.webUrl,
-	  semver: mid.semver,
+	  webUrl: internet.webUrl,
+	  url: internet.webUrl,
+	  semver: git.semver,
 	  type: curry2(mid.type),
-	  http: mid.http,
-	  https: mid.https,
-	  secure: mid.https,
+	  http: internet.http,
+	  https: internet.https,
+	  secure: internet.https,
 	  error: low.isError,
 	  port: isPortNumber,
 	  systemPort: isSystemPortNumber,
@@ -724,32 +725,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return typeof x === expectedType
 	}
 
-	var startsWithHttp = startsWith.bind(null, 'http://')
-	var startsWithHttps = startsWith.bind(null, 'https://')
-
-	function http (x) {
-	  return low.isString(x) && startsWithHttp(x)
-	}
-
-	function https (x) {
-	  return low.isString(x) && startsWithHttps(x)
-	}
-
-	function webUrl (x) {
-	  return low.isString(x) &&
-	  (startsWithHttp(x) || startsWithHttps(x))
-	}
-
-	/**
-	  Checks if it is exact semver
-
-	  @method semver
-	*/
-	function semver (s) {
-	  return low.unemptyString(s) &&
-	  /^\d+\.\d+\.\d+$/.test(s)
-	}
-
 	/**
 	  Returns true if the index is valid for give string / array
 
@@ -803,30 +778,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return arr.indexOf(x) !== -1
 	}
 
-	/**
-	  Returns true for urls of the format `git@....git`
-
-	  @method git
-	*/
-	function git (url) {
-	  return low.unemptyString(url) &&
-	  /^git@/.test(url)
-	}
-
 	module.exports = {
 	  found: found,
 	  startsWith: startsWith,
 	  contains: contains,
 	  type: type,
-	  http: http,
-	  https: https,
-	  webUrl: webUrl,
 	  index: index,
-	  semver: semver,
 	  oneOf: oneOf,
 	  sameLength: sameLength,
-	  allSame: allSame,
-	  git: git
+	  allSame: allSame
 	}
 
 
@@ -1074,6 +1034,38 @@ return /******/ (function(modules) { // webpackBootstrap
 	  git: git,
 	  commitId: commitId,
 	  shortCommitId: shortCommitId
+	}
+
+
+/***/ },
+/* 7 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict'
+
+	var low = __webpack_require__(2)
+	var mid = __webpack_require__(3)
+
+	var startsWithHttp = mid.startsWith.bind(null, 'http://')
+	var startsWithHttps = mid.startsWith.bind(null, 'https://')
+
+	function http (x) {
+	  return low.isString(x) && startsWithHttp(x)
+	}
+
+	function https (x) {
+	  return low.isString(x) && startsWithHttps(x)
+	}
+
+	function webUrl (x) {
+	  return low.isString(x) &&
+	  (startsWithHttp(x) || startsWithHttps(x))
+	}
+
+	module.exports = {
+	  http: http,
+	  https: https,
+	  webUrl: webUrl
 	}
 
 

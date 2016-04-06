@@ -19,6 +19,7 @@ var mid = require('./mid-level')
 var arrays = require('./arrays')
 var logic = require('./logic')
 var git = require('./git')
+var internet = require('./internet')
 
 var check = {
   maybe: {},
@@ -360,7 +361,7 @@ var predicates = {
   commitId: git.commitId,
   shortCommitId: git.shortCommitId,
   index: mid.index,
-  git: mid.git,
+  git: git.git,
   arrayOf: arrays.arrayOf,
   badItems: arrays.badItems,
   oneOf: curry2(mid.oneOf, true),
@@ -379,13 +380,13 @@ var predicates = {
   floatNumber: low.isFloat,
   intNumber: low.isInteger,
   startsWith: mid.startsWith,
-  webUrl: mid.webUrl,
-  url: mid.webUrl,
-  semver: mid.semver,
+  webUrl: internet.webUrl,
+  url: internet.webUrl,
+  semver: git.semver,
   type: curry2(mid.type),
-  http: mid.http,
-  https: mid.https,
-  secure: mid.https,
+  http: internet.http,
+  https: internet.https,
+  secure: internet.https,
   error: low.isError,
   port: isPortNumber,
   systemPort: isSystemPortNumber,
