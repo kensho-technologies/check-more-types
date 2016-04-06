@@ -2,9 +2,9 @@
 
 /* global describe, it */
 describe('check-more-types logic predicates', function () {
-  const la = require('lazy-ass')
-  const logic = require('./logic')
-  const check = require('..')
+  var la = require('lazy-ass')
+  var logic = require('./logic')
+  var check = require('..')
 
   it('has a few methods', function () {
     la(check.fn(logic.or), 'has or')

@@ -2,11 +2,11 @@
 
 /* global describe, it */
 describe('check-more-types array predicates', function () {
-  const la = require('lazy-ass')
-  const check = require('..')
+  var la = require('lazy-ass')
+  var check = require('..')
 
   it('is an object', function () {
-    const arrays = require('./arrays')
+    var arrays = require('./arrays')
     la(check.object(arrays))
   })
 

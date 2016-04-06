@@ -2,11 +2,11 @@
 
 /* global describe, it */
 describe('check-more-types internet predicates', function () {
-  const la = require('lazy-ass')
-  const check = require('..')
+  var la = require('lazy-ass')
+  var check = require('..')
 
   it('is an object', function () {
-    const internet = require('./internet')
+    var internet = require('./internet')
     la(check.object(internet))
   })
 

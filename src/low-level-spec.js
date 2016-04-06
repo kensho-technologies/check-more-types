@@ -2,9 +2,9 @@
 
 /* global describe, it */
 describe('check-more-types low-level predicates', function () {
-  const la = require('lazy-ass')
-  const low = require('./low-level')
-  const check = require('..')
+  var la = require('lazy-ass')
+  var low = require('./low-level')
+  var check = require('..')
 
   it('is an object', function () {
     la(check.object(low))

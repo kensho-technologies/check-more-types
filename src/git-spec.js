@@ -2,11 +2,11 @@
 
 /* global describe, it */
 describe('check-more-types git predicates', function () {
-  const la = require('lazy-ass')
-  const check = require('..')
+  var la = require('lazy-ass')
+  var check = require('..')
 
   it('is an object', function () {
-    const git = require('./git')
+    var git = require('./git')
     la(check.object(git))
   })
 
