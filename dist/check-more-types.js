@@ -72,6 +72,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	var curry2 = __webpack_require__(1).curry2
 	var low = __webpack_require__(2)
 	var mid = __webpack_require__(3)
+	var arrays = __webpack_require__(4)
+	var logic = __webpack_require__(5)
 
 	function every (predicateResults) {
 	  var property, value
@@ -116,70 +118,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	  not: {},
 	  every: every,
 	  map: map
-	}
-
-	/**
-	Checks if given string is already in lower case
-	@method lowerCase
-	*/
-	function lowerCase (str) {
-	  return check.string(str) &&
-	  str.toLowerCase() === str
-	}
-
-	/**
-	Returns true if the argument is an array with at least one value
-	@method unemptyArray
-	*/
-	function unemptyArray (a) {
-	  return check.array(a) && a.length > 0
-	}
-
-	/**
-	Returns true if each item in the array passes the predicate
-	@method arrayOf
-	@param rule Predicate function
-	@param a Array to check
-	*/
-	function arrayOf (rule, a) {
-	  return check.array(a) && a.every(rule)
-	}
-
-	/**
-	Returns items from array that do not passes the predicate
-	@method badItems
-	@param rule Predicate function
-	@param a Array with items
-	*/
-	function badItems (rule, a) {
-	  check.verify.array(a, 'expected array to find bad items')
-	  return a.filter(notModifier(rule))
-	}
-
-	/**
-	Returns true if given array only has strings
-	@method arrayOfStrings
-	@param a Array to check
-	@param checkLowerCase Checks if all strings are lowercase
-	*/
-	function arrayOfStrings (a, checkLowerCase) {
-	  var v = check.array(a) && a.every(check.string)
-	  if (v && check.bool(checkLowerCase) && checkLowerCase) {
-	    return a.every(check.lowerCase)
-	  }
-	  return v
-	}
-
-	/**
-	Returns true if given argument is array of arrays of strings
-	@method arrayOfArraysOfStrings
-	@param a Array to check
-	@param checkLowerCase Checks if all strings are lowercase
-	*/
-	function arrayOfArraysOfStrings (a, checkLowerCase) {
-	  return check.array(a) && a.every(function (arr) {
-	    return check.arrayOfStrings(arr, checkLowerCase)
-	  })
 	}
 
 	/**
@@ -378,59 +316,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	}
 
-	/**
-	  Combines multiple predicate functions to produce new OR predicate
-	  @method or
-	*/
-	function or () {
-	  var predicates = Array.prototype.slice.call(arguments, 0)
-	  if (!predicates.length) {
-	    throw new Error('empty list of arguments to or')
-	  }
-
-	  return function orCheck () {
-	    var values = Array.prototype.slice.call(arguments, 0)
-	    return predicates.some(function (predicate) {
-	      try {
-	        return check.fn(predicate) ? predicate.apply(null, values) : Boolean(predicate)
-	      } catch (err) {
-	        // treat exceptions as false
-	        return false
-	      }
-	    })
-	  }
-	}
-
-	/**
-	  Combines multiple predicate functions to produce new AND predicate
-	  @method or
-	*/
-	function and () {
-	  var predicates = Array.prototype.slice.call(arguments, 0)
-	  if (!predicates.length) {
-	    throw new Error('empty list of arguments to or')
-	  }
-
-	  return function orCheck () {
-	    var values = Array.prototype.slice.call(arguments, 0)
-	    return predicates.every(function (predicate) {
-	      return check.fn(predicate) ? predicate.apply(null, values) : Boolean(predicate)
-	    })
-	  }
-	}
-
-	/**
-	* Public modifier `not`.
-	*
-	* Negates `predicate`.
-	* copied from check-types.js
-	*/
-	function notModifier (predicate) {
-	  return function () {
-	    return !predicate.apply(null, arguments)
-	  }
-	}
-
 	if (!check.mixin) {
 	  /** Adds new predicate to all objects
 	  @method mixin */
@@ -501,7 +386,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    registerPredicate(check, name, fn)
 	    registerPredicate(check.maybe, name, maybeModifier(fn))
-	    registerPredicate(check.not, name, notModifier(fn))
+	    registerPredicate(check.not, name, logic.notModifier(fn))
 	    registerPredicate(check.verify, name, verifyModifier(fn, name + ' failed'))
 	  }
 	}
@@ -577,10 +462,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  bit: low.bit,
 	  bool: low.bool,
 	  has: low.has,
-	  lowerCase: lowerCase,
-	  unemptyArray: unemptyArray,
-	  arrayOfStrings: arrayOfStrings,
-	  arrayOfArraysOfStrings: arrayOfArraysOfStrings,
+	  lowerCase: low.lowerCase,
+	  unemptyArray: arrays.unemptyArray,
+	  arrayOfStrings: arrays.arrayOfStrings,
+	  arrayOfArraysOfStrings: arrays.arrayOfArraysOfStrings,
 	  all: all,
 	  schema: curry2(schema),
 	  raises: raises,
@@ -595,14 +480,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	  shortCommitId: shortCommitId,
 	  index: mid.index,
 	  git: mid.git,
-	  arrayOf: arrayOf,
-	  badItems: badItems,
+	  arrayOf: arrays.arrayOf,
+	  badItems: arrays.badItems,
 	  oneOf: curry2(mid.oneOf, true),
 	  promise: isPromise,
 	  validDate: low.validDate,
 	  equal: curry2(equal),
-	  or: or,
-	  and: and,
+	  or: logic.or,
+	  and: logic.and,
 	  primitive: low.primitive,
 	  zero: low.zero,
 	  date: low.isDate,
@@ -673,13 +558,18 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	// most of the old methods same as check-types.js
 	function isFn (x) { return typeof x === 'function' }
+
 	function isString (x) { return typeof x === 'string' }
+
 	function unemptyString (x) {
 	  return isString(x) && Boolean(x)
 	}
+
+	var isArray = Array.isArray
+
 	function isObject (x) {
 	  return typeof x === 'object' &&
-	  !Array.isArray(x) &&
+	  !isArray(x) &&
 	  !isNull(x) &&
 	  !isDate(x)
 	}
@@ -723,7 +613,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    // swap arguments
 	    return hasLength(k, x)
 	  }
-	  return (Array.isArray(x) || isString(x)) && x.length === k
+	  return (isArray(x) || isString(x)) && x.length === k
 	}
 
 	/**
@@ -796,6 +686,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 	/**
+	Checks if given string is already in lower case
+	@method lowerCase
+	*/
+	function lowerCase (str) {
+	  return isString(str) &&
+	  str.toLowerCase() === str
+	}
+
+	/**
 	  Checks if given object has a property
 	  @method has
 	*/
@@ -832,7 +731,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  same: same,
 	  bit: bit,
 	  bool: bool,
-	  has: has
+	  has: has,
+	  isArray: isArray,
+	  lowerCase: lowerCase
 	}
 
 
@@ -989,6 +890,149 @@ return /******/ (function(modules) { // webpackBootstrap
 	  sameLength: sameLength,
 	  allSame: allSame,
 	  git: git
+	}
+
+
+/***/ },
+/* 4 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict'
+
+	var low = __webpack_require__(2)
+	var logic = __webpack_require__(5)
+
+	/**
+	Returns true if the argument is an array with at least one value
+	@method unemptyArray
+	*/
+	function unemptyArray (a) {
+	  return low.isArray(a) && a.length > 0
+	}
+
+	/**
+	Returns true if each item in the array passes the predicate
+	@method arrayOf
+	@param rule Predicate function
+	@param a Array to check
+	*/
+	function arrayOf (rule, a) {
+	  return low.isArray(a) && a.every(rule)
+	}
+
+	/**
+	Returns items from array that do not passes the predicate
+	@method badItems
+	@param rule Predicate function
+	@param a Array with items
+	*/
+	function badItems (rule, a) {
+	  if (!low.isArray(a)) {
+	    throw new Error('expected array to find bad items')
+	  }
+	  return a.filter(logic.notModifier(rule))
+	}
+
+	/**
+	Returns true if given array only has strings
+	@method arrayOfStrings
+	@param a Array to check
+	@param checkLowerCase Checks if all strings are lowercase
+	*/
+	function arrayOfStrings (a, checkLowerCase) {
+	  var v = low.isArray(a) && a.every(low.isString)
+	  if (v && low.bool(checkLowerCase) && checkLowerCase) {
+	    return a.every(low.lowerCase)
+	  }
+	  return v
+	}
+
+	/**
+	Returns true if given argument is array of arrays of strings
+	@method arrayOfArraysOfStrings
+	@param a Array to check
+	@param checkLowerCase Checks if all strings are lowercase
+	*/
+	function arrayOfArraysOfStrings (a, checkLowerCase) {
+	  return low.isArray(a) && a.every(function (arr) {
+	    return arrayOfStrings(arr, checkLowerCase)
+	  })
+	}
+
+	module.exports = {
+	  unemptyArray: unemptyArray,
+	  arrayOf: arrayOf,
+	  badItems: badItems,
+	  arrayOfStrings: arrayOfStrings,
+	  arrayOfArraysOfStrings: arrayOfArraysOfStrings
+	}
+
+
+/***/ },
+/* 5 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict'
+
+	const low = __webpack_require__(2)
+
+	/**
+	  Combines multiple predicate functions to produce new OR predicate
+	  @method or
+	*/
+	function or () {
+	  var predicates = Array.prototype.slice.call(arguments, 0)
+	  if (!predicates.length) {
+	    throw new Error('empty list of arguments to or')
+	  }
+
+	  return function orCheck () {
+	    var values = Array.prototype.slice.call(arguments, 0)
+	    return predicates.some(function (predicate) {
+	      try {
+	        return low.isFn(predicate) ? predicate.apply(null, values) : Boolean(predicate)
+	      } catch (err) {
+	        // treat exceptions as false
+	        return false
+	      }
+	    })
+	  }
+	}
+
+	/**
+	  Combines multiple predicate functions to produce new AND predicate
+	  @method or
+	*/
+	function and () {
+	  var predicates = Array.prototype.slice.call(arguments, 0)
+	  if (!predicates.length) {
+	    throw new Error('empty list of arguments to or')
+	  }
+
+	  return function orCheck () {
+	    var values = Array.prototype.slice.call(arguments, 0)
+	    return predicates.every(function (predicate) {
+	      return low.isFn(predicate) ? predicate.apply(null, values) : Boolean(predicate)
+	    })
+	  }
+	}
+
+	/**
+	* Public modifier `not`.
+	*
+	* Negates `predicate`.
+	* copied from check-types.js
+	*/
+	function notModifier (predicate) {
+	  return function () {
+	    return !predicate.apply(null, arguments)
+	  }
+	}
+
+	module.exports = {
+	  or: or,
+	  and: and,
+	  notModifier: notModifier
 	}
 
 

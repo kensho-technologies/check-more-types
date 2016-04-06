@@ -4,13 +4,18 @@
 
 // most of the old methods same as check-types.js
 function isFn (x) { return typeof x === 'function' }
+
 function isString (x) { return typeof x === 'string' }
+
 function unemptyString (x) {
   return isString(x) && Boolean(x)
 }
+
+var isArray = Array.isArray
+
 function isObject (x) {
   return typeof x === 'object' &&
-  !Array.isArray(x) &&
+  !isArray(x) &&
   !isNull(x) &&
   !isDate(x)
 }
@@ -54,7 +59,7 @@ function hasLength (x, k) {
     // swap arguments
     return hasLength(k, x)
   }
-  return (Array.isArray(x) || isString(x)) && x.length === k
+  return (isArray(x) || isString(x)) && x.length === k
 }
 
 /**
@@ -127,6 +132,15 @@ function bool (value) {
 }
 
 /**
+Checks if given string is already in lower case
+@method lowerCase
+*/
+function lowerCase (str) {
+  return isString(str) &&
+  str.toLowerCase() === str
+}
+
+/**
   Checks if given object has a property
   @method has
 */
@@ -163,5 +177,7 @@ module.exports = {
   same: same,
   bit: bit,
   bool: bool,
-  has: has
+  has: has,
+  isArray: isArray,
+  lowerCase: lowerCase
 }

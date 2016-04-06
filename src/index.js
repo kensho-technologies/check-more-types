@@ -16,6 +16,8 @@ if (typeof Function.prototype.bind !== 'function') {
 var curry2 = require('./utils').curry2
 var low = require('./low-level')
 var mid = require('./mid-level')
+var arrays = require('./arrays')
+var logic = require('./logic')
 
 function every (predicateResults) {
   var property, value
@@ -60,70 +62,6 @@ var check = {
   not: {},
   every: every,
   map: map
-}
-
-/**
-Checks if given string is already in lower case
-@method lowerCase
-*/
-function lowerCase (str) {
-  return check.string(str) &&
-  str.toLowerCase() === str
-}
-
-/**
-Returns true if the argument is an array with at least one value
-@method unemptyArray
-*/
-function unemptyArray (a) {
-  return check.array(a) && a.length > 0
-}
-
-/**
-Returns true if each item in the array passes the predicate
-@method arrayOf
-@param rule Predicate function
-@param a Array to check
-*/
-function arrayOf (rule, a) {
-  return check.array(a) && a.every(rule)
-}
-
-/**
-Returns items from array that do not passes the predicate
-@method badItems
-@param rule Predicate function
-@param a Array with items
-*/
-function badItems (rule, a) {
-  check.verify.array(a, 'expected array to find bad items')
-  return a.filter(notModifier(rule))
-}
-
-/**
-Returns true if given array only has strings
-@method arrayOfStrings
-@param a Array to check
-@param checkLowerCase Checks if all strings are lowercase
-*/
-function arrayOfStrings (a, checkLowerCase) {
-  var v = check.array(a) && a.every(check.string)
-  if (v && check.bool(checkLowerCase) && checkLowerCase) {
-    return a.every(check.lowerCase)
-  }
-  return v
-}
-
-/**
-Returns true if given argument is array of arrays of strings
-@method arrayOfArraysOfStrings
-@param a Array to check
-@param checkLowerCase Checks if all strings are lowercase
-*/
-function arrayOfArraysOfStrings (a, checkLowerCase) {
-  return check.array(a) && a.every(function (arr) {
-    return check.arrayOfStrings(arr, checkLowerCase)
-  })
 }
 
 /**
@@ -322,59 +260,6 @@ if (!check.defend) {
   }
 }
 
-/**
-  Combines multiple predicate functions to produce new OR predicate
-  @method or
-*/
-function or () {
-  var predicates = Array.prototype.slice.call(arguments, 0)
-  if (!predicates.length) {
-    throw new Error('empty list of arguments to or')
-  }
-
-  return function orCheck () {
-    var values = Array.prototype.slice.call(arguments, 0)
-    return predicates.some(function (predicate) {
-      try {
-        return check.fn(predicate) ? predicate.apply(null, values) : Boolean(predicate)
-      } catch (err) {
-        // treat exceptions as false
-        return false
-      }
-    })
-  }
-}
-
-/**
-  Combines multiple predicate functions to produce new AND predicate
-  @method or
-*/
-function and () {
-  var predicates = Array.prototype.slice.call(arguments, 0)
-  if (!predicates.length) {
-    throw new Error('empty list of arguments to or')
-  }
-
-  return function orCheck () {
-    var values = Array.prototype.slice.call(arguments, 0)
-    return predicates.every(function (predicate) {
-      return check.fn(predicate) ? predicate.apply(null, values) : Boolean(predicate)
-    })
-  }
-}
-
-/**
-* Public modifier `not`.
-*
-* Negates `predicate`.
-* copied from check-types.js
-*/
-function notModifier (predicate) {
-  return function () {
-    return !predicate.apply(null, arguments)
-  }
-}
-
 if (!check.mixin) {
   /** Adds new predicate to all objects
   @method mixin */
@@ -445,7 +330,7 @@ if (!check.mixin) {
 
     registerPredicate(check, name, fn)
     registerPredicate(check.maybe, name, maybeModifier(fn))
-    registerPredicate(check.not, name, notModifier(fn))
+    registerPredicate(check.not, name, logic.notModifier(fn))
     registerPredicate(check.verify, name, verifyModifier(fn, name + ' failed'))
   }
 }
@@ -521,10 +406,10 @@ var predicates = {
   bit: low.bit,
   bool: low.bool,
   has: low.has,
-  lowerCase: lowerCase,
-  unemptyArray: unemptyArray,
-  arrayOfStrings: arrayOfStrings,
-  arrayOfArraysOfStrings: arrayOfArraysOfStrings,
+  lowerCase: low.lowerCase,
+  unemptyArray: arrays.unemptyArray,
+  arrayOfStrings: arrays.arrayOfStrings,
+  arrayOfArraysOfStrings: arrays.arrayOfArraysOfStrings,
   all: all,
   schema: curry2(schema),
   raises: raises,
@@ -539,14 +424,14 @@ var predicates = {
   shortCommitId: shortCommitId,
   index: mid.index,
   git: mid.git,
-  arrayOf: arrayOf,
-  badItems: badItems,
+  arrayOf: arrays.arrayOf,
+  badItems: arrays.badItems,
   oneOf: curry2(mid.oneOf, true),
   promise: isPromise,
   validDate: low.validDate,
   equal: curry2(equal),
-  or: or,
-  and: and,
+  or: logic.or,
+  and: logic.and,
   primitive: low.primitive,
   zero: low.zero,
   date: low.isDate,
