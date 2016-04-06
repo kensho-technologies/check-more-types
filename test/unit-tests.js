@@ -13,87 +13,6 @@ describe('check-more-types', function () {
   // la(!root.check, 'has no root.check')
   })
 
-  describe('system port', function () {
-    it('returns true for system ports', function () {
-      la(check.systemPort(80), '80')
-      la(check.systemPort(1000), '1000')
-    })
-
-    it('returns false for other numbers', function () {
-      la(check.not.systemPort(-80), '-80')
-      la(!check.systemPort(1337), 'too large')
-    })
-  })
-
-  describe('user port', function () {
-    it('returns false for system ports', function () {
-      la(check.not.userPort(80), '80')
-      la(!check.userPort(1000), '1000')
-      la(!check.userPort(1024), '1024')
-    })
-
-    it('returns true for user port numbers', function () {
-      la(check.userPort(4500), '4500')
-      la(check.userPort(1337), '1337')
-    })
-  })
-
-  describe('port', function () {
-    it('returns true for system and user ports', function () {
-      la(check.port(80), '80')
-      la(check.port(1337), '1337')
-    })
-
-    it('returns false for other numbers', function () {
-      la(check.not.port(-80), '-80')
-      la(!check.port(70000), 'too large')
-    })
-  })
-
-  describe('https', function () {
-    it('has function and alias', function () {
-      la(check.fn(check.https), 'has https')
-      la(check.fn(check.secure), 'has secure')
-    })
-
-    it('returns true for https urls', function () {
-      la(check.https('https://localhost'))
-      la(check.secure('https://google.com'))
-    })
-
-    it('returns false for non-https urls', function () {
-      la(check.not.https('http://localhost'))
-      la(!check.secure('http://google.com'))
-    })
-  })
-
-  it('has webUrl', function () {
-    la(check.webUrl('http://localhost:8000/'))
-    la(check.webUrl('http://127.0.0.1/'))
-    la(check.webUrl('https://www.google.com/'))
-    la(!check.webUrl('www.google.com/'))
-  })
-
-  it('has url as alias to webUrl', function () {
-    la(check.webUrl === check.url)
-  })
-
-  describe('check.semver', function () {
-    it('is a function', function () {
-      la(check.fn(check.semver))
-    })
-
-    it('allows numbers', function () {
-      la(check.semver('1.2.3'))
-      la(check.semver('0.2.0'))
-    })
-
-    it('does not allow anything else', function () {
-      la(!check.semver('1.0'))
-      la(!check.semver('1.0.0-alpha'))
-    })
-  })
-
   describe('check/promise', function () {
     it('checks objects api', function () {
       var p = {
@@ -121,22 +40,6 @@ describe('check-more-types', function () {
         la(check.promise(p), 'native Promise is detected')
       })
     }
-  })
-
-  describe('check/email', function () {
-    it('passes simple emails', function () {
-      ['g@kensho.com', 'foo@foo.bar', 'my-email@gmail.com']
-        .forEach(function (s) {
-          la(check.email(s), s)
-        })
-    })
-
-    it('fails simple non-emails', function () {
-      ['g.kensho.com', 'foo@foo', 'my-email@gmail@com']
-        .forEach(function (s) {
-          la(!check.email(s), s)
-        })
-    })
   })
 
   describe('check/arrayOf', function () {
@@ -181,20 +84,6 @@ describe('check-more-types', function () {
       la(check.array(empty), 'returns array')
       la(empty.length === 1, 'has single item')
       la(empty[0] === 10, 'has number')
-    })
-  })
-
-  describe('check/shortCommitId', function () {
-    /** @sample check/shortCommitId */
-    it('shortCommitId', function () {
-      la(check.shortCommitId('3b81980'))
-    })
-  })
-
-  describe('check/commitId', function () {
-    /** @sample check/commitId */
-    it('commitId', function () {
-      la(check.commitId('3b819803cdf2225ca1338beb17e0c506fdeedefc'))
     })
   })
 
@@ -314,13 +203,6 @@ describe('check-more-types', function () {
       la(check.allSame([0, 0]))
       la(check.allSame(['foo', 'foo', 'foo']))
       la(!check.allSame([false, 0]))
-    })
-  })
-
-  describe('check.git', function () {
-    /** @sample check/git */
-    it('detects git url', function () {
-      la(check.git('git@github.com:kensho/check-more-types.git'))
     })
   })
 
