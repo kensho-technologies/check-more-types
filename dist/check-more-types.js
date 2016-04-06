@@ -210,7 +210,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	// work around reserved keywords checks
 	promiseSchema['catch'] = low.isFn
 
-	var hasPromiseApi = schema.bind(null, promiseSchema)
+	var hasPromiseApi = schema.schema.bind(null, promiseSchema)
 
 	/**
 	  Returns true if argument implements promise api (.then, .catch, .finally)
