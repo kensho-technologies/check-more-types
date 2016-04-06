@@ -590,7 +590,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  unempty: unempty,
 	  unit: unit,
 	  hexRgb: hexRgb,
-	  sameLength: low.sameLength,
+	  sameLength: mid.sameLength,
 	  commitId: commitId,
 	  shortCommitId: shortCommitId,
 	  index: mid.index,
