@@ -75,49 +75,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	var arrays = __webpack_require__(4)
 	var logic = __webpack_require__(5)
 
-	function every (predicateResults) {
-	  var property, value
-	  for (property in predicateResults) {
-	    if (predicateResults.hasOwnProperty(property)) {
-	      value = predicateResults[property]
-
-	      if (low.isObject(value) && every(value) === false) {
-	        return false
-	      }
-
-	      if (value === false) {
-	        return false
-	      }
-	    }
-	  }
-	  return true
-	}
-
-	function map (things, predicates) {
-	  var property
-	  var result = {}
-	  var predicate
-	  for (property in predicates) {
-	    if (predicates.hasOwnProperty(property)) {
-	      predicate = predicates[property]
-
-	      if (low.isFn(predicate)) {
-	        result[property] = predicate(things[property])
-	      } else if (low.isObject(predicate)) {
-	        result[property] = map(things[property], predicate)
-	      }
-	    }
-	  }
-
-	  return result
-	}
-
 	var check = {
 	  maybe: {},
 	  verify: {},
 	  not: {},
-	  every: every,
-	  map: map
+	  every: logic.every,
+	  map: logic.map
 	}
 
 	/**
@@ -1029,10 +992,49 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	}
 
+	function every (predicateResults) {
+	  var property, value
+	  for (property in predicateResults) {
+	    if (predicateResults.hasOwnProperty(property)) {
+	      value = predicateResults[property]
+
+	      if (low.isObject(value) && every(value) === false) {
+	        return false
+	      }
+
+	      if (value === false) {
+	        return false
+	      }
+	    }
+	  }
+	  return true
+	}
+
+	function map (things, predicates) {
+	  var property
+	  var result = {}
+	  var predicate
+	  for (property in predicates) {
+	    if (predicates.hasOwnProperty(property)) {
+	      predicate = predicates[property]
+
+	      if (low.isFn(predicate)) {
+	        result[property] = predicate(things[property])
+	      } else if (low.isObject(predicate)) {
+	        result[property] = map(things[property], predicate)
+	      }
+	    }
+	  }
+
+	  return result
+	}
+
 	module.exports = {
 	  or: or,
 	  and: and,
-	  notModifier: notModifier
+	  notModifier: notModifier,
+	  every: every,
+	  map: map
 	}
 
 

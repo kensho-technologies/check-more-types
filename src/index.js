@@ -19,49 +19,12 @@ var mid = require('./mid-level')
 var arrays = require('./arrays')
 var logic = require('./logic')
 
-function every (predicateResults) {
-  var property, value
-  for (property in predicateResults) {
-    if (predicateResults.hasOwnProperty(property)) {
-      value = predicateResults[property]
-
-      if (low.isObject(value) && every(value) === false) {
-        return false
-      }
-
-      if (value === false) {
-        return false
-      }
-    }
-  }
-  return true
-}
-
-function map (things, predicates) {
-  var property
-  var result = {}
-  var predicate
-  for (property in predicates) {
-    if (predicates.hasOwnProperty(property)) {
-      predicate = predicates[property]
-
-      if (low.isFn(predicate)) {
-        result[property] = predicate(things[property])
-      } else if (low.isObject(predicate)) {
-        result[property] = map(things[property], predicate)
-      }
-    }
-  }
-
-  return result
-}
-
 var check = {
   maybe: {},
   verify: {},
   not: {},
-  every: every,
-  map: map
+  every: logic.every,
+  map: logic.map
 }
 
 /**
