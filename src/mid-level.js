@@ -20,6 +20,24 @@ function startsWith (prefix, x) {
 }
 
 /**
+  Checks if given number is even
+
+  @method even
+*/
+function even (n) {
+  return n % 2 === 0
+}
+
+/**
+  Checks if given number is odd
+
+  @method odd
+*/
+function odd (n) {
+  return n % 2 === 1
+}
+
+/**
   Checks if the given item is the given {arrya, string}
 
   @method contains
@@ -140,15 +158,17 @@ function raises (fn, errorValidator) {
 }
 
 module.exports = {
-  found: found,
-  startsWith: startsWith,
-  contains: contains,
-  type: curry2(type),
-  index: index,
-  oneOf: curry2(oneOf, true),
-  sameLength: sameLength,
   allSame: allSame,
-  unit: unit,
+  contains: contains,
+  even: even,
+  found: found,
   hexRgb: hexRgb,
-  raises: raises
+  index: index,
+  odd: odd,
+  oneOf: curry2(oneOf, true),
+  raises: raises,
+  sameLength: sameLength,
+  startsWith: startsWith,
+  type: curry2(type),
+  unit: unit
 }

@@ -18,6 +18,16 @@ check.email('me@foo.bar') // true
 check.email('me.foo.bar') // false
 ```
 
+### check.odd and check.even
+
+Check if a number odd or even
+
+```js
+check.odd(2) // false
+check.odd(3) // true
+check.even(2) // true
+```
+
 ### check.port
 
 Returns true if passed argument is positive number less or equal to largest

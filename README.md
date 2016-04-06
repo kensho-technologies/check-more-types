@@ -51,6 +51,7 @@ for advice and examples.
 
 * **API**
   * [check.email](#checkemail)
+  * [check.odd and check.even](#checkodd-and-checkeven)
   * [check.port](#checkport)
   * [check.systemPort](#checksystemport)
   * [check.userPort](#checkuserport)
@@ -135,6 +136,16 @@ Really simple regex email check. Should not be relied to be robust.
 ```js
 check.email('me@foo.bar') // true
 check.email('me.foo.bar') // false
+```
+
+#### check.odd and check.even
+
+Check if a number odd or even
+
+```js
+check.odd(2) // false
+check.odd(3) // true
+check.even(2) // true
 ```
 
 #### check.port
