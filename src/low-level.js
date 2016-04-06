@@ -153,6 +153,46 @@ function has (o, property) {
     typeof o[property] !== 'undefined')
 }
 
+/**
+  Returns true if given value is ''
+  @method emptyString
+*/
+function emptyString (a) {
+  return a === ''
+}
+
+/**
+  Returns true if given value is [], {} or ''
+  @method empty
+*/
+function empty (a) {
+  var hasLength = typeof a === 'string' ||
+  Array.isArray(a)
+  if (hasLength) {
+    return !a.length
+  }
+  if (a instanceof Object) {
+    return !Object.keys(a).length
+  }
+  return false
+}
+
+/**
+  Returns true if given value has .length and it is not zero, or has properties
+  @method unempty
+*/
+function unempty (a) {
+  var hasLength = typeof a === 'string' ||
+  Array.isArray(a)
+  if (hasLength) {
+    return a.length
+  }
+  if (a instanceof Object) {
+    return Object.keys(a).length
+  }
+  return true
+}
+
 module.exports = {
   isFn: isFn,
   isString: isString,
@@ -179,5 +219,8 @@ module.exports = {
   bool: bool,
   has: has,
   isArray: isArray,
-  lowerCase: lowerCase
+  lowerCase: lowerCase,
+  empty: empty,
+  emptyString: emptyString,
+  unempty: unempty
 }

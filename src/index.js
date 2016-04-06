@@ -87,46 +87,6 @@ function raises (fn, errorValidator) {
 }
 
 /**
-  Returns true if given value is ''
-  @method emptyString
-*/
-function emptyString (a) {
-  return a === ''
-}
-
-/**
-  Returns true if given value is [], {} or ''
-  @method empty
-*/
-function empty (a) {
-  var hasLength = typeof a === 'string' ||
-  Array.isArray(a)
-  if (hasLength) {
-    return !a.length
-  }
-  if (a instanceof Object) {
-    return !Object.keys(a).length
-  }
-  return false
-}
-
-/**
-  Returns true if given value has .length and it is not zero, or has properties
-  @method unempty
-*/
-function unempty (a) {
-  var hasLength = typeof a === 'string' ||
-  Array.isArray(a)
-  if (hasLength) {
-    return a.length
-  }
-  if (a instanceof Object) {
-    return Object.keys(a).length
-  }
-  return true
-}
-
-/**
   Returns true if 0 <= value <= 1
   @method unit
 */
@@ -339,10 +299,10 @@ var predicates = {
   all: all,
   schema: curry2(schema),
   raises: raises,
-  empty: empty,
+  empty: low.empty,
   found: mid.found,
-  emptyString: emptyString,
-  unempty: unempty,
+  emptyString: low.emptyString,
+  unempty: low.unempty,
   unit: unit,
   hexRgb: hexRgb,
   sameLength: mid.sameLength,
