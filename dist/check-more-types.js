@@ -119,159 +119,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 	/**
-	  Checks if argument is defined or not
-
-	  This method now is part of the check-types.js
-	  @method defined
-	*/
-	function defined (value) {
-	  return typeof value !== 'undefined'
-	}
-
-	/**
-	  Checks if argument is a valid Date instance
-
-	  @method validDate
-	*/
-	function validDate (value) {
-	  return check.date(value) &&
-	  check.number(Number(value))
-	}
-
-	/**
-	  Checks if it is exact semver
-
-	  @method semver
-	*/
-	function semver (s) {
-	  return low.unemptyString(s) &&
-	  /^\d+\.\d+\.\d+$/.test(s)
-	}
-
-	/**
-	  Returns true if the argument is primitive JavaScript type
-
-	  @method primitive
-	*/
-	function primitive (value) {
-	  var type = typeof value
-	  return type === 'number' ||
-	  type === 'boolean' ||
-	  type === 'string' ||
-	  type === 'symbol'
-	}
-
-	/**
-	  Returns true if the value is a number 0
-
-	  @method zero
-	*/
-	function zero (x) {
-	  return typeof x === 'number' && x === 0
-	}
-
-	/**
-	  same as ===
-
-	  @method same
-	*/
-	function same (a, b) {
-	  return a === b
-	}
-
-	/**
-	  Returns true if the index is valid for give string / array
-
-	  @method index
-	*/
-	function index (list, k) {
-	  return defined(list) &&
-	  has(list, 'length') &&
-	  k >= 0 &&
-	  k < list.length
-	}
-
-	/**
-	  Returns true if both objects are the same type and have same length property
-
-	  @method sameLength
-	*/
-	function sameLength (a, b) {
-	  return typeof a === typeof b &&
-	  a && b &&
-	  a.length === b.length
-	}
-
-	/**
-	  Returns true if all items in an array are the same reference
-
-	  @method allSame
-	*/
-	function allSame (arr) {
-	  if (!check.array(arr)) {
-	    return false
-	  }
-	  if (!arr.length) {
-	    return true
-	  }
-	  var first = arr[0]
-	  return arr.every(function (item) {
-	    return item === first
-	  })
-	}
-
-	/**
-	  Returns true if given item is in the array
-
-	  @method oneOf
-	*/
-	function oneOf (arr, x) {
-	  check.verify.array(arr, 'expected an array')
-	  return arr.indexOf(x) !== -1
-	}
-
-	/**
-	  Returns true for urls of the format `git@....git`
-
-	  @method git
-	*/
-	function git (url) {
-	  return low.unemptyString(url) &&
-	  /^git@/.test(url)
-	}
-
-	/**
-	  Checks if given value is 0 or 1
-
-	  @method bit
-	*/
-	function bit (value) {
-	  return value === 0 || value === 1
-	}
-
-	/**
-	  Checks if given value is true of false
-
-	  @method bool
-	*/
-	function bool (value) {
-	  return typeof value === 'boolean'
-	}
-
-	/**
-	  Checks if given object has a property
-	  @method has
-	*/
-	function has (o, property) {
-	  if (arguments.length !== 2) {
-	    throw new Error('Expected two arguments to check.has, got only ' + arguments.length)
-	  }
-	  return Boolean(o && property &&
-	    typeof property === 'string' &&
-	    typeof o[property] !== 'undefined')
-	}
-
-	/**
 	Checks if given string is already in lower case
 	@method lowerCase
 	*/
@@ -708,6 +555,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  /^.+@.+\..+$/.test(s)
 	}
 
+	// TODO just mix in all low and mid level predicates
 	// new predicates to be added to check object. Use object to preserve names
 	var predicates = {
 	  email: email,
@@ -723,12 +571,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	  // a couple of aliases
 	  positive: low.positiveNumber,
 	  negative: low.negativeNumber,
-	  defined: defined,
-	  same: same,
-	  allSame: allSame,
-	  bit: bit,
-	  bool: bool,
-	  has: has,
+	  defined: low.defined,
+	  same: low.same,
+	  allSame: mid.allSame,
+	  bit: low.bit,
+	  bool: low.bool,
+	  has: low.has,
 	  lowerCase: lowerCase,
 	  unemptyArray: unemptyArray,
 	  arrayOfStrings: arrayOfStrings,
@@ -742,21 +590,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	  unempty: unempty,
 	  unit: unit,
 	  hexRgb: hexRgb,
-	  sameLength: sameLength,
+	  sameLength: low.sameLength,
 	  commitId: commitId,
 	  shortCommitId: shortCommitId,
-	  index: index,
-	  git: git,
+	  index: mid.index,
+	  git: mid.git,
 	  arrayOf: arrayOf,
 	  badItems: badItems,
-	  oneOf: curry2(oneOf, true),
+	  oneOf: curry2(mid.oneOf, true),
 	  promise: isPromise,
-	  validDate: validDate,
+	  validDate: low.validDate,
 	  equal: curry2(equal),
 	  or: or,
 	  and: and,
-	  primitive: primitive,
-	  zero: zero,
+	  primitive: low.primitive,
+	  zero: low.zero,
 	  date: low.isDate,
 	  regexp: low.isRegExp,
 	  instance: low.instance,
@@ -767,7 +615,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  startsWith: mid.startsWith,
 	  webUrl: mid.webUrl,
 	  url: mid.webUrl,
-	  semver: semver,
+	  semver: mid.semver,
 	  type: curry2(mid.type),
 	  http: mid.http,
 	  https: mid.https,
@@ -823,7 +671,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	// low level predicates
 
-	// most of the old methods from check-types.js
+	// most of the old methods same as check-types.js
 	function isFn (x) { return typeof x === 'function' }
 	function isString (x) { return typeof x === 'string' }
 	function unemptyString (x) {
@@ -878,6 +726,88 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return (Array.isArray(x) || isString(x)) && x.length === k
 	}
 
+	/**
+	  Checks if argument is defined or not
+
+	  This method now is part of the check-types.js
+	  @method defined
+	*/
+	function defined (value) {
+	  return typeof value !== 'undefined'
+	}
+
+	/**
+	  Checks if argument is a valid Date instance
+
+	  @method validDate
+	*/
+	function validDate (value) {
+	  return isDate(value) &&
+	  isNumber(Number(value))
+	}
+
+	/**
+	  Returns true if the argument is primitive JavaScript type
+
+	  @method primitive
+	*/
+	function primitive (value) {
+	  var type = typeof value
+	  return type === 'number' ||
+	  type === 'boolean' ||
+	  type === 'string' ||
+	  type === 'symbol'
+	}
+
+	/**
+	  Returns true if the value is a number 0
+
+	  @method zero
+	*/
+	function zero (x) {
+	  return typeof x === 'number' && x === 0
+	}
+
+	/**
+	  same as ===
+
+	  @method same
+	*/
+	function same (a, b) {
+	  return a === b
+	}
+
+	/**
+	  Checks if given value is 0 or 1
+
+	  @method bit
+	*/
+	function bit (value) {
+	  return value === 0 || value === 1
+	}
+
+	/**
+	  Checks if given value is true of false
+
+	  @method bool
+	*/
+	function bool (value) {
+	  return typeof value === 'boolean'
+	}
+
+	/**
+	  Checks if given object has a property
+	  @method has
+	*/
+	function has (o, property) {
+	  if (arguments.length !== 2) {
+	    throw new Error('Expected two arguments to check.has, got only ' + arguments.length)
+	  }
+	  return Boolean(o && property &&
+	    typeof property === 'string' &&
+	    typeof o[property] !== 'undefined')
+	}
+
 	module.exports = {
 	  isFn: isFn,
 	  isString: isString,
@@ -894,7 +824,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	  instance: instance,
 	  hasLength: hasLength,
 	  isNumber: isNumber,
-	  isDate: isDate
+	  isDate: isDate,
+	  defined: defined,
+	  validDate: validDate,
+	  primitive: primitive,
+	  zero: zero,
+	  same: same,
+	  bit: bit,
+	  bool: bool,
+	  has: has
 	}
 
 
@@ -904,7 +842,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict'
 
-	const low = __webpack_require__(2)
+	var low = __webpack_require__(2)
 
 	/**
 	  Checks if the given index is valid in an array or string or -1
@@ -964,6 +902,79 @@ return /******/ (function(modules) { // webpackBootstrap
 	  (startsWithHttp(x) || startsWithHttps(x))
 	}
 
+	/**
+	  Checks if it is exact semver
+
+	  @method semver
+	*/
+	function semver (s) {
+	  return low.unemptyString(s) &&
+	  /^\d+\.\d+\.\d+$/.test(s)
+	}
+
+	/**
+	  Returns true if the index is valid for give string / array
+
+	  @method index
+	*/
+	function index (list, k) {
+	  return low.defined(list) &&
+	  low.has(list, 'length') &&
+	  k >= 0 &&
+	  k < list.length
+	}
+
+	/**
+	  Returns true if both objects are the same type and have same length property
+
+	  @method sameLength
+	*/
+	function sameLength (a, b) {
+	  return typeof a === typeof b &&
+	  a && b &&
+	  a.length === b.length
+	}
+
+	/**
+	  Returns true if all items in an array are the same reference
+
+	  @method allSame
+	*/
+	function allSame (arr) {
+	  if (!Array.isArray(arr)) {
+	    return false
+	  }
+	  if (!arr.length) {
+	    return true
+	  }
+	  var first = arr[0]
+	  return arr.every(function (item) {
+	    return item === first
+	  })
+	}
+
+	/**
+	  Returns true if given item is in the array
+
+	  @method oneOf
+	*/
+	function oneOf (arr, x) {
+	  if (!Array.isArray(arr)) {
+	    throw new Error('expected an array')
+	  }
+	  return arr.indexOf(x) !== -1
+	}
+
+	/**
+	  Returns true for urls of the format `git@....git`
+
+	  @method git
+	*/
+	function git (url) {
+	  return low.unemptyString(url) &&
+	  /^git@/.test(url)
+	}
+
 	module.exports = {
 	  found: found,
 	  startsWith: startsWith,
@@ -971,7 +982,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	  type: type,
 	  http: http,
 	  https: https,
-	  webUrl: webUrl
+	  webUrl: webUrl,
+	  index: index,
+	  semver: semver,
+	  oneOf: oneOf,
+	  sameLength: sameLength,
+	  allSame: allSame,
+	  git: git
 	}
 
 

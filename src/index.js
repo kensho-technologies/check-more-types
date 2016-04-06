@@ -63,159 +63,6 @@ var check = {
 }
 
 /**
-  Checks if argument is defined or not
-
-  This method now is part of the check-types.js
-  @method defined
-*/
-function defined (value) {
-  return typeof value !== 'undefined'
-}
-
-/**
-  Checks if argument is a valid Date instance
-
-  @method validDate
-*/
-function validDate (value) {
-  return check.date(value) &&
-  check.number(Number(value))
-}
-
-/**
-  Checks if it is exact semver
-
-  @method semver
-*/
-function semver (s) {
-  return low.unemptyString(s) &&
-  /^\d+\.\d+\.\d+$/.test(s)
-}
-
-/**
-  Returns true if the argument is primitive JavaScript type
-
-  @method primitive
-*/
-function primitive (value) {
-  var type = typeof value
-  return type === 'number' ||
-  type === 'boolean' ||
-  type === 'string' ||
-  type === 'symbol'
-}
-
-/**
-  Returns true if the value is a number 0
-
-  @method zero
-*/
-function zero (x) {
-  return typeof x === 'number' && x === 0
-}
-
-/**
-  same as ===
-
-  @method same
-*/
-function same (a, b) {
-  return a === b
-}
-
-/**
-  Returns true if the index is valid for give string / array
-
-  @method index
-*/
-function index (list, k) {
-  return defined(list) &&
-  has(list, 'length') &&
-  k >= 0 &&
-  k < list.length
-}
-
-/**
-  Returns true if both objects are the same type and have same length property
-
-  @method sameLength
-*/
-function sameLength (a, b) {
-  return typeof a === typeof b &&
-  a && b &&
-  a.length === b.length
-}
-
-/**
-  Returns true if all items in an array are the same reference
-
-  @method allSame
-*/
-function allSame (arr) {
-  if (!check.array(arr)) {
-    return false
-  }
-  if (!arr.length) {
-    return true
-  }
-  var first = arr[0]
-  return arr.every(function (item) {
-    return item === first
-  })
-}
-
-/**
-  Returns true if given item is in the array
-
-  @method oneOf
-*/
-function oneOf (arr, x) {
-  check.verify.array(arr, 'expected an array')
-  return arr.indexOf(x) !== -1
-}
-
-/**
-  Returns true for urls of the format `git@....git`
-
-  @method git
-*/
-function git (url) {
-  return low.unemptyString(url) &&
-  /^git@/.test(url)
-}
-
-/**
-  Checks if given value is 0 or 1
-
-  @method bit
-*/
-function bit (value) {
-  return value === 0 || value === 1
-}
-
-/**
-  Checks if given value is true of false
-
-  @method bool
-*/
-function bool (value) {
-  return typeof value === 'boolean'
-}
-
-/**
-  Checks if given object has a property
-  @method has
-*/
-function has (o, property) {
-  if (arguments.length !== 2) {
-    throw new Error('Expected two arguments to check.has, got only ' + arguments.length)
-  }
-  return Boolean(o && property &&
-    typeof property === 'string' &&
-    typeof o[property] !== 'undefined')
-}
-
-/**
 Checks if given string is already in lower case
 @method lowerCase
 */
@@ -652,6 +499,7 @@ function email (s) {
   /^.+@.+\..+$/.test(s)
 }
 
+// TODO just mix in all low and mid level predicates
 // new predicates to be added to check object. Use object to preserve names
 var predicates = {
   email: email,
@@ -667,12 +515,12 @@ var predicates = {
   // a couple of aliases
   positive: low.positiveNumber,
   negative: low.negativeNumber,
-  defined: defined,
-  same: same,
-  allSame: allSame,
-  bit: bit,
-  bool: bool,
-  has: has,
+  defined: low.defined,
+  same: low.same,
+  allSame: mid.allSame,
+  bit: low.bit,
+  bool: low.bool,
+  has: low.has,
   lowerCase: lowerCase,
   unemptyArray: unemptyArray,
   arrayOfStrings: arrayOfStrings,
@@ -686,21 +534,21 @@ var predicates = {
   unempty: unempty,
   unit: unit,
   hexRgb: hexRgb,
-  sameLength: sameLength,
+  sameLength: mid.sameLength,
   commitId: commitId,
   shortCommitId: shortCommitId,
-  index: index,
-  git: git,
+  index: mid.index,
+  git: mid.git,
   arrayOf: arrayOf,
   badItems: badItems,
-  oneOf: curry2(oneOf, true),
+  oneOf: curry2(mid.oneOf, true),
   promise: isPromise,
-  validDate: validDate,
+  validDate: low.validDate,
   equal: curry2(equal),
   or: or,
   and: and,
-  primitive: primitive,
-  zero: zero,
+  primitive: low.primitive,
+  zero: low.zero,
   date: low.isDate,
   regexp: low.isRegExp,
   instance: low.instance,
@@ -711,7 +559,7 @@ var predicates = {
   startsWith: mid.startsWith,
   webUrl: mid.webUrl,
   url: mid.webUrl,
-  semver: semver,
+  semver: mid.semver,
   type: curry2(mid.type),
   http: mid.http,
   https: mid.https,
