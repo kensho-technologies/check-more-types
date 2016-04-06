@@ -1,6 +1,6 @@
 'use strict'
 
-const low = require('./low-level')
+var low = require('./low-level')
 
 /**
   Combines multiple predicate functions to produce new OR predicate
