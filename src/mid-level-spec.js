@@ -10,6 +10,42 @@ describe('check-more-types mid-level predicates', function () {
     la(check.object(mid))
   })
 
+  describe('check/extension', function () {
+    it('is a function', function () {
+      la(check.fn(check.extension), 'has extension method')
+    })
+
+    it('has an alias', function () {
+      la(check.extension === check.ext, 'has ext alias')
+    })
+
+    it('returns filename extension', function () {
+      ['foo.txt', 'foo.bar.txt', 'foo/bar/baz.txt'].forEach(function (name) {
+        la(check.extension('txt', name), 'not txt extension', name)
+      })
+    })
+
+    it('is curried', function () {
+      var isJs = check.extension('js')
+      la(check.fn(isJs), 'returns new function')
+      la(isJs('script.js'))
+      la(!isJs('script.txt'))
+    })
+
+    it('is case sensitive', function () {
+      var isJson = check.extension('json')
+      la(isJson('filename.json'))
+      la(!isJson('filename.json.JSON'))
+    })
+
+    it('has a few shortcuts for convenience', function () {
+      la(check.isJson('filename.json'))
+      la(check.isJs('foo/bar/baz.js'))
+      la(check.isJpeg('foo/bar/baz-nice.jpg'))
+      la(check.isJpg === check.isJpeg)
+    })
+  })
+
   it('check/even', function () {
     la(mid.even(2), '2 is even')
     la(mid.even(4), '4 is even')

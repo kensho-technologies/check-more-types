@@ -18,6 +18,23 @@ check.email('me@foo.bar') // true
 check.email('me.foo.bar') // false
 ```
 
+### check.extension (alias `check.ext`)
+
+Confirms that given file name has expected extension
+
+```js
+check.extension('txt', 'foo/bar.txt') // true
+```
+
+It is curried, so you can create convenient methods
+
+```js
+const isJs = check.extension('js')
+isJs('script.js') // true
+```
+
+There are a couple of convenient shortcuts, like `check.isJs`, `check.isJson`, `check.isJpg`
+
 ### check.odd and check.even
 
 Check if a number odd or even
@@ -395,15 +412,15 @@ check.badItems(check.unemptyString, ['foo', '', 'bar']); // ['']
 ### check.schema
 
     var obj = {
-      foo: 'foo',
-      bar: 'bar',
-      baz: 'baz'
+    foo: 'foo',
+    bar: 'bar',
+    baz: 'baz'
     }
     var schema = {
-      foo: check.unemptyString,
-      bar: function(value) {
-        return value === 'bar'
-      }
+    foo: check.unemptyString,
+    bar: function(value) {
+    return value === 'bar'
+    }
     }
     check.schema(schema, obj); // true
     check.schema(schema, {}); // false
@@ -422,17 +439,17 @@ hasName({ name: 'joe' }); // true
 ### check.schema bind
 
     var personSchema = {
-      name: check.unemptyString,
-      age: check.positiveNumber
+    name: check.unemptyString,
+    age: check.positiveNumber
     }
     var isValidPerson = check.schema.bind(null, personSchema)
     var h1 = {
-      name: 'joe',
-      age: 10
+    name: 'joe',
+    age: 10
     }
     var h2 = {
-      name: 'ann'
-        // missing age property
+    name: 'ann'
+    // missing age property
     }
     isValidPerson(h1); // true
     isValidPerson(h2); // false
@@ -464,15 +481,15 @@ another check
 ### schema composition
 
     var teamSchema = {
-      manager: isValidPerson,
-      members: check.unemptyArray
+    manager: isValidPerson,
+    members: check.unemptyArray
     }
     var team = {
-      manager: {
-        name: 'jim',
-        age: 20
-      },
-      members: ['joe', 'ann']
+    manager: {
+    name: 'jim',
+    age: 20
+    },
+    members: ['joe', 'ann']
     }
     check.schema(teamSchema, team); // true
 

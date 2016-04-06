@@ -157,13 +157,35 @@ function raises (fn, errorValidator) {
   return false
 }
 
+/**
+  Confirms that filename has expected extension
+
+  @method extension
+*/
+function extension (expectedExtension, filename) {
+  verify(low.unemptyString(expectedExtension), 'missing expected extension', expectedExtension)
+  verify(low.unemptyString(filename), 'missing filename', filename)
+  return filename.endsWith('.' + expectedExtension)
+}
+
+var extensionCurried = curry2(extension)
+var isJpg = extensionCurried('jpg')
+
 module.exports = {
   allSame: allSame,
   contains: contains,
   even: even,
+  ext: extensionCurried,
+  extension: extensionCurried,
   found: found,
   hexRgb: hexRgb,
   index: index,
+  // a couple of shortcuts
+  isCss: extensionCurried('css'),
+  isJpg: isJpg,
+  isJpeg: isJpg,
+  isJs: extensionCurried('js'),
+  isJson: extensionCurried('json'),
   odd: odd,
   oneOf: curry2(oneOf, true),
   raises: raises,
