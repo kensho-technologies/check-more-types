@@ -31,11 +31,21 @@ function isUserPortNumber (x) {
   return isPortNumber(x) && x > 1024
 }
 
+/**
+  Really simple email sanity check
+  @method email
+*/
+function email (s) {
+  return low.isString(s) &&
+  /^.+@.+\..+$/.test(s)
+}
+
 module.exports = {
   http: http,
   https: https,
   webUrl: webUrl,
   isPortNumber: isPortNumber,
   isSystemPortNumber: isSystemPortNumber,
-  isUserPortNumber: isUserPortNumber
+  isUserPortNumber: isUserPortNumber,
+  email: email
 }

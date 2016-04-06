@@ -193,6 +193,14 @@ function unempty (a) {
   return true
 }
 
+/**
+  Shallow strict comparison
+  @method equal
+*/
+function equal (a, b) {
+  return a === b
+}
+
 module.exports = {
   isFn: isFn,
   isString: isString,
@@ -222,5 +230,6 @@ module.exports = {
   lowerCase: lowerCase,
   empty: empty,
   emptyString: emptyString,
-  unempty: unempty
+  unempty: unempty,
+  equal: equal
 }

@@ -1,6 +1,7 @@
 'use strict'
 
 var low = require('./low-level')
+var verify = require('./verify')
 
 /**
   Checks if the given index is valid in an array or string or -1
@@ -97,6 +98,46 @@ function oneOf (arr, x) {
   return arr.indexOf(x) !== -1
 }
 
+/**
+  Returns true if 0 <= value <= 1
+  @method unit
+*/
+function unit (value) {
+  return low.isNumber(value) &&
+  value >= 0.0 && value <= 1.0
+}
+
+var rgb = /^#(?:[0-9a-fA-F]{3}){1,2}$/
+/**
+  Returns true if value is hex RGB between '#000000' and '#FFFFFF'
+  @method hexRgb
+*/
+function hexRgb (value) {
+  return low.isString(value) &&
+  rgb.test(value)
+}
+
+/** Checks if given function raises an error
+
+  @method raises
+*/
+function raises (fn, errorValidator) {
+  verify(low.isFn(fn), 'expected function that raises')
+  try {
+    fn()
+  } catch (err) {
+    if (typeof errorValidator === 'undefined') {
+      return true
+    }
+    if (typeof errorValidator === 'function') {
+      return errorValidator(err)
+    }
+    return false
+  }
+  // error has not been raised
+  return false
+}
+
 module.exports = {
   found: found,
   startsWith: startsWith,
@@ -105,5 +146,8 @@ module.exports = {
   index: index,
   oneOf: oneOf,
   sameLength: sameLength,
-  allSame: allSame
+  allSame: allSame,
+  unit: unit,
+  hexRgb: hexRgb,
+  raises: raises
 }

@@ -20,6 +20,7 @@ var arrays = require('./arrays')
 var logic = require('./logic')
 var git = require('./git')
 var internet = require('./internet')
+var schema = require('./schema')
 
 var check = {
   maybe: {},
@@ -27,82 +28,6 @@ var check = {
   not: {},
   every: logic.every,
   map: logic.map
-}
-
-/**
-  Checks if object passes all rules in predicates.
-
-  check.all({ foo: 'foo' }, { foo: check.string }, 'wrong object')
-
-  This is a composition of check.every(check.map ...) calls
-  https://github.com/philbooth/check-types.js#batch-operations
-
-  @method all
-  @param {object} object object to check
-  @param {object} predicates rules to check. Usually one per property.
-  @public
-  @returns true or false
-*/
-function all (obj, predicates) {
-  check.verify.fn(check.every, 'missing check.every method')
-  check.verify.fn(check.map, 'missing check.map method')
-
-  check.verify.object(obj, 'missing object to check')
-  check.verify.object(predicates, 'missing predicates object')
-  Object.keys(predicates).forEach(function (property) {
-    if (!check.fn(predicates[property])) {
-      throw new Error('not a predicate function for ' + property + ' but ' + predicates[property])
-    }
-  })
-  return check.every(check.map(obj, predicates))
-}
-
-/**
-  Checks given object against predicates object
-  @method schema
-*/
-function schema (predicates, obj) {
-  return all(obj, predicates)
-}
-
-/** Checks if given function raises an error
-
-  @method raises
-*/
-function raises (fn, errorValidator) {
-  check.verify.fn(fn, 'expected function that raises')
-  try {
-    fn()
-  } catch (err) {
-    if (typeof errorValidator === 'undefined') {
-      return true
-    }
-    if (typeof errorValidator === 'function') {
-      return errorValidator(err)
-    }
-    return false
-  }
-  // error has not been raised
-  return false
-}
-
-/**
-  Returns true if 0 <= value <= 1
-  @method unit
-*/
-function unit (value) {
-  return check.number(value) &&
-  value >= 0.0 && value <= 1.0
-}
-
-var rgb = /^#(?:[0-9a-fA-F]{3}){1,2}$/
-/**
-  Returns true if value is hex RGB between '#000000' and '#FFFFFF'
-  @method hexRgb
-*/
-function hexRgb (value) {
-  return check.string(value) &&
-  rgb.test(value)
 }
 
 //
@@ -198,21 +123,7 @@ if (!check.mixin) {
       }
     }
 
-    /**
-     * Public modifier `verify`.
-     *
-     * Throws if `predicate` returns `false`.
-     * copied from check-types.js
-     */
-    function verifyModifier (predicate, defaultMessage) {
-      return function () {
-        var message
-        if (predicate.apply(null, arguments) === false) {
-          message = arguments[arguments.length - 1]
-          throw new Error(low.unemptyString(message) ? message : defaultMessage)
-        }
-      }
-    }
+    var verifyModifier = require('./verify')
 
     registerPredicate(check, name, fn)
     registerPredicate(check.maybe, name, maybeModifier(fn))
@@ -243,7 +154,7 @@ var promiseSchema = {
 // work around reserved keywords checks
 promiseSchema['catch'] = low.isFn
 
-var hasPromiseApi = schema.bind(null, promiseSchema)
+var hasPromiseApi = schema.schema.bind(null, promiseSchema)
 
 /**
   Returns true if argument implements promise api (.then, .catch, .finally)
@@ -253,27 +164,10 @@ function isPromise (p) {
   return check.object(p) && hasPromiseApi(p)
 }
 
-/**
-  Shallow strict comparison
-  @method equal
-*/
-function equal (a, b) {
-  return a === b
-}
-
-/**
-  Really simple email sanity check
-  @method email
-*/
-function email (s) {
-  return low.isString(s) &&
-  /^.+@.+\..+$/.test(s)
-}
-
 // TODO just mix in all low and mid level predicates
 // new predicates to be added to check object. Use object to preserve names
 var predicates = {
-  email: email,
+  email: internet.email,
   nulled: low.isNull,
   fn: low.isFn,
   string: low.isString,
@@ -296,15 +190,15 @@ var predicates = {
   unemptyArray: arrays.unemptyArray,
   arrayOfStrings: arrays.arrayOfStrings,
   arrayOfArraysOfStrings: arrays.arrayOfArraysOfStrings,
-  all: all,
-  schema: curry2(schema),
-  raises: raises,
+  all: schema.all,
+  schema: curry2(schema.schema),
+  raises: mid.raises,
   empty: low.empty,
   found: mid.found,
   emptyString: low.emptyString,
   unempty: low.unempty,
-  unit: unit,
-  hexRgb: hexRgb,
+  unit: mid.unit,
+  hexRgb: mid.hexRgb,
   sameLength: mid.sameLength,
   commitId: git.commitId,
   shortCommitId: git.shortCommitId,
@@ -315,7 +209,7 @@ var predicates = {
   oneOf: curry2(mid.oneOf, true),
   promise: isPromise,
   validDate: low.validDate,
-  equal: curry2(equal),
+  equal: curry2(low.equal),
   or: logic.or,
   and: logic.and,
   primitive: low.primitive,

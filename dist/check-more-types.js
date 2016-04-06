@@ -72,10 +72,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	var curry2 = __webpack_require__(1).curry2
 	var low = __webpack_require__(2)
 	var mid = __webpack_require__(3)
-	var arrays = __webpack_require__(4)
-	var logic = __webpack_require__(5)
-	var git = __webpack_require__(6)
-	var internet = __webpack_require__(7)
+	var arrays = __webpack_require__(5)
+	var logic = __webpack_require__(6)
+	var git = __webpack_require__(7)
+	var internet = __webpack_require__(8)
+	var schema = __webpack_require__(9)
 
 	var check = {
 	  maybe: {},
@@ -83,82 +84,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	  not: {},
 	  every: logic.every,
 	  map: logic.map
-	}
-
-	/**
-	  Checks if object passes all rules in predicates.
-
-	  check.all({ foo: 'foo' }, { foo: check.string }, 'wrong object')
-
-	  This is a composition of check.every(check.map ...) calls
-	  https://github.com/philbooth/check-types.js#batch-operations
-
-	  @method all
-	  @param {object} object object to check
-	  @param {object} predicates rules to check. Usually one per property.
-	  @public
-	  @returns true or false
-	*/
-	function all (obj, predicates) {
-	  check.verify.fn(check.every, 'missing check.every method')
-	  check.verify.fn(check.map, 'missing check.map method')
-
-	  check.verify.object(obj, 'missing object to check')
-	  check.verify.object(predicates, 'missing predicates object')
-	  Object.keys(predicates).forEach(function (property) {
-	    if (!check.fn(predicates[property])) {
-	      throw new Error('not a predicate function for ' + property + ' but ' + predicates[property])
-	    }
-	  })
-	  return check.every(check.map(obj, predicates))
-	}
-
-	/**
-	  Checks given object against predicates object
-	  @method schema
-	*/
-	function schema (predicates, obj) {
-	  return all(obj, predicates)
-	}
-
-	/** Checks if given function raises an error
-
-	  @method raises
-	*/
-	function raises (fn, errorValidator) {
-	  check.verify.fn(fn, 'expected function that raises')
-	  try {
-	    fn()
-	  } catch (err) {
-	    if (typeof errorValidator === 'undefined') {
-	      return true
-	    }
-	    if (typeof errorValidator === 'function') {
-	      return errorValidator(err)
-	    }
-	    return false
-	  }
-	  // error has not been raised
-	  return false
-	}
-
-	/**
-	  Returns true if 0 <= value <= 1
-	  @method unit
-	*/
-	function unit (value) {
-	  return check.number(value) &&
-	  value >= 0.0 && value <= 1.0
-	}
-
-	var rgb = /^#(?:[0-9a-fA-F]{3}){1,2}$/
-	/**
-	  Returns true if value is hex RGB between '#000000' and '#FFFFFF'
-	  @method hexRgb
-	*/
-	function hexRgb (value) {
-	  return check.string(value) &&
-	  rgb.test(value)
 	}
 
 	//
@@ -254,21 +179,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 	    }
 
-	    /**
-	     * Public modifier `verify`.
-	     *
-	     * Throws if `predicate` returns `false`.
-	     * copied from check-types.js
-	     */
-	    function verifyModifier (predicate, defaultMessage) {
-	      return function () {
-	        var message
-	        if (predicate.apply(null, arguments) === false) {
-	          message = arguments[arguments.length - 1]
-	          throw new Error(low.unemptyString(message) ? message : defaultMessage)
-	        }
-	      }
-	    }
+	    var verifyModifier = __webpack_require__(4)
 
 	    registerPredicate(check, name, fn)
 	    registerPredicate(check.maybe, name, maybeModifier(fn))
@@ -309,27 +220,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return check.object(p) && hasPromiseApi(p)
 	}
 
-	/**
-	  Shallow strict comparison
-	  @method equal
-	*/
-	function equal (a, b) {
-	  return a === b
-	}
-
-	/**
-	  Really simple email sanity check
-	  @method email
-	*/
-	function email (s) {
-	  return low.isString(s) &&
-	  /^.+@.+\..+$/.test(s)
-	}
-
 	// TODO just mix in all low and mid level predicates
 	// new predicates to be added to check object. Use object to preserve names
 	var predicates = {
-	  email: email,
+	  email: internet.email,
 	  nulled: low.isNull,
 	  fn: low.isFn,
 	  string: low.isString,
@@ -352,15 +246,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	  unemptyArray: arrays.unemptyArray,
 	  arrayOfStrings: arrays.arrayOfStrings,
 	  arrayOfArraysOfStrings: arrays.arrayOfArraysOfStrings,
-	  all: all,
-	  schema: curry2(schema),
-	  raises: raises,
+	  all: schema.all,
+	  schema: curry2(schema.schema),
+	  raises: mid.raises,
 	  empty: low.empty,
 	  found: mid.found,
 	  emptyString: low.emptyString,
 	  unempty: low.unempty,
-	  unit: unit,
-	  hexRgb: hexRgb,
+	  unit: mid.unit,
+	  hexRgb: mid.hexRgb,
 	  sameLength: mid.sameLength,
 	  commitId: git.commitId,
 	  shortCommitId: git.shortCommitId,
@@ -371,7 +265,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  oneOf: curry2(mid.oneOf, true),
 	  promise: isPromise,
 	  validDate: low.validDate,
-	  equal: curry2(equal),
+	  equal: curry2(low.equal),
 	  or: logic.or,
 	  and: logic.and,
 	  primitive: low.primitive,
@@ -633,6 +527,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return true
 	}
 
+	/**
+	  Shallow strict comparison
+	  @method equal
+	*/
+	function equal (a, b) {
+	  return a === b
+	}
+
 	module.exports = {
 	  isFn: isFn,
 	  isString: isString,
@@ -662,7 +564,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  lowerCase: lowerCase,
 	  empty: empty,
 	  emptyString: emptyString,
-	  unempty: unempty
+	  unempty: unempty,
+	  equal: equal
 	}
 
 
@@ -673,6 +576,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	'use strict'
 
 	var low = __webpack_require__(2)
+	var verify = __webpack_require__(4)
 
 	/**
 	  Checks if the given index is valid in an array or string or -1
@@ -769,6 +673,46 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return arr.indexOf(x) !== -1
 	}
 
+	/**
+	  Returns true if 0 <= value <= 1
+	  @method unit
+	*/
+	function unit (value) {
+	  return low.isNumber(value) &&
+	  value >= 0.0 && value <= 1.0
+	}
+
+	var rgb = /^#(?:[0-9a-fA-F]{3}){1,2}$/
+	/**
+	  Returns true if value is hex RGB between '#000000' and '#FFFFFF'
+	  @method hexRgb
+	*/
+	function hexRgb (value) {
+	  return low.isString(value) &&
+	  rgb.test(value)
+	}
+
+	/** Checks if given function raises an error
+
+	  @method raises
+	*/
+	function raises (fn, errorValidator) {
+	  verify(low.isFn(fn), 'expected function that raises')
+	  try {
+	    fn()
+	  } catch (err) {
+	    if (typeof errorValidator === 'undefined') {
+	      return true
+	    }
+	    if (typeof errorValidator === 'function') {
+	      return errorValidator(err)
+	    }
+	    return false
+	  }
+	  // error has not been raised
+	  return false
+	}
+
 	module.exports = {
 	  found: found,
 	  startsWith: startsWith,
@@ -777,7 +721,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  index: index,
 	  oneOf: oneOf,
 	  sameLength: sameLength,
-	  allSame: allSame
+	  allSame: allSame,
+	  unit: unit,
+	  hexRgb: hexRgb,
+	  raises: raises
 	}
 
 
@@ -788,7 +735,34 @@ return /******/ (function(modules) { // webpackBootstrap
 	'use strict'
 
 	var low = __webpack_require__(2)
-	var logic = __webpack_require__(5)
+
+	/**
+	 * Public modifier `verify`.
+	 *
+	 * Throws if `predicate` returns `false`.
+	 * copied from check-types.js
+	 */
+	function verify (predicate, defaultMessage) {
+	  return function () {
+	    var message
+	    if (predicate.apply(null, arguments) === false) {
+	      message = arguments[arguments.length - 1]
+	      throw new Error(low.unemptyString(message) ? message : defaultMessage)
+	    }
+	  }
+	}
+
+	module.exports = verify
+
+
+/***/ },
+/* 5 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict'
+
+	var low = __webpack_require__(2)
+	var logic = __webpack_require__(6)
 
 	/**
 	Returns true if the argument is an array with at least one value
@@ -857,7 +831,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 5 */
+/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict'
@@ -964,7 +938,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 6 */
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict'
@@ -1029,7 +1003,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 7 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict'
@@ -1065,13 +1039,77 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return isPortNumber(x) && x > 1024
 	}
 
+	/**
+	  Really simple email sanity check
+	  @method email
+	*/
+	function email (s) {
+	  return low.isString(s) &&
+	  /^.+@.+\..+$/.test(s)
+	}
+
 	module.exports = {
 	  http: http,
 	  https: https,
 	  webUrl: webUrl,
 	  isPortNumber: isPortNumber,
 	  isSystemPortNumber: isSystemPortNumber,
-	  isUserPortNumber: isUserPortNumber
+	  isUserPortNumber: isUserPortNumber,
+	  email: email
+	}
+
+
+/***/ },
+/* 9 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict'
+
+	var low = __webpack_require__(2)
+	var verify = __webpack_require__(4)
+	var every = __webpack_require__(6).every
+	var map = __webpack_require__(6).map
+
+	/**
+	  Checks if object passes all rules in predicates.
+
+	  check.all({ foo: 'foo' }, { foo: check.string }, 'wrong object')
+
+	  This is a composition of check.every(check.map ...) calls
+	  https://github.com/philbooth/check-types.js#batch-operations
+
+	  @method all
+	  @param {object} object object to check
+	  @param {object} predicates rules to check. Usually one per property.
+	  @public
+	  @returns true or false
+	*/
+	function all (obj, predicates) {
+	  // verify.fn(low.isFn(check.every, 'missing check.every method')
+	  // check.verify.fn(check.map, 'missing check.map method')
+
+	  verify(low.isObject(obj), 'missing object to check')
+	  verify(low.isObject(predicates), 'missing predicates object')
+
+	  Object.keys(predicates).forEach(function (property) {
+	    if (!low.isFn(predicates[property])) {
+	      throw new Error('not a predicate function for ' + property + ' but ' + predicates[property])
+	    }
+	  })
+	  return every(map(obj, predicates))
+	}
+
+	/**
+	  Checks given object against predicates object
+	  @method schema
+	*/
+	function schema (predicates, obj) {
+	  return all(obj, predicates)
+	}
+
+	module.exports = {
+	  all: all,
+	  schema: schema
 	}
 
 
