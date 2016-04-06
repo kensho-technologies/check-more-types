@@ -880,7 +880,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  isError: isError,
 	  instance: instance,
 	  hasLength: hasLength,
-	  isNumber: isNumber
+	  isNumber: isNumber,
+	  isDate: isDate
 	}
 
 
