@@ -296,7 +296,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  check.mixin(predicates[name], name)
 	})
 
-	check.VERSION = '0.0.0'
+	check.VERSION = '{{ packageVersion }}'
 
 	module.exports = check
 

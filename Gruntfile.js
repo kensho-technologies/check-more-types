@@ -127,5 +127,5 @@ module.exports = function(grunt) {
   grunt.registerTask('doc', ['xplain', 'toc', 'readme']);
   grunt.registerTask('version', ['string-replace']);
   grunt.registerTask('default',
-    ['nice-package', 'deps-ok', 'sync', 'string-replace', 'uglify', 'doc']);
+    ['nice-package', 'deps-ok', 'sync', 'uglify', 'doc']);
 };
