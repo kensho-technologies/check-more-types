@@ -481,18 +481,18 @@ another check
 ### check.raises(fn, validator)
 
     function foo() {
-      throw new Error('foo')
+    throw new Error('foo')
     }
 
     function bar() {}
 
     function isValidError(err) {
-      return err.message === 'foo'
+    return err.message === 'foo'
     }
 
     function isInvalid(err) {
-      check.instance(err, Error); // true
-      return false
+    check.instance(err, Error); // true
+    return false
     }
     check.raises(foo); // true
     check.raises(bar); // false

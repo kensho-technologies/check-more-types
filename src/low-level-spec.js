@@ -382,4 +382,56 @@ describe('check-more-types low-level predicates', function () {
       }))
     })
   })
+
+  describe('lowerCase', function () {
+    it('check.lowerCase', function () {
+      la(check.lowerCase('foo bar'))
+      la(check.lowerCase('*foo ^bar'))
+      la(!check.lowerCase('fooBar'))
+      // non-strings return false
+      la(!check.lowerCase(10))
+    })
+
+    /** @sample check/lowerCase */
+    it('checks lower case', function () {
+      la(check.lowerCase('foo bar'))
+      la(check.lowerCase('*foo ^bar'))
+      la(!check.lowerCase('fooBar'))
+    })
+
+    it('passes lower case with spaces', function () {
+      la(check.lowerCase('foo'))
+      la(check.lowerCase('foo bar'))
+      la(check.lowerCase('  foo bar  '))
+    })
+
+    it('handles special chars', function () {
+      la(check.lowerCase('^tea'))
+      la(check.lowerCase('$tea'))
+      la(check.lowerCase('s&p 500'))
+    })
+
+    it('rejects upper case', function () {
+      la(!check.lowerCase('Foo'))
+      la(!check.lowerCase('FOO '))
+      la(!check.lowerCase('FOO BAR'))
+      la(!check.lowerCase('foo bAr'))
+    })
+
+    it('returns true', function () {
+      la(check.fn(check.lowerCase), 'it is a function')
+      la(check.lowerCase('foo 2 []'))
+      la(check.lowerCase('-_foo_ and another bar'))
+    })
+
+    it('returns false', function () {
+      la(!check.lowerCase('FoO'))
+    })
+
+    it('returns false for non strings', function () {
+      la(!check.lowerCase([]))
+      la(!check.lowerCase(7))
+      la(!check.lowerCase({ foo: 'foo' }))
+    })
+  })
 })
