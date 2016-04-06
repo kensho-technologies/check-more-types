@@ -8,7 +8,7 @@ module.exports = function (config) {
       'unit-tests.js'
     ],
     port: 9876,
-    browsers: ['Chrome'],
+    browsers: ['PhantomJS'],
     singleRun: true
   })
 }
