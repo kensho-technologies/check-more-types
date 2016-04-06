@@ -41,11 +41,13 @@ function email (s) {
 }
 
 module.exports = {
+  email: email,
   http: http,
   https: https,
-  webUrl: webUrl,
-  isPortNumber: isPortNumber,
-  isSystemPortNumber: isSystemPortNumber,
-  isUserPortNumber: isUserPortNumber,
-  email: email
+  port: isPortNumber,
+  secure: https,
+  systemPort: isSystemPortNumber,
+  url: webUrl,
+  userPort: isUserPortNumber,
+  webUrl: webUrl
 }

@@ -167,7 +167,6 @@ function isPromise (p) {
 // TODO just mix in all low and mid level predicates
 // new predicates to be added to check object. Use object to preserve names
 var predicates = {
-  email: internet.email,
   nulled: low.isNull,
   fn: low.isFn,
   string: low.isString,
@@ -200,10 +199,7 @@ var predicates = {
   unit: mid.unit,
   hexRgb: mid.hexRgb,
   sameLength: mid.sameLength,
-  commitId: git.commitId,
-  shortCommitId: git.shortCommitId,
   index: mid.index,
-  git: git.git,
   arrayOf: arrays.arrayOf,
   badItems: arrays.badItems,
   oneOf: curry2(mid.oneOf, true),
@@ -222,22 +218,21 @@ var predicates = {
   floatNumber: low.isFloat,
   intNumber: low.isInteger,
   startsWith: mid.startsWith,
-  webUrl: internet.webUrl,
-  url: internet.webUrl,
-  semver: git.semver,
-  type: curry2(mid.type),
-  http: internet.http,
-  https: internet.https,
-  secure: internet.https,
+  contains: mid.contains,
   error: low.isError,
-  port: internet.isPortNumber,
-  systemPort: internet.isSystemPortNumber,
-  userPort: internet.isUserPortNumber,
-  contains: mid.contains
+  type: curry2(mid.type)
 }
 
 Object.keys(predicates).forEach(function (name) {
   check.mixin(predicates[name], name)
+})
+
+Object.keys(git).forEach(function (name) {
+  check.mixin(git[name], name)
+})
+
+Object.keys(internet).forEach(function (name) {
+  check.mixin(internet[name], name)
 })
 
 check.VERSION = '{{ packageVersion }}'
