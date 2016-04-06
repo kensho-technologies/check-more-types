@@ -165,7 +165,8 @@ function raises (fn, errorValidator) {
 function extension (expectedExtension, filename) {
   verify(low.unemptyString(expectedExtension), 'missing expected extension', expectedExtension)
   verify(low.unemptyString(filename), 'missing filename', filename)
-  return filename.endsWith('.' + expectedExtension)
+  var reg = new RegExp('.' + expectedExtension + '$')
+  return reg.test(filename)
 }
 
 var extensionCurried = curry2(extension)
