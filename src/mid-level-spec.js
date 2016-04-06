@@ -215,4 +215,51 @@ describe('check-more-types mid-level predicates', function () {
       la(!check.hexRgb('red'))
     })
   })
+
+  describe('check/contains', function () {
+    it('is a function', function () {
+      la(check.fn(check.contains))
+    })
+
+    /** @sample check/contains */
+    it('contains item in an array', function () {
+      var items = ['foo', 1, 'bar']
+      la(check.contains(items, 'foo'))
+      la(check.contains(items, 1))
+      la(check.contains(items, 'bar'))
+      la(check.not.contains(items, 42))
+    })
+
+    /** @sample check/contains */
+    it('contains substring', function () {
+      var str = 'foo bar baz'
+      la(check.contains(str, 'foo'))
+      la(check.contains(str, 'bar'))
+      la(check.contains(str, 'r ba'))
+      la(check.not.contains(str, 'foobar'))
+    })
+  })
+
+  describe('check.allSame', function () {
+    la(check.fn(check.allSame))
+
+    it('returns false for non arrays', function () {
+      la(!check.allSame('foo'))
+      la(!check.allSame())
+      la(check.allSame([]))
+    })
+
+    /** @sample check/allSame */
+    it('check.allSame', function () {
+      var foo = {}
+      var bar = {}
+      la(check.allSame([foo, foo, foo]))
+      la(!check.allSame([foo, foo, bar]))
+
+      // primitives are compared by value
+      la(check.allSame([0, 0]))
+      la(check.allSame(['foo', 'foo', 'foo']))
+      la(!check.allSame([false, 0]))
+    })
+  })
 })
