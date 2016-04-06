@@ -19,8 +19,23 @@ function webUrl (x) {
   (startsWithHttp(x) || startsWithHttps(x))
 }
 
+function isPortNumber (x) {
+  return low.positiveNumber(x) && x <= 65535
+}
+
+function isSystemPortNumber (x) {
+  return low.positiveNumber(x) && x <= 1024
+}
+
+function isUserPortNumber (x) {
+  return isPortNumber(x) && x > 1024
+}
+
 module.exports = {
   http: http,
   https: https,
-  webUrl: webUrl
+  webUrl: webUrl,
+  isPortNumber: isPortNumber,
+  isSystemPortNumber: isSystemPortNumber,
+  isUserPortNumber: isUserPortNumber
 }

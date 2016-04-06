@@ -126,18 +126,6 @@ function unempty (a) {
   return true
 }
 
-function isPortNumber (x) {
-  return check.positive(x) && x <= 65535
-}
-
-function isSystemPortNumber (x) {
-  return check.positive(x) && x <= 1024
-}
-
-function isUserPortNumber (x) {
-  return isPortNumber(x) && x > 1024
-}
-
 /**
   Returns true if 0 <= value <= 1
   @method unit
@@ -388,9 +376,9 @@ var predicates = {
   https: internet.https,
   secure: internet.https,
   error: low.isError,
-  port: isPortNumber,
-  systemPort: isSystemPortNumber,
-  userPort: isUserPortNumber,
+  port: internet.isPortNumber,
+  systemPort: internet.isSystemPortNumber,
+  userPort: internet.isUserPortNumber,
   contains: mid.contains
 }
 
