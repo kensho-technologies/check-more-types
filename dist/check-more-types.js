@@ -69,8 +69,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  throw new Error('Missing Function.prototype.bind, please load es5-shim first')
 	}
 
-	var curry2 = __webpack_require__(1).curry2
-	var low = __webpack_require__(2)
+	var low = __webpack_require__(1)
 	var mid = __webpack_require__(3)
 	var arrays = __webpack_require__(5)
 	var logic = __webpack_require__(6)
@@ -131,13 +130,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	  /** Adds new predicate to all objects
 	  @method mixin */
 	  check.mixin = function mixin (fn, name) {
-	    if (low.isString(fn) && low.isFn(name)) {
+	    if (low.string(fn) && low.fn(name)) {
 	      var tmp = fn
 	      fn = name
 	      name = tmp
 	    }
 
-	    if (!low.isFn(fn)) {
+	    if (!low.fn(fn)) {
 	      throw new Error('expected predicate function for name ' + name)
 	    }
 	    if (!low.unemptyString(name)) {
@@ -148,13 +147,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    function registerPredicate (obj, name, fn) {
-	      if (!low.isObject(obj)) {
+	      if (!low.object(obj)) {
 	        throw new Error('missing object ' + obj)
 	      }
 	      if (!low.unemptyString(name)) {
 	        throw new Error('missing name')
 	      }
-	      if (!low.isFn(fn)) {
+	      if (!low.fn(fn)) {
 	        throw new Error('missing function')
 	      }
 
@@ -204,11 +203,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 	var promiseSchema = {
-	  then: low.isFn
+	  then: low.fn
 	}
 
 	// work around reserved keywords checks
-	promiseSchema['catch'] = low.isFn
+	promiseSchema['catch'] = low.fn
 
 	var hasPromiseApi = schema.schema.bind(null, promiseSchema)
 
@@ -220,54 +219,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return check.object(p) && hasPromiseApi(p)
 	}
 
-	// TODO just mix in all low and mid level predicates
 	// new predicates to be added to check object. Use object to preserve names
 	var predicates = {
-	  nulled: low.isNull,
-	  fn: low.isFn,
-	  string: low.isString,
-	  unemptyString: low.unemptyString,
-	  object: low.isObject,
-	  number: low.isNumber,
 	  array: Array.isArray,
-	  positiveNumber: low.positiveNumber,
-	  negativeNumber: low.negativeNumber,
-	  // a couple of aliases
-	  positive: low.positiveNumber,
-	  negative: low.negativeNumber,
-	  defined: low.defined,
-	  same: low.same,
-	  allSame: mid.allSame,
-	  bit: low.bit,
-	  bool: low.bool,
-	  has: low.has,
-	  lowerCase: low.lowerCase,
-	  raises: mid.raises,
-	  empty: low.empty,
-	  found: mid.found,
-	  emptyString: low.emptyString,
-	  unempty: low.unempty,
-	  unit: mid.unit,
-	  hexRgb: mid.hexRgb,
-	  sameLength: mid.sameLength,
-	  index: mid.index,
-	  oneOf: curry2(mid.oneOf, true),
-	  promise: isPromise,
-	  validDate: low.validDate,
-	  equal: curry2(low.equal),
-	  primitive: low.primitive,
-	  zero: low.zero,
-	  date: low.isDate,
-	  regexp: low.isRegExp,
-	  instance: low.instance,
-	  emptyObject: low.isEmptyObject,
-	  length: curry2(low.hasLength),
-	  floatNumber: low.isFloat,
-	  intNumber: low.isInteger,
-	  startsWith: mid.startsWith,
-	  contains: mid.contains,
-	  error: low.isError,
-	  type: curry2(mid.type)
+	  promise: isPromise
 	}
 
 	function mixCollection (collection) {
@@ -276,7 +231,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  })
 	}
 
-	[predicates, git, internet, arrays, logic, schema].forEach(mixCollection)
+	[low, mid, predicates, git, internet, arrays, logic, schema].forEach(mixCollection)
 
 	check.VERSION = '{{ packageVersion }}'
 
@@ -285,36 +240,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 1 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict'
 
-	// utility methods
-	function curry2 (fn, strict2) {
-	  return function curried (a) {
-	    if (strict2 && arguments.length > 2) {
-	      throw new Error('Curry2 function ' + fn.name +
-	        ' called with too many arguments ' + arguments.length)
-	    }
-	    if (arguments.length === 2) {
-	      return fn(arguments[0], arguments[1])
-	    }
-	    return function second (b) {
-	      return fn(a, b)
-	    }
-	  }
-	}
-
-	module.exports = {
-	  curry2: curry2
-	}
-
-
-/***/ },
-/* 2 */
-/***/ function(module, exports) {
-
-	'use strict'
+	var curry2 = __webpack_require__(2).curry2
 
 	// low level predicates
 
@@ -518,36 +448,65 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 	module.exports = {
-	  isFn: isFn,
-	  isString: isString,
-	  isObject: isObject,
-	  isNull: isNull,
-	  unemptyString: unemptyString,
-	  isEmptyObject: isEmptyObject,
-	  isInteger: isInteger,
-	  isFloat: isFloat,
-	  positiveNumber: positiveNumber,
-	  negativeNumber: negativeNumber,
-	  isRegExp: isRegExp,
-	  isError: isError,
-	  instance: instance,
-	  hasLength: hasLength,
-	  isNumber: isNumber,
-	  isDate: isDate,
-	  defined: defined,
-	  validDate: validDate,
-	  primitive: primitive,
-	  zero: zero,
-	  same: same,
 	  bit: bit,
 	  bool: bool,
-	  has: has,
-	  isArray: isArray,
-	  lowerCase: lowerCase,
+	  date: isDate,
+	  defined: defined,
 	  empty: empty,
+	  emptyObject: isEmptyObject,
 	  emptyString: emptyString,
+	  equal: curry2(equal),
+	  error: isError,
+	  floatNumber: isFloat,
+	  fn: isFn,
+	  has: has,
+	  instance: instance,
+	  intNumber: isInteger,
+	  isArray: isArray,
+	  length: curry2(hasLength),
+	  lowerCase: lowerCase,
+	  negative: negativeNumber,
+	  negativeNumber: negativeNumber,
+	  nulled: isNull,
+	  number: isNumber,
+	  object: isObject,
+	  positive: positiveNumber,
+	  positiveNumber: positiveNumber,
+	  primitive: primitive,
+	  regexp: isRegExp,
+	  same: same,
+	  string: isString,
 	  unempty: unempty,
-	  equal: equal
+	  unemptyString: unemptyString,
+	  validDate: validDate,
+	  zero: zero
+	}
+
+
+/***/ },
+/* 2 */
+/***/ function(module, exports) {
+
+	'use strict'
+
+	// utility methods
+	function curry2 (fn, strict2) {
+	  return function curried (a) {
+	    if (strict2 && arguments.length > 2) {
+	      throw new Error('Curry2 function ' + fn.name +
+	        ' called with too many arguments ' + arguments.length)
+	    }
+	    if (arguments.length === 2) {
+	      return fn(arguments[0], arguments[1])
+	    }
+	    return function second (b) {
+	      return fn(a, b)
+	    }
+	  }
+	}
+
+	module.exports = {
+	  curry2: curry2
 	}
 
 
@@ -557,8 +516,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict'
 
-	var low = __webpack_require__(2)
+	var low = __webpack_require__(1)
 	var verify = __webpack_require__(4)
+	var curry2 = __webpack_require__(2).curry2
 
 	/**
 	  Checks if the given index is valid in an array or string or -1
@@ -570,8 +530,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 	function startsWith (prefix, x) {
-	  return low.isString(prefix) &&
-	  low.isString(x) &&
+	  return low.string(prefix) &&
+	  low.string(x) &&
 	  x.indexOf(prefix) === 0
 	}
 
@@ -660,7 +620,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  @method unit
 	*/
 	function unit (value) {
-	  return low.isNumber(value) &&
+	  return low.number(value) &&
 	  value >= 0.0 && value <= 1.0
 	}
 
@@ -670,7 +630,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  @method hexRgb
 	*/
 	function hexRgb (value) {
-	  return low.isString(value) &&
+	  return low.string(value) &&
 	  rgb.test(value)
 	}
 
@@ -679,7 +639,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  @method raises
 	*/
 	function raises (fn, errorValidator) {
-	  verify(low.isFn(fn), 'expected function that raises')
+	  verify(low.fn(fn), 'expected function that raises')
 	  try {
 	    fn()
 	  } catch (err) {
@@ -699,9 +659,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  found: found,
 	  startsWith: startsWith,
 	  contains: contains,
-	  type: type,
+	  type: curry2(type),
 	  index: index,
-	  oneOf: oneOf,
+	  oneOf: curry2(oneOf, true),
 	  sameLength: sameLength,
 	  allSame: allSame,
 	  unit: unit,
@@ -716,7 +676,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict'
 
-	var low = __webpack_require__(2)
+	var low = __webpack_require__(1)
 
 	/**
 	 * Public modifier `verify`.
@@ -743,8 +703,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict'
 
-	var low = __webpack_require__(2)
+	var low = __webpack_require__(1)
 	var logic = __webpack_require__(6)
+	var verify = __webpack_require__(4)
+
+	verify(low.fn(low.isArray), 'missing low level isArray')
 
 	/**
 	Returns true if the argument is an array with at least one value
@@ -784,7 +747,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	@param checkLowerCase Checks if all strings are lowercase
 	*/
 	function arrayOfStrings (a, checkLowerCase) {
-	  var v = low.isArray(a) && a.every(low.isString)
+	  var v = low.isArray(a) && a.every(low.string)
 	  if (v && low.bool(checkLowerCase) && checkLowerCase) {
 	    return a.every(low.lowerCase)
 	  }
@@ -818,7 +781,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict'
 
-	var low = __webpack_require__(2)
+	var low = __webpack_require__(1)
 
 	/**
 	  Combines multiple predicate functions to produce new OR predicate
@@ -834,7 +797,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var values = Array.prototype.slice.call(arguments, 0)
 	    return predicates.some(function (predicate) {
 	      try {
-	        return low.isFn(predicate) ? predicate.apply(null, values) : Boolean(predicate)
+	        return low.fn(predicate) ? predicate.apply(null, values) : Boolean(predicate)
 	      } catch (err) {
 	        // treat exceptions as false
 	        return false
@@ -856,7 +819,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return function orCheck () {
 	    var values = Array.prototype.slice.call(arguments, 0)
 	    return predicates.every(function (predicate) {
-	      return low.isFn(predicate) ? predicate.apply(null, values) : Boolean(predicate)
+	      return low.fn(predicate) ? predicate.apply(null, values) : Boolean(predicate)
 	    })
 	  }
 	}
@@ -879,7 +842,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    if (predicateResults.hasOwnProperty(property)) {
 	      value = predicateResults[property]
 
-	      if (low.isObject(value) && every(value) === false) {
+	      if (low.object(value) && every(value) === false) {
 	        return false
 	      }
 
@@ -899,9 +862,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    if (predicates.hasOwnProperty(property)) {
 	      predicate = predicates[property]
 
-	      if (low.isFn(predicate)) {
+	      if (low.fn(predicate)) {
 	        result[property] = predicate(things[property])
-	      } else if (low.isObject(predicate)) {
+	      } else if (low.object(predicate)) {
 	        result[property] = map(things[property], predicate)
 	      }
 	    }
@@ -925,7 +888,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict'
 
-	var low = __webpack_require__(2)
+	var low = __webpack_require__(1)
 
 	// functions that deal with git information
 
@@ -958,7 +921,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  @method commitId
 	*/
 	function commitId (id) {
-	  return low.isString(id) &&
+	  return low.string(id) &&
 	  id.length === 40 &&
 	  shaReg.test(id)
 	}
@@ -971,7 +934,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  @method shortCommitId
 	*/
 	function shortCommitId (id) {
-	  return low.isString(id) &&
+	  return low.string(id) &&
 	  id.length === 7 &&
 	  shortShaReg.test(id)
 	}
@@ -990,22 +953,22 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict'
 
-	var low = __webpack_require__(2)
+	var low = __webpack_require__(1)
 	var mid = __webpack_require__(3)
 
 	var startsWithHttp = mid.startsWith.bind(null, 'http://')
 	var startsWithHttps = mid.startsWith.bind(null, 'https://')
 
 	function http (x) {
-	  return low.isString(x) && startsWithHttp(x)
+	  return low.string(x) && startsWithHttp(x)
 	}
 
 	function https (x) {
-	  return low.isString(x) && startsWithHttps(x)
+	  return low.string(x) && startsWithHttps(x)
 	}
 
 	function webUrl (x) {
-	  return low.isString(x) &&
+	  return low.string(x) &&
 	  (startsWithHttp(x) || startsWithHttps(x))
 	}
 
@@ -1026,7 +989,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  @method email
 	*/
 	function email (s) {
-	  return low.isString(s) &&
+	  return low.string(s) &&
 	  /^.+@.+\..+$/.test(s)
 	}
 
@@ -1049,11 +1012,14 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict'
 
-	var curry2 = __webpack_require__(1).curry2
-	var low = __webpack_require__(2)
+	var curry2 = __webpack_require__(2).curry2
+	var low = __webpack_require__(1)
 	var verify = __webpack_require__(4)
 	var every = __webpack_require__(6).every
 	var map = __webpack_require__(6).map
+
+	verify(low.fn(every), 'missing check.every method')
+	verify(low.fn(map), 'missing check.map method')
 
 	/**
 	  Checks if object passes all rules in predicates.
@@ -1070,14 +1036,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	  @returns true or false
 	*/
 	function all (obj, predicates) {
-	  // verify.fn(low.isFn(check.every, 'missing check.every method')
-	  // check.verify.fn(check.map, 'missing check.map method')
-
-	  verify(low.isObject(obj), 'missing object to check')
-	  verify(low.isObject(predicates), 'missing predicates object')
+	  verify(low.object(obj), 'missing object to check')
+	  verify(low.object(predicates), 'missing predicates object')
 
 	  Object.keys(predicates).forEach(function (property) {
-	    if (!low.isFn(predicates[property])) {
+	    if (!low.fn(predicates[property])) {
 	      throw new Error('not a predicate function for ' + property + ' but ' + predicates[property])
 	    }
 	  })

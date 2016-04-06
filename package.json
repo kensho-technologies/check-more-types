@@ -112,7 +112,7 @@
     "node-test": "node test/load-under-node-test.js",
     "pack": "webpack",
     "pkgfiles": "pkgfiles",
-    "pretest": "npm run format && npm run lint",
+    "pretest": "npm run format && npm run lint && npm run build",
     "semantic-release": "semantic-release pre && npm run set-version && npm publish && semantic-release post",
     "set-version": "grunt version && grunt",
     "size": "tarball=\"$(npm pack .)\"; wc -c \"${tarball}\"; tar tvf \"${tarball}\"; rm \"${tarball}\";",

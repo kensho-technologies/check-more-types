@@ -33,7 +33,7 @@ var shaReg = /^[0-9a-f]{40}$/
   @method commitId
 */
 function commitId (id) {
-  return low.isString(id) &&
+  return low.string(id) &&
   id.length === 40 &&
   shaReg.test(id)
 }
@@ -46,7 +46,7 @@ var shortShaReg = /^[0-9a-f]{7}$/
   @method shortCommitId
 */
 function shortCommitId (id) {
-  return low.isString(id) &&
+  return low.string(id) &&
   id.length === 7 &&
   shortShaReg.test(id)
 }

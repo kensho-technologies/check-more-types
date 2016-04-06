@@ -6,6 +6,9 @@ var verify = require('./verify')
 var every = require('./logic').every
 var map = require('./logic').map
 
+verify(low.fn(every), 'missing check.every method')
+verify(low.fn(map), 'missing check.map method')
+
 /**
   Checks if object passes all rules in predicates.
 
@@ -21,14 +24,11 @@ var map = require('./logic').map
   @returns true or false
 */
 function all (obj, predicates) {
-  // verify.fn(low.isFn(check.every, 'missing check.every method')
-  // check.verify.fn(check.map, 'missing check.map method')
-
-  verify(low.isObject(obj), 'missing object to check')
-  verify(low.isObject(predicates), 'missing predicates object')
+  verify(low.object(obj), 'missing object to check')
+  verify(low.object(predicates), 'missing predicates object')
 
   Object.keys(predicates).forEach(function (property) {
-    if (!low.isFn(predicates[property])) {
+    if (!low.fn(predicates[property])) {
       throw new Error('not a predicate function for ' + property + ' but ' + predicates[property])
     }
   })

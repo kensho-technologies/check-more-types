@@ -13,7 +13,6 @@ if (typeof Function.prototype.bind !== 'function') {
   throw new Error('Missing Function.prototype.bind, please load es5-shim first')
 }
 
-var curry2 = require('./utils').curry2
 var low = require('./low-level')
 var mid = require('./mid-level')
 var arrays = require('./arrays')
@@ -75,13 +74,13 @@ if (!check.mixin) {
   /** Adds new predicate to all objects
   @method mixin */
   check.mixin = function mixin (fn, name) {
-    if (low.isString(fn) && low.isFn(name)) {
+    if (low.string(fn) && low.fn(name)) {
       var tmp = fn
       fn = name
       name = tmp
     }
 
-    if (!low.isFn(fn)) {
+    if (!low.fn(fn)) {
       throw new Error('expected predicate function for name ' + name)
     }
     if (!low.unemptyString(name)) {
@@ -92,13 +91,13 @@ if (!check.mixin) {
     }
 
     function registerPredicate (obj, name, fn) {
-      if (!low.isObject(obj)) {
+      if (!low.object(obj)) {
         throw new Error('missing object ' + obj)
       }
       if (!low.unemptyString(name)) {
         throw new Error('missing name')
       }
-      if (!low.isFn(fn)) {
+      if (!low.fn(fn)) {
         throw new Error('missing function')
       }
 
@@ -148,11 +147,11 @@ if (!check.then) {
 }
 
 var promiseSchema = {
-  then: low.isFn
+  then: low.fn
 }
 
 // work around reserved keywords checks
-promiseSchema['catch'] = low.isFn
+promiseSchema['catch'] = low.fn
 
 var hasPromiseApi = schema.schema.bind(null, promiseSchema)
 
@@ -164,54 +163,10 @@ function isPromise (p) {
   return check.object(p) && hasPromiseApi(p)
 }
 
-// TODO just mix in all low and mid level predicates
 // new predicates to be added to check object. Use object to preserve names
 var predicates = {
-  nulled: low.isNull,
-  fn: low.isFn,
-  string: low.isString,
-  unemptyString: low.unemptyString,
-  object: low.isObject,
-  number: low.isNumber,
   array: Array.isArray,
-  positiveNumber: low.positiveNumber,
-  negativeNumber: low.negativeNumber,
-  // a couple of aliases
-  positive: low.positiveNumber,
-  negative: low.negativeNumber,
-  defined: low.defined,
-  same: low.same,
-  allSame: mid.allSame,
-  bit: low.bit,
-  bool: low.bool,
-  has: low.has,
-  lowerCase: low.lowerCase,
-  raises: mid.raises,
-  empty: low.empty,
-  found: mid.found,
-  emptyString: low.emptyString,
-  unempty: low.unempty,
-  unit: mid.unit,
-  hexRgb: mid.hexRgb,
-  sameLength: mid.sameLength,
-  index: mid.index,
-  oneOf: curry2(mid.oneOf, true),
-  promise: isPromise,
-  validDate: low.validDate,
-  equal: curry2(low.equal),
-  primitive: low.primitive,
-  zero: low.zero,
-  date: low.isDate,
-  regexp: low.isRegExp,
-  instance: low.instance,
-  emptyObject: low.isEmptyObject,
-  length: curry2(low.hasLength),
-  floatNumber: low.isFloat,
-  intNumber: low.isInteger,
-  startsWith: mid.startsWith,
-  contains: mid.contains,
-  error: low.isError,
-  type: curry2(mid.type)
+  promise: isPromise
 }
 
 function mixCollection (collection) {
@@ -220,7 +175,7 @@ function mixCollection (collection) {
   })
 }
 
-[predicates, git, internet, arrays, logic, schema].forEach(mixCollection)
+[low, mid, predicates, git, internet, arrays, logic, schema].forEach(mixCollection)
 
 check.VERSION = '{{ packageVersion }}'
 

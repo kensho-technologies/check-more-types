@@ -2,6 +2,9 @@
 
 var low = require('./low-level')
 var logic = require('./logic')
+var verify = require('./verify')
+
+verify(low.fn(low.isArray), 'missing low level isArray')
 
 /**
 Returns true if the argument is an array with at least one value
@@ -41,7 +44,7 @@ Returns true if given array only has strings
 @param checkLowerCase Checks if all strings are lowercase
 */
 function arrayOfStrings (a, checkLowerCase) {
-  var v = low.isArray(a) && a.every(low.isString)
+  var v = low.isArray(a) && a.every(low.string)
   if (v && low.bool(checkLowerCase) && checkLowerCase) {
     return a.every(low.lowerCase)
   }

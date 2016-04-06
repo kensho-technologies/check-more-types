@@ -1,5 +1,7 @@
 'use strict'
 
+var curry2 = require('./utils').curry2
+
 // low level predicates
 
 // most of the old methods same as check-types.js
@@ -202,34 +204,36 @@ function equal (a, b) {
 }
 
 module.exports = {
-  isFn: isFn,
-  isString: isString,
-  isObject: isObject,
-  isNull: isNull,
-  unemptyString: unemptyString,
-  isEmptyObject: isEmptyObject,
-  isInteger: isInteger,
-  isFloat: isFloat,
-  positiveNumber: positiveNumber,
-  negativeNumber: negativeNumber,
-  isRegExp: isRegExp,
-  isError: isError,
-  instance: instance,
-  hasLength: hasLength,
-  isNumber: isNumber,
-  isDate: isDate,
-  defined: defined,
-  validDate: validDate,
-  primitive: primitive,
-  zero: zero,
-  same: same,
   bit: bit,
   bool: bool,
-  has: has,
-  isArray: isArray,
-  lowerCase: lowerCase,
+  date: isDate,
+  defined: defined,
   empty: empty,
+  emptyObject: isEmptyObject,
   emptyString: emptyString,
+  equal: curry2(equal),
+  error: isError,
+  floatNumber: isFloat,
+  fn: isFn,
+  has: has,
+  instance: instance,
+  intNumber: isInteger,
+  isArray: isArray,
+  length: curry2(hasLength),
+  lowerCase: lowerCase,
+  negative: negativeNumber,
+  negativeNumber: negativeNumber,
+  nulled: isNull,
+  number: isNumber,
+  object: isObject,
+  positive: positiveNumber,
+  positiveNumber: positiveNumber,
+  primitive: primitive,
+  regexp: isRegExp,
+  same: same,
+  string: isString,
   unempty: unempty,
-  equal: equal
+  unemptyString: unemptyString,
+  validDate: validDate,
+  zero: zero
 }

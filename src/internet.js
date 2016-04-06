@@ -7,15 +7,15 @@ var startsWithHttp = mid.startsWith.bind(null, 'http://')
 var startsWithHttps = mid.startsWith.bind(null, 'https://')
 
 function http (x) {
-  return low.isString(x) && startsWithHttp(x)
+  return low.string(x) && startsWithHttp(x)
 }
 
 function https (x) {
-  return low.isString(x) && startsWithHttps(x)
+  return low.string(x) && startsWithHttps(x)
 }
 
 function webUrl (x) {
-  return low.isString(x) &&
+  return low.string(x) &&
   (startsWithHttp(x) || startsWithHttps(x))
 }
 
@@ -36,7 +36,7 @@ function isUserPortNumber (x) {
   @method email
 */
 function email (s) {
-  return low.isString(s) &&
+  return low.string(s) &&
   /^.+@.+\..+$/.test(s)
 }
 

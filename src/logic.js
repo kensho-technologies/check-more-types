@@ -16,7 +16,7 @@ function or () {
     var values = Array.prototype.slice.call(arguments, 0)
     return predicates.some(function (predicate) {
       try {
-        return low.isFn(predicate) ? predicate.apply(null, values) : Boolean(predicate)
+        return low.fn(predicate) ? predicate.apply(null, values) : Boolean(predicate)
       } catch (err) {
         // treat exceptions as false
         return false
@@ -38,7 +38,7 @@ function and () {
   return function orCheck () {
     var values = Array.prototype.slice.call(arguments, 0)
     return predicates.every(function (predicate) {
-      return low.isFn(predicate) ? predicate.apply(null, values) : Boolean(predicate)
+      return low.fn(predicate) ? predicate.apply(null, values) : Boolean(predicate)
     })
   }
 }
@@ -61,7 +61,7 @@ function every (predicateResults) {
     if (predicateResults.hasOwnProperty(property)) {
       value = predicateResults[property]
 
-      if (low.isObject(value) && every(value) === false) {
+      if (low.object(value) && every(value) === false) {
         return false
       }
 
@@ -81,9 +81,9 @@ function map (things, predicates) {
     if (predicates.hasOwnProperty(property)) {
       predicate = predicates[property]
 
-      if (low.isFn(predicate)) {
+      if (low.fn(predicate)) {
         result[property] = predicate(things[property])
-      } else if (low.isObject(predicate)) {
+      } else if (low.object(predicate)) {
         result[property] = map(things[property], predicate)
       }
     }

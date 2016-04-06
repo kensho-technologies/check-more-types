@@ -2,6 +2,7 @@
 
 var low = require('./low-level')
 var verify = require('./verify')
+var curry2 = require('./utils').curry2
 
 /**
   Checks if the given index is valid in an array or string or -1
@@ -13,8 +14,8 @@ function found (index) {
 }
 
 function startsWith (prefix, x) {
-  return low.isString(prefix) &&
-  low.isString(x) &&
+  return low.string(prefix) &&
+  low.string(x) &&
   x.indexOf(prefix) === 0
 }
 
@@ -103,7 +104,7 @@ function oneOf (arr, x) {
   @method unit
 */
 function unit (value) {
-  return low.isNumber(value) &&
+  return low.number(value) &&
   value >= 0.0 && value <= 1.0
 }
 
@@ -113,7 +114,7 @@ var rgb = /^#(?:[0-9a-fA-F]{3}){1,2}$/
   @method hexRgb
 */
 function hexRgb (value) {
-  return low.isString(value) &&
+  return low.string(value) &&
   rgb.test(value)
 }
 
@@ -122,7 +123,7 @@ function hexRgb (value) {
   @method raises
 */
 function raises (fn, errorValidator) {
-  verify(low.isFn(fn), 'expected function that raises')
+  verify(low.fn(fn), 'expected function that raises')
   try {
     fn()
   } catch (err) {
@@ -142,9 +143,9 @@ module.exports = {
   found: found,
   startsWith: startsWith,
   contains: contains,
-  type: type,
+  type: curry2(type),
   index: index,
-  oneOf: oneOf,
+  oneOf: curry2(oneOf, true),
   sameLength: sameLength,
   allSame: allSame,
   unit: unit,
