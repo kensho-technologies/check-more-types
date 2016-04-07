@@ -15,20 +15,6 @@ module.exports = function(grunt) {
       }
     },
 
-    'string-replace': {
-      dist: {
-        files: {
-          'dist/check-more-types.js': 'dist/check-more-types.js'
-        },
-        options: {
-          replacements: [{
-            pattern: '{{ packageVersion }}',
-            replacement: pkg.version
-          }]
-        }
-      }
-    },
-
     xplain: {
       options: {
         framework: 'jasmine'
@@ -125,7 +111,6 @@ module.exports = function(grunt) {
 
   grunt.registerTask('test', ['gt']);
   grunt.registerTask('doc', ['xplain', 'toc', 'readme']);
-  grunt.registerTask('version', ['string-replace']);
   grunt.registerTask('default',
     ['nice-package', 'deps-ok', 'sync', 'uglify', 'doc']);
 };

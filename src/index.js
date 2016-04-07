@@ -177,6 +177,6 @@ function mixCollection (collection) {
 
 [low, mid, predicates, git, internet, arrays, logic, schema].forEach(mixCollection)
 
-check.VERSION = '{{ packageVersion }}'
+check.VERSION = '{{ include-version }}'
 
 module.exports = check

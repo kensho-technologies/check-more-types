@@ -25,7 +25,11 @@
       "skip": [
         "grunt-cli"
       ]
-    }
+    },
+    "include-version": [
+      "dist/check-more-types.js",
+      "dist/check-more-types.min.js"
+    ]
   },
   "contributors": [],
   "dependencies": {},
@@ -45,9 +49,9 @@
     "grunt-nice-package": "0.10.2",
     "grunt-npm2bower-sync": "0.9.1",
     "grunt-readme": "0.4.5",
-    "grunt-string-replace": "1.2.1",
     "grunt-toc": "0.1.0",
     "grunt-xplain": "0.2.7",
+    "include-version": "1.0.1",
     "jshint-summary": "0.4.0",
     "karma": "0.13.22",
     "karma-chrome-launcher": "0.2.3",
@@ -113,8 +117,7 @@
     "pack": "webpack",
     "pkgfiles": "pkgfiles",
     "pretest": "npm run format && npm run lint && npm run build",
-    "semantic-release": "semantic-release pre && npm run set-version && npm publish && semantic-release post",
-    "set-version": "grunt version && grunt",
+    "semantic-release": "semantic-release pre && include-version && npm publish && semantic-release post",
     "size": "tarball=\"$(npm pack .)\"; wc -c \"${tarball}\"; tar tvf \"${tarball}\"; rm \"${tarball}\";",
     "test": "npm run node-test && npm run mocha && npm run karma",
     "unit": "npm run mocha",
