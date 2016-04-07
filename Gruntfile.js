@@ -84,6 +84,7 @@ module.exports = function(grunt) {
 
     uglify: {
       options: {
+        maxLineLen: 1000,
         banner: '/*! <%= pkg.name %> - v<%= pkg.version %>\n' +
         ' homepage: <%= pkg.homepage %>\n' +
         ' Copyright @ 2014 Kensho license: <%= pkg.license %> */\n\n'
