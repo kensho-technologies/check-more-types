@@ -1,3 +1,9 @@
+engines:
+  eslint:
+    enabled: true
 ratings:
   paths:
-    - src/**
+    - "src/*.js"
+exclude_paths:
+  - "src/*-spec.js"
+  - dist/
