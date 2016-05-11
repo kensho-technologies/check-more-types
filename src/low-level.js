@@ -13,6 +13,23 @@ function unemptyString (x) {
   return isString(x) && Boolean(x)
 }
 
+/**
+  Checks if given string is already in upper case
+  @method upperCase
+*/
+function upperCase (x) {
+  return isString(x) && x.toUpperCase() === x
+}
+
+/**
+  Checks if given string is already in lower case
+  @method lowerCase
+*/
+function lowerCase (str) {
+  return isString(str) &&
+  str.toLowerCase() === str
+}
+
 var isArray = Array.isArray
 
 function isObject (x) {
@@ -134,15 +151,6 @@ function bool (value) {
 }
 
 /**
-Checks if given string is already in lower case
-@method lowerCase
-*/
-function lowerCase (str) {
-  return isString(str) &&
-  str.toLowerCase() === str
-}
-
-/**
   Checks if given object has a property
   @method has
 */
@@ -220,7 +228,6 @@ module.exports = {
   intNumber: isInteger,
   isArray: isArray,
   length: curry2(hasLength),
-  lowerCase: lowerCase,
   negative: negativeNumber,
   negativeNumber: negativeNumber,
   nulled: isNull,
@@ -234,6 +241,8 @@ module.exports = {
   string: isString,
   unempty: unempty,
   unemptyString: unemptyString,
+  upperCase: upperCase,
+  lowerCase: lowerCase,
   validDate: validDate,
   zero: zero
 }

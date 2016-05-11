@@ -366,6 +366,41 @@ describe('check-more-types low-level predicates', function () {
     })
   })
 
+  describe('check.lowerCase', function () {
+    it('is defined', function () {
+      la(check.fn(check.lowerCase))
+    })
+
+    /** @sample check/lowerCase */
+    it('check.lowerCase', function () {
+      la(check.lowerCase(''))
+      la(check.lowerCase(' '))
+      la(check.lowerCase('0123'))
+      la(check.lowerCase('abb foo'))
+      la(!check.lowerCase(0))
+      la(!check.lowerCase([]))
+      la(!check.lowerCase('Foo'))
+    })
+  })
+
+  describe('check.upperCase', function () {
+    it('is defined', function () {
+      la(check.fn(check.upperCase))
+    })
+
+    /** @sample check/upperCase */
+    it('check.upperCase', function () {
+      la(check.upperCase(''))
+      la(check.upperCase(' '))
+      la(check.upperCase('0123'))
+      la(check.upperCase('ABB FOO'))
+      la(!check.upperCase('abb foo'))
+      la(!check.lowerCase(0))
+      la(!check.lowerCase([]))
+      la(!check.lowerCase('Foo'))
+    })
+  })
+
   describe('check.unemptyString', function () {
     it('is defined', function () {
       la(check.fn(check.unemptyString))
