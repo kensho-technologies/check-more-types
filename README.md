@@ -85,7 +85,8 @@ for advice and examples.
   * [check.empty](#checkempty)
   * [check.unempty](#checkunempty)
   * [check.unemptyArray](#checkunemptyarray)
-  * [check.arrayOfStrings](#checkarrayofstrings)
+  * [check.arrayOfStrings (alias `strings`)](#checkarrayofstrings-alias-strings)
+  * [check.numbers](#checknumbers)
   * [check.arrayOf](#checkarrayof)
   * [check.badItems](#checkbaditems)
   * [check.arrayOfArraysOfStrings](#checkarrayofarraysofstrings)
@@ -438,7 +439,7 @@ check.length(3)('foo'); // true
 
 ---
 
-#### check.arrayOfStrings
+#### check.arrayOfStrings (alias `strings`)
 
     // second argument is checkLowerCase
     check.arrayOfStrings(['foo', 'Foo']); // true
@@ -447,6 +448,10 @@ check.length(3)('foo'); // true
     check.arrayOfStrings(['FOO', 'BAR'], true); // false
 
 ---
+
+#### check.numbers
+
+Returns true if all items in an array are numbers
 
 #### check.arrayOf
 

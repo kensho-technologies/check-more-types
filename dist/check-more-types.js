@@ -818,12 +818,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	  })
 	}
 
+	/**
+	Returns true if all items in an array are numbers
+	@method numbers
+	@param a Array to check
+	*/
+	function numbers (a) {
+	  return low.isArray(a) && a.every(low.number)
+	}
+
 	module.exports = {
 	  arrayOf: arrayOf,
 	  arrayOfArraysOfStrings: arrayOfArraysOfStrings,
 	  arrayOfStrings: arrayOfStrings,
+	  strings: arrayOfStrings,
 	  badItems: badItems,
-	  unemptyArray: unemptyArray
+	  unemptyArray: unemptyArray,
+	  numbers: numbers
 	}
 
 

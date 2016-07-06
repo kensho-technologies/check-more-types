@@ -317,7 +317,7 @@ check.length(3)('foo'); // true
 
 ---
 
-### check.arrayOfStrings
+### check.arrayOfStrings (alias `strings`)
 
     // second argument is checkLowerCase
     check.arrayOfStrings(['foo', 'Foo']); // true
@@ -326,6 +326,10 @@ check.length(3)('foo'); // true
     check.arrayOfStrings(['FOO', 'BAR'], true); // false
 
 ---
+
+### check.numbers
+
+Returns true if all items in an array are numbers
 
 ### check.arrayOf
 
