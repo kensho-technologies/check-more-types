@@ -126,6 +126,18 @@ describe('check-more-types array predicates', function () {
     })
   })
 
+  describe('numbers', function () {
+    it('passes numbers', function () {
+      la(check.numbers([1, 2, 3]))
+      la(check.numbers([-1, 0, 3]))
+    })
+
+    it('rejects mixed content', function () {
+      la(!check.numbers([1, 2, undefined]))
+      la(!check.numbers(['1', '2', '3']))
+    })
+  })
+
   describe('arrayOfArraysOfStrings', function () {
     it('has check', function () {
       la(check.fn(check.arrayOfArraysOfStrings))
