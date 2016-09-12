@@ -136,9 +136,10 @@ function hexRgb (value) {
   rgb.test(value)
 }
 
-/** Checks if given function raises an error
+/** Checks if given function raises an error. Alias "throws"
 
   @method raises
+  @alias throws
 */
 function raises (fn, errorValidator) {
   verify(low.fn(fn), 'expected function that raises')
@@ -190,6 +191,7 @@ module.exports = {
   odd: odd,
   oneOf: curry2(oneOf, true),
   raises: raises,
+  throws: raises,
   sameLength: sameLength,
   startsWith: startsWith,
   type: curry2(type),

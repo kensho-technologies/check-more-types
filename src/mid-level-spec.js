@@ -179,6 +179,8 @@ describe('check-more-types mid-level predicates', function () {
       }
 
       la(check.raises(foo))
+      // has "throws" alias
+      la(check.throws(foo), 'use throws alias')
       la(!check.raises(bar))
       la(check.raises(foo, isValidError))
       la(!check.raises(foo, isInvalid))
