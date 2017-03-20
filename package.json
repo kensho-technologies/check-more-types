@@ -76,6 +76,7 @@
   },
   "files": [
     "bower.json",
+    "dist/check-more-types.d.ts",
     "dist/check-more-types.js",
     "dist/check-more-types.min.js"
   ],
@@ -122,5 +123,6 @@
     "test": "npm run node-test && npm run mocha && npm run karma",
     "unit": "npm run mocha",
     "watch": "grunt watch"
-  }
+  },
+  "types": "dist/check-more-types.d.ts"
 }
