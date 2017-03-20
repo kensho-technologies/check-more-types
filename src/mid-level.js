@@ -61,7 +61,7 @@ function contains (where, what) {
   @method type
 */
 function type (expectedType, x) {
-  return typeof x === expectedType
+  return typeof x === expectedType // eslint-disable-line valid-typeof
 }
 
 /**
