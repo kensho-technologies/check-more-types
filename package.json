@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "author": "Gleb Bahmutov <gleb.bahmutov@gmail.com>",
   "bugs": {
-    "url": "https://github.com/kensho/check-more-types/issues"
+    "url": "https://github.com/kensho-technologies/check-more-types/issues"
   },
   "config": {
     "pre-git": {
@@ -79,7 +79,7 @@
     "dist/check-more-types.js",
     "dist/check-more-types.min.js"
   ],
-  "homepage": "https://github.com/kensho/check-more-types",
+  "homepage": "https://github.com/kensho-technologies/check-more-types",
   "keywords": [
     "check-types",
     "checks",
@@ -102,7 +102,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/kensho/check-more-types.git"
+    "url": "https://github.com/kensho-technologies/check-more-types.git"
   },
   "scripts": {
     "build": "npm run pack && grunt",

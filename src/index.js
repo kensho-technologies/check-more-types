@@ -2,7 +2,7 @@
 
 /**
   Custom JavaScript assertions and predicates
-  Created by Kensho https://github.com/kensho
+  Created by Kensho https://github.com/kensho-technologies
   Copyright @ 2014 Kensho https://www.kensho.com/
   License: MIT
 

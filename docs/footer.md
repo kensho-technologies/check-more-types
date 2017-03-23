@@ -6,4 +6,4 @@ Author: Kensho &copy; 2014
 * [kensho.com](http://kensho.com)
 
 Support: if you find any problems with this library,
-[open issue](https://github.com/kensho/check-more-types/issues) on Github
+[open issue](https://github.com/kensho-technologies/check-more-types/issues) on Github
